@@ -178,9 +178,13 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     Contact* contact = [_contacts_ontable objectAtIndex:indexPath.row];
     selected_contact = contact;
+    
+    [self headto:EDITCONTACTVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:selected_contact, CONTACT, @(EDIT),@"script",nil]];
+    
+    /*
     UIActionSheet* sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Edit",@"Delete", nil];
     sheet.destructiveButtonIndex = 1;
-    [sheet showInView:self.view];
+    [sheet showInView:self.view];*/
 }
 
 #pragma mark -

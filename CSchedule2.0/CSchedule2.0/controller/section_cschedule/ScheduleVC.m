@@ -207,8 +207,13 @@
             minIndex = count;
         }
         count++;
+    
     }
-    [_table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:minIndex] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    if(_table_headers.count)
+    {
+        [_table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:minIndex] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    }
+
 }
 
 -(IBAction) allme: (id)sender

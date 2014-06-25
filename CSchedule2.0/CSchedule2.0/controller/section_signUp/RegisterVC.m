@@ -67,7 +67,8 @@
 
 -(IBAction) create:(id)sender
 {
-    if (_email_tf.text == nil || _email_tf.text.length == 0 || [self IsValidEmail:_email_tf.text]) {
+    NSLog(@"_email_tf.text :%@",_email_tf.text);
+    if (_email_tf.text == nil || _email_tf.text.length == 0 || ![self IsValidEmail:_email_tf.text]) {
         [[[UIAlertView alloc] initWithTitle:@"Lack information" message:@"You should enter a true email address" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
         return;
     }

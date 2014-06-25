@@ -42,6 +42,10 @@
 - (void) signinFail:(NSNotification*) note
 {
     //    NSLog(@"signin success");
+    
+    [self.acitiveIndicator show:NO];
+    [self.acitiveIndicator setHidden:YES];
+    
     [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Password does not match the email account" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
     _passwd_tf.text = @"";
 }
