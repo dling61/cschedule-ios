@@ -51,7 +51,7 @@
 {
     [self refreshTable];
 }
-
+/*
 - (void) deleteContactSuccess: (NSNotification*) note
 {
     [self.dataManager deleteContact:selected_contact.contact_id Synced:YES];
@@ -62,7 +62,7 @@
 {
     [self.dataManager deleteContact:selected_contact.contact_id Synced:NO];
     [self refreshTable];
-}
+}*/
 
 - (void) registerForNotifications
 {
@@ -70,8 +70,10 @@
     [self responde:GETCONTACTSUCCESSNOTE by:@selector(getContactsSuccess:)];
     [self responde:ADDCONTACTSUCCESSNOTE by:@selector(refreshContacts:)];
     [self responde:UPDATECONTACTSUCCESSNOTE by:@selector(refreshContacts:)];
-    [self responde:DELETECONTACTSUCCESSNOTE by:@selector(deleteContactSuccess:)];
-    [self responde:DELETECONTACTFAILNOTE by:@selector(deleteContactFail:)];
+    
+    
+   // [self responde:DELETECONTACTSUCCESSNOTE by:@selector(deleteContactSuccess:)];
+   // [self responde:DELETECONTACTFAILNOTE by:@selector(deleteContactFail:)];
 }
 
 - (void) restoreInitialState

@@ -21,6 +21,7 @@
 @synthesize email_tf = _email_tf;
 @synthesize mobile_tf = _mobile_tf;
 @synthesize script = _script;
+@synthesize deleteButton=_deleteButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,13 +36,21 @@
 {
     _script = [[self.package valueForKey:@"script"] intValue];
     _editing_contact = [self.package valueForKey:CONTACT];
+    
+    if (_script == ADD) {
+        _deleteButton.hidden=YES;
+        self.title =ADDCONTACTVC;
+    }
+    else{
+        self.title = EDITCONTACTVC;
+        _deleteButton.hidden=NO;
+    }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.title = EDITCONTACTVC;
     [self unpack];
 }
 
@@ -76,6 +85,19 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATECONTACTSUCCESSNOTE object:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (void) deleteContactSuccess: (NSNotification*) note
+{
+    [self.dataManager deleteContact:_editing_contact.contact_id Synced:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATECONTACTSUCCESSNOTE object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) deleteContactFail: (NSNotification*) note
+{
+    [self.dataManager deleteContact:_editing_contact.contact_id Synced:NO];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATECONTACTSUCCESSNOTE object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void) registerForNotifications
 {
@@ -84,6 +106,9 @@
     [self responde:PUTCONTACTSUCCESSNOTE by:@selector(updateContactSuccess:)];
     [self responde:POSTCONTACTFAILNOTE by:@selector(addContactFail:)];
     [self responde:PUTCONTACTFAILNOTE by:@selector(updateContactFail:)];
+    
+    [self responde:DELETECONTACTSUCCESSNOTE by:@selector(deleteContactSuccess:)];
+    [self responde:DELETECONTACTFAILNOTE by:@selector(deleteContactFail:)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -116,6 +141,11 @@
         [[self.syncEngine updateContact:_editing_contact] start];
     }
 }
+-(IBAction) touchOnDeleteContact:(id)sender;
+{
+    [self del];
+}
+
 
 #pragma mark -
 #pragma mark UITableView Datasource methods
@@ -164,4 +194,26 @@
     return YES;
 }
 
+
+-(void) del
+{
+    if ([self.dataManager IsParticipatedinSchedules:_editing_contact.contact_id]) {
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This contact is currently participated in some schedules!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+    }
+    
+    else
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:[NSString stringWithFormat:@"Are you sure you want to delete contact %@", _editing_contact.contact_name] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
+    }
+}
+
+#pragma mark -
+#pragma mark Alert view delegate Method
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [[self.syncEngine deleteContact:_editing_contact.contact_id] start];
+    }
+}
 @end

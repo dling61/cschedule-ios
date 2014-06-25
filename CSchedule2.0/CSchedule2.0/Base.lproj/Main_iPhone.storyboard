@@ -535,6 +535,17 @@
                                     <outlet property="delegate" destination="ABo-Ld-jYG" id="wTE-G6-Mes"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="G9e-y9-qVe" userLabel="deleteButton">
+                                <rect key="frame" x="10" y="333" width="300" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" image="btn_delete.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchOnDeleteContact:" destination="ABo-Ld-jYG" eventType="touchUpInside" id="rHJ-AI-Z5D"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -546,6 +557,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="deleteButton" destination="G9e-y9-qVe" id="oLH-Bd-Xnu"/>
                         <outlet property="table" destination="HO9-IX-ZNV" id="d3t-Yi-AGA"/>
                     </connections>
                 </viewController>
@@ -1405,6 +1417,7 @@
     <resources>
         <image name="Handshake30.png" width="30" height="30"/>
         <image name="account.png" width="30" height="30"/>
+        <image name="btn_delete.png" width="300" height="44"/>
         <image name="btn_register.png" width="300" height="44"/>
         <image name="btn_reset_password.png" width="300" height="44"/>
         <image name="btn_signin.png" width="300" height="44"/>

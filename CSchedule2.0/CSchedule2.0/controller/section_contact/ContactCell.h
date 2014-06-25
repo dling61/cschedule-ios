@@ -14,4 +14,5 @@ WEAK IBOutlet UILabel* name_lbl;
 WEAK IBOutlet UILabel* email_lbl;
 WEAK IBOutlet UILabel* mobile_lbl;
 
+
 @end

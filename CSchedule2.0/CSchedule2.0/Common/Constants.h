@@ -106,6 +106,7 @@
 #define EDITACTIVITYVC                  @"Edit Activity"
 #define CONTACTVC                       @"Contact"
 #define EDITCONTACTVC                   @"Edit Contact"
+#define ADDCONTACTVC                    @"Add Contact"
 #define SHAREMEMBERVC                   @"Share"
 #define SCHEDULEVC                      @"Schedule"
 #define EDITSCHEDULEVC                  @"Edit schedule"

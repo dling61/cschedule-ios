@@ -161,7 +161,6 @@
 		9BC0484D195AD672007F79F6 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		9BC0484E195AD672007F79F6 /* DatetimeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatetimeHelper.h; sourceTree = "<group>"; };
 		9BC0484F195AD672007F79F6 /* DatetimeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatetimeHelper.m; sourceTree = "<group>"; };
-		9BC04850195AD672007F79F6 /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
 		9BC04851195AD672007F79F6 /* MyTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTypes.h; sourceTree = "<group>"; };
 		9BC04852195AD672007F79F6 /* PopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopView.h; sourceTree = "<group>"; };
 		9BC04853195AD672007F79F6 /* PopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopView.m; sourceTree = "<group>"; };
@@ -366,7 +365,6 @@
 				9BC0484D195AD672007F79F6 /* DataManager.m */,
 				9BC0484E195AD672007F79F6 /* DatetimeHelper.h */,
 				9BC0484F195AD672007F79F6 /* DatetimeHelper.m */,
-				9BC04850195AD672007F79F6 /* Global.h */,
 				9BC04851195AD672007F79F6 /* MyTypes.h */,
 				9BC04852195AD672007F79F6 /* PopView.h */,
 				9BC04853195AD672007F79F6 /* PopView.m */,

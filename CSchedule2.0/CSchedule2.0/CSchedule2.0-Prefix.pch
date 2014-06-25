@@ -13,5 +13,15 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
-    #import "Global.h"
+    #import "Constants.h"
+    #import "MyTypes.h"
+    #import "Activity.h"
+    #import "Contact.h"
+    #import "SharedMember.h"
+    #import "Schedule.h"
+    #import "AFNetworking.h"
+    #import "SyncEngine.h"
+    #import "DataManager.h"
+    #import "DatetimeHelper.h"
+    #import "MyVC.h"
 #endif

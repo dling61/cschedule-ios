@@ -8,17 +8,18 @@
 
 #import "MyVC.h"
 
-@interface EditContactVC : MyVC <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface EditContactVC : MyVC <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate,UIAlertViewDelegate>
 
 STRONG Contact* editing_contact;
 
 WEAK IBOutlet UITableView* table;
+WEAK IBOutlet UIButton *deleteButton;
+
 STRONG UITextField* name_tf;
 STRONG UITextField* email_tf;
 STRONG UITextField* mobile_tf;
-
 NOPOINTER int script;
 
 -(IBAction) EditContactDone:(id)sender;
-
+-(IBAction) touchOnDeleteContact:(id)sender;
 @end
