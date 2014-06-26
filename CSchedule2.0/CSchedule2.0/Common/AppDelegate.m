@@ -7,14 +7,16 @@
 //
 
 #import "AppDelegate.h"
-
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    /*
     [[UINavigationBar appearance] setBackgroundImage:[[UIImage imageNamed:@"bkg_navigation_bar.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 1, 0, 1)] forBarMetrics:UIBarMetricsDefault];
+    */
     
+    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x067AB5)];
     [[UINavigationBar appearance] setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIColor whiteColor],
@@ -24,13 +26,10 @@
       [UIFont fontWithName:@"Arial-Bold" size:0.0],
       NSFontAttributeName,
       nil]];
-    
     [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"btn_bkg.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 5, 2, 5)] forState:UIControlStateNormal
                                           barMetrics:UIBarMetricsDefault];
-    
     [[UIBarButtonItem appearance] setTintColor:[UIColor whiteColor]];
     [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:YES] forKey:FIRSTOPEN];
-    
     
     return YES;
 }

@@ -8,7 +8,7 @@
 
 #import "MyVC.h"
 
-@interface SigninVC : MyVC <UITableViewDataSource,UITableViewDelegate>
+@interface SigninVC : MyVC <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 
 STRONG UITextField* email_tf;
 STRONG UITextField* passwd_tf;

@@ -93,6 +93,7 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TFCell* cell = [tableView dequeueReusableCellWithIdentifier:TFCELL];
+    cell.tf.delegate=self;
     switch (indexPath.row) {
         case 0:
             cell.tf.placeholder = @"Email";
@@ -123,4 +124,12 @@
     return cell;
 }
 
+#pragma mark -
+#pragma mark UITextField Delegate methods
+
+-(BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
 @end

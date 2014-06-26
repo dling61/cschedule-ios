@@ -40,7 +40,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.title = SHAREMEMBERVC;
+    self.title = PARTICIPANTVC;
     [self refreshTable];
 }
 
@@ -52,13 +52,19 @@
     for (SharedMember* sm in deletedones) {
         [self.dataManager deleteSharedmember:sm.member_id of:_activity_id Synced:YES];
     }
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    /*
     if (script == ADD) {
         [self.navigationController popToRootViewControllerAnimated:YES];
+
     }
     else
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
+     */
 }
 
 - (void) addContactSuccess: (NSNotification*) note
@@ -83,9 +89,6 @@
 - (void) registerForNotifications
 {
     [super registerForNotifications];
-/*    [self responde:POSTSHAREDMEMBERSUCCESSNOTE by:@selector(postSharedmemberSuccess:)];
-    [self responde:PUTSHAREDMEMBERSUCCESSNOTE by:@selector(putSharedmemberSuccess:)];
-    [self responde:DELETESHAREDMEMBERSUCCESSNOTE by:@selector(deleteSharedmemberSuccess:)];*/
     [self responde:UPDATEALLSHAREDMEMBERSNOTE by:@selector(updateAllSharedmembersSuccess:)];
     [self responde:ADDCONTACTSUCCESSNOTE by:@selector(addContactSuccess:)];
 }

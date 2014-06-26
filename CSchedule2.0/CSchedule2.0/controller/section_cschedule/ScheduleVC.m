@@ -164,18 +164,6 @@
     [_table reloadData];
 }
 
-- (void)deleteScheduleSuccess:(NSNotification*) note
-{
-    [self.dataManager deleteSchedule:selected_schedule.schedule_id Synced:YES];
-    [self refreshTable];
-}
-
-- (void)deleteScheduleFail:(NSNotification*) note
-{
-    [self.dataManager deleteSchedule:selected_schedule.schedule_id Synced:NO];
-    [self refreshTable];
-}
-
 - (void)registerForNotifications
 {
     [super registerForNotifications];
@@ -183,9 +171,7 @@
     [self responde:GETALLSCHEDULESNOTE by:@selector(getAllSchedulesDone:)];
     [self responde:ADDSCHEDULESUCCESSNOTE by:@selector(getAllSchedulesDone:)];
     [self responde:UPDATESCHEDULESUCCESSNOTE by:@selector(getAllSchedulesDone:)];
-    [self responde:DELETESCHEDULESUCCESSNOTE by:@selector(deleteScheduleSuccess:)];
-    [self responde:DELETESCHEDULEFAILNOTE by:@selector(deleteScheduleFail:)];
-    
+        
     [self responde:GETACTIVITYSUCCESSNOTE by:@selector(getActivitiesSuccess:)];
     [self responde:GETSHAREDMEMBERSUCCESSNOTE by:@selector(getSharedMembersDone:)];
     [self responde:GETALLSHAREDMEMBERSNOTE by:@selector(getAllsharedMembersDone:)];
@@ -339,10 +325,19 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    ScheduleCell* cell = (ScheduleCell*)[tableView cellForRowAtIndexPath:indexPath];
     Schedule* schedule = [[_groupedSchedules_ontable objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    Activity* activity = [self.dataManager getActivityWithID:schedule.activity_id];
     selected_schedule = schedule;
+    Activity* activity = [self.dataManager getActivityWithID:schedule.activity_id];
+    if (activity.shared_role == OWNER || activity.shared_role == ORGANIZER ) {
+        [self headto:EDITSCHEDULEVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:selected_schedule, SCHEDULE, @(EDIT),@"script",nil]];
+    }
+    else {
+        [self headto:EDITSCHEDULEVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:selected_schedule, SCHEDULE, @(VIEW),@"script",nil]];
+    }
+    
+    /*
+     
+    //Activity* activity = [self.dataManager getActivityWithID:schedule.activity_id];
     UIActionSheet* sheet = nil;
     if (activity.shared_role == OWNER) {
         sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Edit",@"Delete", nil];
@@ -361,37 +356,8 @@
         sheet.tag = 30;
     }
     [sheet showInView:self.view];
+     */
 }
-
-#pragma mark -
-#pragma mark Popview button Method
-
--(void) edit
-{
-    [self headto:EDITSCHEDULEVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:selected_schedule, SCHEDULE, @(EDIT),@"script",nil]];
-}
-
--(void) del
-{
-    [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Are you sure you want to delete this schedule ?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
-}
-
--(void) inspect
-{
-    [self headto:EDITSCHEDULEVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:selected_schedule, SCHEDULE, @(VIEW),@"script",nil]];
-}
-
-#pragma mark -
-#pragma mark Popview button Method
-
-- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        [[self.syncEngine deleteSchedule:selected_schedule.schedule_id] start];
-//        [self restoreInitialState];
-    }
-}
-
 #pragma mark -
 #pragma mark UIActionsheet delegate
 -(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex

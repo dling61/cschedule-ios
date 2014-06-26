@@ -82,18 +82,6 @@
     [self refreshTable];
 }
 
-- (void)deleteActivitySuccess: (NSNotification*)note
-{
-    [self.dataManager deleteActivityAndRelatedSchedules:selected_activity.activity_id Synced:YES];
-    [self refreshTable];
-}
-
-- (void)deleteActivityFail: (NSNotification*)note
-{
-    [self.dataManager deleteActivityAndRelatedSchedules:selected_activity.activity_id Synced:NO];
-    [self refreshTable];
-}
-
 - (void)getSharedMembersDone: (NSNotification*) note
 {
     [self.dataManager processSharedmemberInfo:[note userInfo]];
@@ -115,13 +103,7 @@
     [self responde:UPDATEACTIVITYSUCCESSNOTE by:@selector(updateActivitySuccess:)];
     [self responde:GETSHAREDMEMBERSUCCESSNOTE by:@selector(getSharedMembersDone:)];
     [self responde:GETALLSHAREDMEMBERSNOTE by:@selector(getAllsharedMembersDone:)];
-    [self responde:DELETEACTIVITYSUCCESSNOTE by:@selector(deleteActivitySuccess:)];
-    [self responde:DELETEACTIVITYFAILNOTE by:@selector(deleteActivityFail:)];
-/*    if ([self.dataManager IsFirsttimeOpen]) {
-        [self responde:GETCONTACTSUCCESSNOTE by:@selector(getContactsSuccess:)];
-        [self responde:GETSCHEDULESUCCESSNOTE by:@selector(getScheduleSuccess:)];
-        [self responde:GETALLSCHEDULESNOTE by:@selector(getAllScheduleSuccess:)];
-    }*/
+    
 }
 
 - (void)initAppearance
@@ -198,15 +180,6 @@
     }
     Activity* activity = [_activities_ontable objectAtIndex:indexPath.row];
     cell.activity_name_lbl.text = activity.activity_name;
-/*    cell.activity_session_lbl.text = [NSString stringWithFormat:@"%@ to %@",[self.datetimeHelper GMTDateToLocalDateStringStyle2:activity.startdatetime],[self.datetimeHelper GMTDateToLocalDateStringStyle2:activity.enddatetime]];
-    cell.activity_session_lbl.textColor = LightBlue;*/
-/*    cell.activity_description_lbl.text = activity.activity_description;
-    if (activity.activity_description.length == 0) {
-        cell.activity_description_lbl.text = @" ";
-    }*/
-    /*if there is descpition we add a description label*/
-//    if (activity.activity_description!= nil && activity.activity_description.length > 0)
-//    {
     NSString* text = activity.activity_description;
     if (text == nil || text.length == 0) {
         text = @"No description";
@@ -236,13 +209,11 @@
     if (text == nil || text.length == 0) {
         text = @"No description";
     }
-//    if (activity.activity_description!= nil && activity.activity_description.length > 0) {
-        UIFont* font = [UIFont fontWithName:@"Helvetica" size:12.0f];
-        CGSize labelSize = [text.description sizeWithFont:font
-                                            constrainedToSize:CGSizeMake(300.0, 70.0)
-                                                lineBreakMode:NSLineBreakByTruncatingTail];
-        height += labelSize.height;
-//    }
+    UIFont* font = [UIFont fontWithName:@"Helvetica" size:12.0f];
+    CGSize labelSize = [text.description sizeWithFont:font
+                                    constrainedToSize:CGSizeMake(300.0, 70.0)
+                                        lineBreakMode:NSLineBreakByTruncatingTail];
+    height += labelSize.height;
     return height;
 }
 
@@ -252,15 +223,12 @@
     Activity* activity = [_activities_ontable objectAtIndex:indexPath.row];
     if (activity.shared_role <= PARTICIPANT) {
         selected_activity = activity;
-/*        UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-        CGFloat showingYinView = cell.frame.origin.y - tableView.contentOffset.y;
-        CGFloat PositioningY = showingYinView + cell.frame.size.height;
-        _popview = [[PopView alloc] initWithWidth:100.0f andBtnHeight:40.0f andRole:activity.shared_role andSituation:self.title];
-        _popview.btnDelegate = self;
-        [self PositionPopView:_popview in:self.view byframeY:PositioningY];
-        [self.view addSubview:_popview];
-        [self.view addGestureRecognizer:_tapRecognizer];
-        [_table setUserInteractionEnabled:NO];*/
+        [self edit];
+    }
+    
+    /*
+    if (activity.shared_role <= PARTICIPANT) {
+        selected_activity = activity;
         UIActionSheet* sheet = nil;
         if (activity.shared_role == OWNER) {
             sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Edit",@"Share",@"Mail",@"Delete", nil];
@@ -276,6 +244,7 @@
         }
         [sheet showInView:self.view];
     }
+     */
 }
 
 
@@ -286,6 +255,7 @@
 {
     [self headto:EDITACTIVITYVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:selected_activity, ACTIVITY, @(EDIT),@"script",nil]];
 }
+
 
 -(void) share
 {
@@ -310,7 +280,6 @@
 	[self presentViewController:picker animated:YES completion:^{
         
     }];
-//    [self restoreState];
 }
 
 -(void) del

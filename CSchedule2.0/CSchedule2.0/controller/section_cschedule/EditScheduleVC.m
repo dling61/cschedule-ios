@@ -9,6 +9,7 @@
 #import "EditScheduleVC.h"
 #import "LblCell.h"
 #import "TVCell.h"
+#import "ButtonActionCell.h"
 
 @interface EditScheduleVC ()
 
@@ -46,13 +47,43 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.title = EDITSCHEDULEVC;
+    
+}
+
+- (void) unpack
+{
+    _editing_schedule = [self.package valueForKey:SCHEDULE];
+    script = [[self.package valueForKey:@"script"] intValue];
+    if(script ==ADD)
+    {
+        self.title = ADDSCHEDULEVC;
+        self.numberSection= 4;
+    }
+    else if(script == VIEW){
+        self.title = VIEWSCHEDULEVC;
+        self.navigationItem.rightBarButtonItem = nil;
+        self.numberSection= 4;
+    }
+    else{
+        self.title = EDITSCHEDULEVC;
+        Activity* activity = [self.dataManager getActivityWithID:_editing_schedule.activity_id];
+        if (activity.shared_role == OWNER ) { //can Edit && delete
+            self.numberSection= 5;
+        }
+        else if(activity.shared_role == ORGANIZER) // can Edit , no delete
+        {
+         self.numberSection= 4;
+        }
+
+    }
+    
 }
 
 - (void)initProperties
 {
     [super initProperties];
     [self unpack];
+    
     myActivities = [self.dataManager myActivities];
     _pickerContainer = [[[NSBundle mainBundle] loadNibNamed:@"ActivityPickerView" owner:self options:nil] objectAtIndex:0];
     _datepickerContainer = [[[NSBundle mainBundle] loadNibNamed:@"DatePickerView" owner:self options:nil] objectAtIndex:0];
@@ -67,9 +98,7 @@
     [_datepickerContainer setFrame:CGRectMake(0, self.view.bounds.size.height, 320.0, MYPICKERVIEWHEIGHT)];
     [self.view addSubview:_datepickerContainer];
     _datepickerContainer.alpha = 0.0f;
-    if (script == VIEW) {
-        self.navigationItem.rightBarButtonItem = nil;
-    }
+    
 }
 
 - (void) editParticipantsDone: (NSNotification*) note
@@ -109,6 +138,20 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)deleteScheduleSuccess:(NSNotification*) note
+{
+    [self.dataManager deleteSchedule:_editing_schedule.schedule_id Synced:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATESCHEDULESUCCESSNOTE object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)deleteScheduleFail:(NSNotification*) note
+{
+    [self.dataManager deleteSchedule:_editing_schedule.schedule_id Synced:NO];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATESCHEDULESUCCESSNOTE object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)registerForNotifications
 {
     [super registerForNotifications];
@@ -117,6 +160,11 @@
     [self responde:POSTSCHEDULEFAILNOTE by:@selector(postScheduleFail:)];
     [self responde:PUTSCHEDULESUCCESSNOTE by:@selector(putScheduleSuccess:)];
     [self responde:PUTSCHEDULEFAILNOTE by:@selector(putScheduleFail:)];
+    
+    
+    [self responde:DELETESCHEDULESUCCESSNOTE by:@selector(deleteScheduleSuccess:)];
+    [self responde:DELETESCHEDULEFAILNOTE by:@selector(deleteScheduleFail:)];
+
 }
 
 - (void) showPickerContainer
@@ -194,11 +242,6 @@
     }
 }
 
-- (void) unpack
-{
-    _editing_schedule = [self.package valueForKey:SCHEDULE];
-    script = [[self.package valueForKey:@"script"] intValue];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -303,14 +346,17 @@
     }
     return participantids;
 }
-
+-(void) del
+{
+    [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Are you sure you want to delete this schedule ?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
+}
 
 #pragma mark -
 #pragma mark UITable Datasource methods
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return self.numberSection;
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -326,6 +372,9 @@
             return 1;
             break;
         case 3:
+            return 1;
+            break;
+        case 4:
             return 1;
             break;
         default:
@@ -400,6 +449,14 @@
             cell = notecell;
             break;
         }
+        case 4:
+        {
+            ButtonActionCell* buttoncell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEBUTTONCELL];
+            cell = buttoncell;
+            break;
+
+        }
+            break;
         default:
             break;
     }
@@ -439,7 +496,9 @@
         case 2:
             [self headto:ONDUTYVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:[self involvedMembers],@"members",@(_editing_schedule.activity_id),ACTIVITY, nil]];
             break;
-            
+        case 4:
+            [self del];
+            break;
         default:
             break;
     }
@@ -507,6 +566,14 @@ shouldChangeTextInRange:(NSRange)rang
         textView.text = @"";
     }
 }
+#pragma mark -
+#pragma mark Popview button Method
 
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [[self.syncEngine deleteSchedule:_editing_schedule.schedule_id] start];
+    }
+}
 
 @end

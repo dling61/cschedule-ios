@@ -79,6 +79,7 @@
 #define POSTSCHEDULEFAILNOTE            @"postschedulefail"
 #define PUTSCHEDULESUCCESSNOTE          @"putschedulesuccess"
 #define PUTSCHEDULEFAILNOTE             @"putschedulefail"
+
 #define DELETESCHEDULESUCCESSNOTE       @"deleteschedulesuccessfully"
 #define DELETESCHEDULEFAILNOTE          @"deleteschedulefail"
 
@@ -103,13 +104,17 @@
 #define FORGETPWVC                      @"Forget password"
 #define TABPAGES                        @"tabpages"
 #define ACTIVITYVC                      @"Activity"
+#define ADDACTIVITYVC                   @"Add Activity"
 #define EDITACTIVITYVC                  @"Edit Activity"
 #define CONTACTVC                       @"Contact"
 #define EDITCONTACTVC                   @"Edit Contact"
 #define ADDCONTACTVC                    @"Add Contact"
 #define SHAREMEMBERVC                   @"Share"
+#define PARTICIPANTVC                    @"Participant"
 #define SCHEDULEVC                      @"Schedule"
 #define EDITSCHEDULEVC                  @"Edit schedule"
+#define ADDSCHEDULEVC                   @"Add schedule"
+#define VIEWSCHEDULEVC                  @"View schedule"
 #define ONDUTYVC                        @"Onduty"
 #define SETTINGVC                       @"Account"
 #define FEEDBACKVC                      @"Feedback"
@@ -132,6 +137,7 @@
 #define SCHEDULEENDCELL                 @"scheduleendcell"
 #define SCHEDULEONDUTYCELL              @"scheduleondutycell"
 #define SCHEDULEDESPCELL                @"scheduledespcell"
+#define SCHEDULEBUTTONCELL              @"schedulebuttoncell"
 #define ONDUTYCELL                      @"ondutycell"
 
 

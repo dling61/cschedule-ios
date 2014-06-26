@@ -15,34 +15,16 @@ typedef enum
     REPEAT
 } PickerOption;
 
-@interface EditActivityVC : MyVC <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UITextViewDelegate>
+@interface EditActivityVC : MyVC < UITextFieldDelegate, UITextViewDelegate,UIAlertViewDelegate>
 
 STRONG Activity* editing_activity;
-
-WEAK IBOutlet UITableView* table;
-
-STRONG UIView* pickerContainerView;
-WEAK IBOutlet UIPickerView* picker;
-STRONG UITextField* name_tf;
-STRONG UILabel* timezone_lbl;
-STRONG UILabel* repeat_lbl;
-STRONG UILabel* alert_lbl;
-STRONG UITextView* desp_tv;
-
-STRONG NSArray* alert_types;
-STRONG NSArray* repeart_types;
-STRONG NSArray* timezone_types;
-STRONG NSArray* timezone_utcoffs;
-STRONG NSArray* picker_data;
-
-NOPOINTER PickerOption current_picker_option;
-STRONG UITapGestureRecognizer* recognizer;
-
--(IBAction) pickDone:(id)sender;
--(IBAction) pickCancel:(id)sender;
+WEAK IBOutlet UITextField* name_tf;
+WEAK IBOutlet UITextView* desp_tv;
+WEAK IBOutlet UIButton *deleteButton;
+WEAK IBOutlet UIButton *addParticipantButton;
+WEAK IBOutlet UIBarButtonItem *saveButton;
 
 -(IBAction) EditActivityDone: (id)sender;
-
--(void) showPickerViewWithOption: (PickerOption) option;
-
+-(IBAction) touchOnDeleteActivity:(id)sender;
+-(IBAction) touchOnAddParticipantButton:(id)sender;
 @end

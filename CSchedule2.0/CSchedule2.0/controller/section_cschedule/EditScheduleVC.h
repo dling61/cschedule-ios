@@ -8,7 +8,7 @@
 
 #import "MyVC.h"
 
-@interface EditScheduleVC : MyVC <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource,UIPickerViewDelegate, UITextViewDelegate>
+@interface EditScheduleVC : MyVC <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource,UIPickerViewDelegate, UITextViewDelegate,UIAlertViewDelegate>
 
 WEAK IBOutlet UITableView* table;
 WEAK IBOutlet UIPickerView* picker;
@@ -16,6 +16,7 @@ WEAK IBOutlet UIDatePicker* datePicker;
 STRONG UIView* datepickerContainer;
 STRONG UIView* pickerContainer;
 STRONG Schedule* editing_schedule;
+NOPOINTER (assign,nonatomic) int numberSection;
 
 - (IBAction) datepickerCancel: (id)sender;
 - (IBAction) datepickerDone: (id)sender;

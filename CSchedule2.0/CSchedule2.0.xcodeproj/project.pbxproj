@@ -41,6 +41,7 @@
 		9B72E57B195ACF5B00FBADDF /* txt_forgot_password.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B72E559195ACF5B00FBADDF /* txt_forgot_password.png */; };
 		9B72E57C195ACF5B00FBADDF /* txt_forgot_password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B72E55A195ACF5B00FBADDF /* txt_forgot_password@2x.png */; };
 		9B72E57D195ACF5B00FBADDF /* viewer.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B72E55B195ACF5B00FBADDF /* viewer.png */; };
+		9B769651195C97D700E48FA7 /* ButtonActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B769650195C97D700E48FA7 /* ButtonActionCell.m */; };
 		9BC0488D195AD672007F79F6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC0484A195AD672007F79F6 /* AppDelegate.m */; };
 		9BC0488E195AD672007F79F6 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC0484D195AD672007F79F6 /* DataManager.m */; };
 		9BC0488F195AD672007F79F6 /* DatetimeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC0484F195AD672007F79F6 /* DatetimeHelper.m */; };
@@ -154,6 +155,8 @@
 		9B72E559195ACF5B00FBADDF /* txt_forgot_password.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = txt_forgot_password.png; sourceTree = "<group>"; };
 		9B72E55A195ACF5B00FBADDF /* txt_forgot_password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "txt_forgot_password@2x.png"; sourceTree = "<group>"; };
 		9B72E55B195ACF5B00FBADDF /* viewer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewer.png; sourceTree = "<group>"; };
+		9B76964F195C97D700E48FA7 /* ButtonActionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonActionCell.h; sourceTree = "<group>"; };
+		9B769650195C97D700E48FA7 /* ButtonActionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonActionCell.m; sourceTree = "<group>"; };
 		9BC04849195AD672007F79F6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9BC0484A195AD672007F79F6 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		9BC0484B195AD672007F79F6 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -536,6 +539,8 @@
 				9BC048B6195AD67C007F79F6 /* TFCell.m */,
 				9BC048B7195AD67C007F79F6 /* TVCell.h */,
 				9BC048B8195AD67C007F79F6 /* TVCell.m */,
+				9B76964F195C97D700E48FA7 /* ButtonActionCell.h */,
+				9B769650195C97D700E48FA7 /* ButtonActionCell.m */,
 			);
 			path = tablecells;
 			sourceTree = "<group>";
@@ -858,6 +863,7 @@
 				9BC0489D195AD672007F79F6 /* ScheduleCell.m in Sources */,
 				9BC0489E195AD672007F79F6 /* ScheduleVC.m in Sources */,
 				9BC048A3195AD672007F79F6 /* RegisterVC.m in Sources */,
+				9B769651195C97D700E48FA7 /* ButtonActionCell.m in Sources */,
 				9BC0489A195AD672007F79F6 /* ContactVC.m in Sources */,
 				9BC048DC195AD67C007F79F6 /* AFHTTPClient.m in Sources */,
 				9BC048DE195AD67C007F79F6 /* AFImageRequestOperation.m in Sources */,
