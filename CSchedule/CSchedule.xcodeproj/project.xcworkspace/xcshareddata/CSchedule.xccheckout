@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3F46821E-6069-459C-BB55-A538F3C7DB6A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CSchedule</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E297EC71-EB8A-463E-B390-7E57944B9FFA</key>
+		<string>https://github.com/dling61/cschedule_ios.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CSchedule/CSchedule.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E297EC71-EB8A-463E-B390-7E57944B9FFA</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/dling61/cschedule_ios.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E297EC71-EB8A-463E-B390-7E57944B9FFA</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E297EC71-EB8A-463E-B390-7E57944B9FFA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SourceCode</string>
+		</dict>
+	</array>
+</dict>
+</plist>

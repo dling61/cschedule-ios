@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C76BA85A1886E7E500294AB8"
-               BuildableName = "CSchedule2.0.app"
-               BlueprintName = "CSchedule2.0"
-               ReferencedContainer = "container:CSchedule2.0.xcodeproj">
+               BlueprintIdentifier = "C76BA87E1886E7E500294AB8"
+               BuildableName = "CScheduleTests.xctest"
+               BlueprintName = "CScheduleTests"
+               ReferencedContainer = "container:CSchedule.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,15 +29,6 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C76BA85A1886E7E500294AB8"
-            BuildableName = "CSchedule2.0.app"
-            BlueprintName = "CSchedule2.0"
-            ReferencedContainer = "container:CSchedule2.0.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -48,15 +39,6 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C76BA85A1886E7E500294AB8"
-            BuildableName = "CSchedule2.0.app"
-            BlueprintName = "CSchedule2.0"
-            ReferencedContainer = "container:CSchedule2.0.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -66,15 +48,6 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C76BA85A1886E7E500294AB8"
-            BuildableName = "CSchedule2.0.app"
-            BlueprintName = "CSchedule2.0"
-            ReferencedContainer = "container:CSchedule2.0.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

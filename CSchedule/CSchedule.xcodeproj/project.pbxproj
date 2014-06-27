@@ -256,20 +256,20 @@
 		9BC048EB195AD6BE007F79F6 /* btn_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_delete.png; sourceTree = "<group>"; };
 		9BC048EC195AD6BE007F79F6 /* btn_delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_delete@2x.png"; sourceTree = "<group>"; };
 		C7201C3E18C4025100476BFA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		C76BA85B1886E7E500294AB8 /* CSchedule2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSchedule2.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C76BA85B1886E7E500294AB8 /* CSchedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSchedule.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C76BA85E1886E7E500294AB8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C76BA8601886E7E500294AB8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C76BA8621886E7E500294AB8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		C76BA8661886E7E500294AB8 /* CSchedule2.0-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CSchedule2.0-Info.plist"; sourceTree = "<group>"; };
+		C76BA8661886E7E500294AB8 /* CSchedule-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CSchedule-Info.plist"; sourceTree = "<group>"; };
 		C76BA8681886E7E500294AB8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C76BA86A1886E7E500294AB8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		C76BA86C1886E7E500294AB8 /* CSchedule2.0-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CSchedule2.0-Prefix.pch"; sourceTree = "<group>"; };
+		C76BA86C1886E7E500294AB8 /* CSchedule-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CSchedule-Prefix.pch"; sourceTree = "<group>"; };
 		C76BA8711886E7E500294AB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		C76BA8741886E7E500294AB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		C76BA8791886E7E500294AB8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C76BA87F1886E7E500294AB8 /* CSchedule2.0Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CSchedule2.0Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C76BA87F1886E7E500294AB8 /* CScheduleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CScheduleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C76BA8801886E7E500294AB8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		C76BA8881886E7E500294AB8 /* CSchedule2.0Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CSchedule2.0Tests-Info.plist"; sourceTree = "<group>"; };
+		C76BA8881886E7E500294AB8 /* CScheduleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CScheduleTests-Info.plist"; sourceTree = "<group>"; };
 		C76BA88A1886E7E500294AB8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C76BA88C1886E7E500294AB8 /* CSchedule2_0Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSchedule2_0Tests.m; sourceTree = "<group>"; };
 		C7D68A2D18A6ACD100A4C069 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -623,8 +623,8 @@
 			isa = PBXGroup;
 			children = (
 				C7201C3E18C4025100476BFA /* Default-568h@2x.png */,
-				C76BA8641886E7E500294AB8 /* CSchedule2.0 */,
-				C76BA8861886E7E500294AB8 /* CSchedule2.0Tests */,
+				C76BA8641886E7E500294AB8 /* CSchedule */,
+				C76BA8861886E7E500294AB8 /* CScheduleTests */,
 				C76BA85D1886E7E500294AB8 /* Frameworks */,
 				C76BA85C1886E7E500294AB8 /* Products */,
 			);
@@ -633,8 +633,8 @@
 		C76BA85C1886E7E500294AB8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C76BA85B1886E7E500294AB8 /* CSchedule2.0.app */,
-				C76BA87F1886E7E500294AB8 /* CSchedule2.0Tests.xctest */,
+				C76BA85B1886E7E500294AB8 /* CSchedule.app */,
+				C76BA87F1886E7E500294AB8 /* CScheduleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -651,7 +651,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C76BA8641886E7E500294AB8 /* CSchedule2.0 */ = {
+		C76BA8641886E7E500294AB8 /* CSchedule */ = {
 			isa = PBXGroup;
 			children = (
 				9BC048A9195AD67C007F79F6 /* model */,
@@ -665,34 +665,35 @@
 				C76BA8791886E7E500294AB8 /* Images.xcassets */,
 				C76BA8651886E7E500294AB8 /* Supporting Files */,
 			);
-			path = CSchedule2.0;
+			path = CSchedule;
 			sourceTree = "<group>";
 		};
 		C76BA8651886E7E500294AB8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
 				C71CDBB8188B0BD400D4A521 /* images */,
-				C76BA8661886E7E500294AB8 /* CSchedule2.0-Info.plist */,
+				C76BA8661886E7E500294AB8 /* CSchedule-Info.plist */,
 				C76BA8671886E7E500294AB8 /* InfoPlist.strings */,
 				C76BA86A1886E7E500294AB8 /* main.m */,
-				C76BA86C1886E7E500294AB8 /* CSchedule2.0-Prefix.pch */,
+				C76BA86C1886E7E500294AB8 /* CSchedule-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		C76BA8861886E7E500294AB8 /* CSchedule2.0Tests */ = {
+		C76BA8861886E7E500294AB8 /* CScheduleTests */ = {
 			isa = PBXGroup;
 			children = (
 				C76BA88C1886E7E500294AB8 /* CSchedule2_0Tests.m */,
 				C76BA8871886E7E500294AB8 /* Supporting Files */,
 			);
+			name = CScheduleTests;
 			path = CSchedule2.0Tests;
 			sourceTree = "<group>";
 		};
 		C76BA8871886E7E500294AB8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C76BA8881886E7E500294AB8 /* CSchedule2.0Tests-Info.plist */,
+				C76BA8881886E7E500294AB8 /* CScheduleTests-Info.plist */,
 				C76BA8891886E7E500294AB8 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -701,9 +702,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C76BA85A1886E7E500294AB8 /* CSchedule2.0 */ = {
+		C76BA85A1886E7E500294AB8 /* CSchedule */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C76BA8901886E7E500294AB8 /* Build configuration list for PBXNativeTarget "CSchedule2.0" */;
+			buildConfigurationList = C76BA8901886E7E500294AB8 /* Build configuration list for PBXNativeTarget "CSchedule" */;
 			buildPhases = (
 				C76BA8571886E7E500294AB8 /* Sources */,
 				C76BA8581886E7E500294AB8 /* Frameworks */,
@@ -713,14 +714,14 @@
 			);
 			dependencies = (
 			);
-			name = CSchedule2.0;
+			name = CSchedule;
 			productName = CSchedule2.0;
-			productReference = C76BA85B1886E7E500294AB8 /* CSchedule2.0.app */;
+			productReference = C76BA85B1886E7E500294AB8 /* CSchedule.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C76BA87E1886E7E500294AB8 /* CSchedule2.0Tests */ = {
+		C76BA87E1886E7E500294AB8 /* CScheduleTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C76BA8931886E7E500294AB8 /* Build configuration list for PBXNativeTarget "CSchedule2.0Tests" */;
+			buildConfigurationList = C76BA8931886E7E500294AB8 /* Build configuration list for PBXNativeTarget "CScheduleTests" */;
 			buildPhases = (
 				C76BA87B1886E7E500294AB8 /* Sources */,
 				C76BA87C1886E7E500294AB8 /* Frameworks */,
@@ -731,9 +732,9 @@
 			dependencies = (
 				C76BA8851886E7E500294AB8 /* PBXTargetDependency */,
 			);
-			name = CSchedule2.0Tests;
+			name = CScheduleTests;
 			productName = CSchedule2.0Tests;
-			productReference = C76BA87F1886E7E500294AB8 /* CSchedule2.0Tests.xctest */;
+			productReference = C76BA87F1886E7E500294AB8 /* CScheduleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -750,7 +751,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C76BA8561886E7E500294AB8 /* Build configuration list for PBXProject "CSchedule2.0" */;
+			buildConfigurationList = C76BA8561886E7E500294AB8 /* Build configuration list for PBXProject "CSchedule" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -763,8 +764,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C76BA85A1886E7E500294AB8 /* CSchedule2.0 */,
-				C76BA87E1886E7E500294AB8 /* CSchedule2.0Tests */,
+				C76BA85A1886E7E500294AB8 /* CSchedule */,
+				C76BA87E1886E7E500294AB8 /* CScheduleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -900,7 +901,7 @@
 /* Begin PBXTargetDependency section */
 		C76BA8851886E7E500294AB8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C76BA85A1886E7E500294AB8 /* CSchedule2.0 */;
+			target = C76BA85A1886E7E500294AB8 /* CSchedule */;
 			targetProxy = C76BA8841886E7E500294AB8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1021,10 +1022,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Tan Nguyen (B9EW4TUM5G)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tan Nguyen (B9EW4TUM5G)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CSchedule2.0/CSchedule2.0-Prefix.pch";
-				INFOPLIST_FILE = "CSchedule2.0/CSchedule2.0-Info.plist";
+				GCC_PREFIX_HEADER = "CSchedule/CSchedule-Prefix.pch";
+				INFOPLIST_FILE = "CSchedule/CSchedule-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CSchedule;
 				PROVISIONING_PROFILE = "B2C457A5-03E6-4A10-853C-1CA04E1BECD6";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B2C457A5-03E6-4A10-853C-1CA04E1BECD6";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1038,10 +1039,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Tan Nguyen (B9EW4TUM5G)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tan Nguyen (B9EW4TUM5G)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CSchedule2.0/CSchedule2.0-Prefix.pch";
-				INFOPLIST_FILE = "CSchedule2.0/CSchedule2.0-Info.plist";
+				GCC_PREFIX_HEADER = "CSchedule/CSchedule-Prefix.pch";
+				INFOPLIST_FILE = "CSchedule/CSchedule-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CSchedule;
 				PROVISIONING_PROFILE = "B2C457A5-03E6-4A10-853C-1CA04E1BECD6";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B2C457A5-03E6-4A10-853C-1CA04E1BECD6";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1065,8 +1066,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "CSchedule2.0Tests/CSchedule2.0Tests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "CSchedule2.0Tests/CScheduleTests-Info.plist";
+				PRODUCT_NAME = CScheduleTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1084,8 +1085,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CSchedule2.0/CSchedule2.0-Prefix.pch";
-				INFOPLIST_FILE = "CSchedule2.0Tests/CSchedule2.0Tests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "CSchedule2.0Tests/CScheduleTests-Info.plist";
+				PRODUCT_NAME = CScheduleTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1094,7 +1095,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C76BA8561886E7E500294AB8 /* Build configuration list for PBXProject "CSchedule2.0" */ = {
+		C76BA8561886E7E500294AB8 /* Build configuration list for PBXProject "CSchedule" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C76BA88E1886E7E500294AB8 /* Debug */,
@@ -1103,7 +1104,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C76BA8901886E7E500294AB8 /* Build configuration list for PBXNativeTarget "CSchedule2.0" */ = {
+		C76BA8901886E7E500294AB8 /* Build configuration list for PBXNativeTarget "CSchedule" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C76BA8911886E7E500294AB8 /* Debug */,
@@ -1112,7 +1113,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C76BA8931886E7E500294AB8 /* Build configuration list for PBXNativeTarget "CSchedule2.0Tests" */ = {
+		C76BA8931886E7E500294AB8 /* Build configuration list for PBXNativeTarget "CScheduleTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C76BA8941886E7E500294AB8 /* Debug */,
