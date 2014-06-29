@@ -196,9 +196,6 @@
             //picker_selected_index = [myActivities indexOfObject:@(_editing_schedule.activity_id)];
             break;
         case TIMEZONE:
-            if (script == EDIT) {
-                return;
-            }
             _picker_data = _timezone_types;
             //picker_selected_index = [_timezone_utcoffs indexOfObject:@(_editing_schedule.tzid)];
             break;

@@ -15,11 +15,12 @@
 
 WEAK IBOutlet UITableView* table;
 WEAK IBOutlet UIBarButtonItem* today_barbtn;
+
 -(IBAction) today: (id)sender;
 -(IBAction) allme: (id)sender;
 -(IBAction) refresh:(id)sender;
 -(IBAction) addSchedule:(id)sender;
-
+NOPOINTER   int scheduleButtonSelected;
 STRONG NSMutableArray* table_headers;
 STRONG NSArray* groupedSchedules_ontable;
 STRONG PopView* popview;

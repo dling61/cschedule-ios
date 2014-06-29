@@ -103,6 +103,9 @@
 #define POSTFEEDBACKSUCCESSNOTE         @"postfeedbacksuccess"
 #define POSTFEEDBACKFAILNOTE            @"postfeedbackfail"
 
+#define CONFIRMSTATUSSUCCESSNOTE         @"confirmstatussuccess"
+#define CONFIRMSTATUSFAILNOTE            @"confirmstatusfail"
+
 #pragma mark -
 #pragma mark VC titles
 

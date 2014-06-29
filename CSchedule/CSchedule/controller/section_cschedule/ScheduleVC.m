@@ -25,7 +25,7 @@
 @synthesize table_headers = _table_headers;
 @synthesize popview = _popview;
 @synthesize tapRecognizer = _tapRecognizer;
-
+@synthesize scheduleButtonSelected;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -144,6 +144,17 @@
     [[self.syncEngine getContacts] start];
 }
 
+- (void)confirmSharedMemberSuccess: (NSNotification*) note
+{
+    [self.acitiveIndicator show:YES];
+    self.acitiveIndicator.hidden = NO;
+    [self.syncEngine getAllSchedulesForActivities:[self.dataManager allSortedActivities]];
+}
+- (void)confirmSharedMemberFail: (NSNotification*) note
+{
+    
+}
+
 - (void) refreshTable
 {
     NSArray* schedules = nil;
@@ -176,6 +187,9 @@
     [self responde:GETSHAREDMEMBERSUCCESSNOTE by:@selector(getSharedMembersDone:)];
     [self responde:GETALLSHAREDMEMBERSNOTE by:@selector(getAllsharedMembersDone:)];
     [self responde:GETCONTACTSUCCESSNOTE by:@selector(getContactsSuccess:)];
+    
+    [self responde:CONFIRMSTATUSSUCCESSNOTE by:@selector(confirmSharedMemberSuccess:)];
+    [self responde:CONFIRMSTATUSFAILNOTE by:@selector(confirmSharedMemberFail:)];
 }
 
 -(IBAction) today: (id)sender
@@ -230,9 +244,11 @@
 
 -(void) smClicked: (id)sender
 {
-    UIButton* btn = (UIButton*) sender;
+    SharedMemberButton* btn = (SharedMemberButton*) sender;
     int member_id = btn.tag;
     int activity_id = btn.titleLabel.tag;
+    self.scheduleButtonSelected= btn.schedule_id;
+    
     SharedMember* sm = [self.dataManager getSharedMemberWithID:member_id andActivityID:activity_id];
     selected_sharedmember = sm;
     UIActionSheet* sheet=nil;
@@ -254,13 +270,13 @@
     [sheet showInView:self.view];
 }
 
--(NSArray*) createBtnsForSMs :(NSArray*) smembers
+-(NSArray*) createBtnsForSMs :(NSArray*) smembers withcschedule:(int)schedule_id
 {
     NSMutableArray* btns = [[NSMutableArray alloc] init];
     float beginXoffset = 0.0f;
     for (SharedMember* sm in smembers) {
         CGSize size = [sm.member_name sizeWithFont:[UIFont systemFontOfSize:14.0f]];
-        UIButton* btn1 = [[UIButton alloc] initWithFrame:CGRectMake(beginXoffset, 0, size.width + 20, size.height + 6)];
+        SharedMemberButton* btn1 = [[SharedMemberButton alloc] initWithFrame:CGRectMake(beginXoffset, 0, size.width + 20, size.height + 6)];
         [btn1 setTitle:sm.member_name forState:UIControlStateNormal];
         if(sm.confirm==Denied)
         {
@@ -276,10 +292,12 @@
         }
         
         btn1.titleLabel.font = [UIFont systemFontOfSize:12.0f];
-        [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [btn1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [btn1 addTarget:self action:@selector(smClicked:) forControlEvents:UIControlEventTouchUpInside];
         btn1.tag = sm.member_id;
         btn1.titleLabel.tag = sm.activity_id;
+        btn1.schedule_id= schedule_id;
+        //btn1.titleLabel.text=@"1244555";
         beginXoffset += btn1.frame.size.width + 5.0f;
         [btns addObject:btn1];
     }
@@ -327,7 +345,7 @@
     schedulecell.time_lbl.text = [NSString stringWithFormat:@"%@ to %@",
                                   [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:schedule.schedule_start andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]],
                                   [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:schedule.schedule_end andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]]];
-    NSArray* smbtns = [self createBtnsForSMs:schedule.participants];
+    NSArray* smbtns = [self createBtnsForSMs:schedule.participants withcschedule:schedule.schedule_id];
     float totallength = 0.0f;
     for (UIButton* btn in smbtns)
         totallength += btn.frame.size.width;
@@ -441,12 +459,19 @@
             }
             case 3:
             {
-                if(selected_sharedmember==Unknown || selected_sharedmember.confirm==Denied)
+                if(selected_sharedmember.confirm==Unknown || selected_sharedmember.confirm==Denied)
                 {
-                     [[[UIAlertView alloc] initWithTitle:@"Message" message:@"Handle Confirm action" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+                    selected_sharedmember.confirm= Confirmed;
+                    [[self.syncEngine confirmSharedMember:selected_sharedmember schedule:self.scheduleButtonSelected]start];
+                    
+                     //[[[UIAlertView alloc] initWithTitle:@"Message" message:@"Handle Confirm action" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
                 }
                 else{
-                     [[[UIAlertView alloc] initWithTitle:@"Message" message:@"Handle Deny action" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+                    
+                    selected_sharedmember.confirm= Denied;
+                    [[self.syncEngine confirmSharedMember:selected_sharedmember schedule:self.scheduleButtonSelected]start];
+                    
+                     //[[[UIAlertView alloc] initWithTitle:@"Message" message:@"Handle Deny action" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
                 }
                 
             }

@@ -26,4 +26,5 @@
     #import "MyVC.h"
     #import "AlertInfo.h"
     #import "TimeZone.h"
+    #import "SharedMemberButton.h"
 #endif

@@ -50,6 +50,7 @@
 		9B854AFF1960997C000F6B75 /* confirm_green_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B854AF91960997C000F6B75 /* confirm_green_background@2x.png */; };
 		9B854B001960997C000F6B75 /* confirm_red_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B854AFA1960997C000F6B75 /* confirm_red_background.png */; };
 		9B854B011960997C000F6B75 /* confirm_red_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B854AFB1960997C000F6B75 /* confirm_red_background@2x.png */; };
+		9B854B041960AC56000F6B75 /* SharedMemberButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B854B031960AC56000F6B75 /* SharedMemberButton.m */; };
 		9BC0488D195AD672007F79F6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC0484A195AD672007F79F6 /* AppDelegate.m */; };
 		9BC0488E195AD672007F79F6 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC0484D195AD672007F79F6 /* DataManager.m */; };
 		9BC0488F195AD672007F79F6 /* DatetimeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC0484F195AD672007F79F6 /* DatetimeHelper.m */; };
@@ -175,6 +176,8 @@
 		9B854AF91960997C000F6B75 /* confirm_green_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "confirm_green_background@2x.png"; sourceTree = "<group>"; };
 		9B854AFA1960997C000F6B75 /* confirm_red_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = confirm_red_background.png; sourceTree = "<group>"; };
 		9B854AFB1960997C000F6B75 /* confirm_red_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "confirm_red_background@2x.png"; sourceTree = "<group>"; };
+		9B854B021960AC56000F6B75 /* SharedMemberButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedMemberButton.h; sourceTree = "<group>"; };
+		9B854B031960AC56000F6B75 /* SharedMemberButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedMemberButton.m; sourceTree = "<group>"; };
 		9BC04849195AD672007F79F6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9BC0484A195AD672007F79F6 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		9BC0484B195AD672007F79F6 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -406,6 +409,8 @@
 				9BC04854195AD672007F79F6 /* PopviewButtonsDelegate.h */,
 				9BC04855195AD672007F79F6 /* SyncEngine.h */,
 				9BC04856195AD672007F79F6 /* SyncEngine.m */,
+				9B854B021960AC56000F6B75 /* SharedMemberButton.h */,
+				9B854B031960AC56000F6B75 /* SharedMemberButton.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -892,6 +897,7 @@
 				9BC048E1195AD67C007F79F6 /* AFPropertyListRequestOperation.m in Sources */,
 				9BC048D9195AD67C007F79F6 /* LblCell.m in Sources */,
 				9BC048A0195AD672007F79F6 /* ResetPasswdVC.m in Sources */,
+				9B854B041960AC56000F6B75 /* SharedMemberButton.m in Sources */,
 				9BC04892195AD672007F79F6 /* SettingVC.m in Sources */,
 				9BC048D8195AD67C007F79F6 /* LblBtnCell.m in Sources */,
 				9BC0489F195AD672007F79F6 /* FeedbackVC.m in Sources */,
