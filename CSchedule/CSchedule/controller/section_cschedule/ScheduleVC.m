@@ -328,7 +328,7 @@
     Schedule* schedule = [[_groupedSchedules_ontable objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     selected_schedule = schedule;
     Activity* activity = [self.dataManager getActivityWithID:schedule.activity_id];
-    if (activity.shared_role == OWNER || activity.shared_role == ORGANIZER ) {
+    if (activity.shared_role == OWNER ) {
         [self headto:EDITSCHEDULEVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:selected_schedule, SCHEDULE, @(EDIT),@"script",nil]];
     }
     else {

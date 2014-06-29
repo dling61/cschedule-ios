@@ -61,6 +61,7 @@ static SyncEngine* sharedEngine = nil;
 - (AFHTTPRequestOperation*) sendInfo: (NSDictionary*) info To:(NSString*) path through:(NSString*) method
         withNotifications:(NSDictionary*)notes
 {
+    NSLog(@"path %@ parameter is %@",path,info);
     NSURLRequest* request = [self requestWithMethod:method andPath:path andParameters:info];
     return [_client HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -131,29 +132,18 @@ static SyncEngine* sharedEngine = nil;
 
 
 /*get timezone list information*/
-- (AFHTTPRequestOperation*) getTimeZones
+- (AFHTTPRequestOperation*) getSetting
 {
+    NSLog(@"getSetting Request");
+    
     NSDate* lastupdatetime = [[DataManager sharedDataManagerInstance] lastUpdatetimeMember];
     NSString* lastupdatetime_str = @"";
     if (lastupdatetime) {
         lastupdatetime_str = [[DatetimeHelper sharedHelper] dateToStringStyle1:lastupdatetime];
     }
     NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[[DataManager sharedDataManagerInstance] currentUserid]],@"ownerid",lastupdatetime_str,@"lastupdatetime", nil];
-    NSDictionary* notes = [NSDictionary dictionaryWithObjectsAndKeys:GETTIMEZONESUCCESSNOTE,@"200",GETTIMEZONEFAILNOTE,@"fail", nil];
-    return [self sendInfo:info To:TIMEZONEPATH through:@"GET" withNotifications:notes];
-}
-
-/*get alert list information*/
-- (AFHTTPRequestOperation*) getAlerts
-{
-    NSDate* lastupdatetime = [[DataManager sharedDataManagerInstance] lastUpdatetimeMember];
-    NSString* lastupdatetime_str = @"";
-    if (lastupdatetime) {
-        lastupdatetime_str = [[DatetimeHelper sharedHelper] dateToStringStyle1:lastupdatetime];
-    }
-    NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[[DataManager sharedDataManagerInstance] currentUserid]],@"ownerid",lastupdatetime_str,@"lastupdatetime", nil];
-    NSDictionary* notes = [NSDictionary dictionaryWithObjectsAndKeys:GETALERTSUCCESSNOTE,@"200",GETALERTFAILNOTE,@"fail", nil];
-    return [self sendInfo:info To:ALERTPATH through:@"GET" withNotifications:notes];
+    NSDictionary* notes = [NSDictionary dictionaryWithObjectsAndKeys:GETSETTINGSUCCESSNOTE,@"200",GETSETTINGFAILNOTE,@"fail", nil];
+    return [self sendInfo:info To:SETTINGPATH through:@"GET" withNotifications:notes];
 }
 - (AFHTTPRequestOperation*) postActivity: (Activity*) activity
 {
@@ -275,7 +265,8 @@ static SyncEngine* sharedEngine = nil;
 {
     NSMutableArray* participantids = [[NSMutableArray alloc] init];
     for (SharedMember* sm in schedule.participants) {
-        [participantids addObject:@(sm.member_id)];
+         NSDictionary* participant_dict = [NSDictionary dictionaryWithObjectsAndKeys:@(sm.member_id),@"memberid",@(sm.confirm),@"confirm", nil];
+        [participantids addObject:participant_dict];
     }
     NSDictionary* schedule_info = [NSDictionary dictionaryWithObjectsAndKeys:
                           [NSNumber numberWithInt:schedule.schedule_id],@"scheduleid",
@@ -295,7 +286,10 @@ static SyncEngine* sharedEngine = nil;
 {
     NSMutableArray* participantids = [[NSMutableArray alloc] init];
     for (SharedMember* sm in schedule.participants) {
-        [participantids addObject:@(sm.member_id)];
+        
+        NSDictionary* participant_dict = [NSDictionary dictionaryWithObjectsAndKeys:@(sm.member_id),@"memberid",@(sm.confirm),@"confirm", nil];
+        [participantids addObject:participant_dict];
+        //[participantids addObject:@(sm.member_id)];
     }
     NSDictionary* schedule_info = [NSDictionary dictionaryWithObjectsAndKeys:
                                    schedule.schedule_desp,@"desp",

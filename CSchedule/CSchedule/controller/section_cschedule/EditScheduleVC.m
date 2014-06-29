@@ -77,15 +77,7 @@
     }
     else{
         self.title = EDITSCHEDULEVC;
-        Activity* activity = [self.dataManager getActivityWithID:_editing_schedule.activity_id];
-        if (activity.shared_role == OWNER ) { //can Edit && delete
-            self.numberSection= 7;
-        }
-        else if(activity.shared_role == ORGANIZER) // can Edit , no delete
-        {
-         self.numberSection= 6;
-        }
-
+        self.numberSection= 7;
     }
     
 }
@@ -117,7 +109,21 @@
 
 - (void) editParticipantsDone: (NSNotification*) note
 {
+    
     NSArray* participants = [[note userInfo] valueForKey:@"newmembers"];
+    
+    // Update list participants
+   for (SharedMember *oldMember in _editing_schedule.participants)
+   {
+       for(SharedMember *sharedMember in participants)
+       {
+           if(sharedMember.member_id == oldMember.member_id)
+           {
+               sharedMember.confirm= oldMember.confirm;
+           }
+       }
+   }
+    
     _editing_schedule.participants = participants;
     [_table reloadData];
 }

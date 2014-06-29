@@ -44,6 +44,12 @@
 		9B72E57C195ACF5B00FBADDF /* txt_forgot_password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B72E55A195ACF5B00FBADDF /* txt_forgot_password@2x.png */; };
 		9B72E57D195ACF5B00FBADDF /* viewer.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B72E55B195ACF5B00FBADDF /* viewer.png */; };
 		9B769651195C97D700E48FA7 /* ButtonActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B769650195C97D700E48FA7 /* ButtonActionCell.m */; };
+		9B854AFC1960997C000F6B75 /* confirm_gray_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B854AF61960997C000F6B75 /* confirm_gray_background.png */; };
+		9B854AFD1960997C000F6B75 /* confirm_gray_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B854AF71960997C000F6B75 /* confirm_gray_background@2x.png */; };
+		9B854AFE1960997C000F6B75 /* confirm_green_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B854AF81960997C000F6B75 /* confirm_green_background.png */; };
+		9B854AFF1960997C000F6B75 /* confirm_green_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B854AF91960997C000F6B75 /* confirm_green_background@2x.png */; };
+		9B854B001960997C000F6B75 /* confirm_red_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B854AFA1960997C000F6B75 /* confirm_red_background.png */; };
+		9B854B011960997C000F6B75 /* confirm_red_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B854AFB1960997C000F6B75 /* confirm_red_background@2x.png */; };
 		9BC0488D195AD672007F79F6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC0484A195AD672007F79F6 /* AppDelegate.m */; };
 		9BC0488E195AD672007F79F6 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC0484D195AD672007F79F6 /* DataManager.m */; };
 		9BC0488F195AD672007F79F6 /* DatetimeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC0484F195AD672007F79F6 /* DatetimeHelper.m */; };
@@ -163,6 +169,12 @@
 		9B72E55B195ACF5B00FBADDF /* viewer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewer.png; sourceTree = "<group>"; };
 		9B76964F195C97D700E48FA7 /* ButtonActionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonActionCell.h; sourceTree = "<group>"; };
 		9B769650195C97D700E48FA7 /* ButtonActionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonActionCell.m; sourceTree = "<group>"; };
+		9B854AF61960997C000F6B75 /* confirm_gray_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = confirm_gray_background.png; sourceTree = "<group>"; };
+		9B854AF71960997C000F6B75 /* confirm_gray_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "confirm_gray_background@2x.png"; sourceTree = "<group>"; };
+		9B854AF81960997C000F6B75 /* confirm_green_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = confirm_green_background.png; sourceTree = "<group>"; };
+		9B854AF91960997C000F6B75 /* confirm_green_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "confirm_green_background@2x.png"; sourceTree = "<group>"; };
+		9B854AFA1960997C000F6B75 /* confirm_red_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = confirm_red_background.png; sourceTree = "<group>"; };
+		9B854AFB1960997C000F6B75 /* confirm_red_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "confirm_red_background@2x.png"; sourceTree = "<group>"; };
 		9BC04849195AD672007F79F6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9BC0484A195AD672007F79F6 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		9BC0484B195AD672007F79F6 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -309,6 +321,7 @@
 		9B72E537195ACF5B00FBADDF /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				9B854AF51960997C000F6B75 /* confirm_color */,
 				9BC048E8195AD6BE007F79F6 /* newButton */,
 				9B72E538195ACF5B00FBADDF /* app */,
 				9B72E53D195ACF5B00FBADDF /* oldImage */,
@@ -362,6 +375,19 @@
 				9B72E55B195ACF5B00FBADDF /* viewer.png */,
 			);
 			path = oldImage;
+			sourceTree = "<group>";
+		};
+		9B854AF51960997C000F6B75 /* confirm_color */ = {
+			isa = PBXGroup;
+			children = (
+				9B854AF61960997C000F6B75 /* confirm_gray_background.png */,
+				9B854AF71960997C000F6B75 /* confirm_gray_background@2x.png */,
+				9B854AF81960997C000F6B75 /* confirm_green_background.png */,
+				9B854AF91960997C000F6B75 /* confirm_green_background@2x.png */,
+				9B854AFA1960997C000F6B75 /* confirm_red_background.png */,
+				9B854AFB1960997C000F6B75 /* confirm_red_background@2x.png */,
+			);
+			path = confirm_color;
 			sourceTree = "<group>";
 		};
 		9BC04848195AD672007F79F6 /* Common */ = {
@@ -789,14 +815,18 @@
 				9B72E57C195ACF5B00FBADDF /* txt_forgot_password@2x.png in Resources */,
 				9B72E56B195ACF5B00FBADDF /* btn_reset_password@2x.png in Resources */,
 				9B72E573195ACF5B00FBADDF /* Handshake30.png in Resources */,
+				9B854AFE1960997C000F6B75 /* confirm_green_background.png in Resources */,
 				9BC048ED195AD6BE007F79F6 /* btn_add_participant.png in Resources */,
 				9BC048EE195AD6BE007F79F6 /* btn_add_participant@2x.png in Resources */,
 				9B72E561195ACF5B00FBADDF /* account.png in Resources */,
+				9B854B001960997C000F6B75 /* confirm_red_background.png in Resources */,
 				9B72E571195ACF5B00FBADDF /* creator.png in Resources */,
 				9B72E56C195ACF5B00FBADDF /* btn_signin.png in Resources */,
+				9B854B011960997C000F6B75 /* confirm_red_background@2x.png in Resources */,
 				9B72E55E195ACF5B00FBADDF /* icon_200_200.png in Resources */,
 				9B72E565195ACF5B00FBADDF /* bkg_navigation_bar@2x.png in Resources */,
 				C76BA87A1886E7E500294AB8 /* Images.xcassets in Resources */,
+				9B854AFD1960997C000F6B75 /* confirm_gray_background@2x.png in Resources */,
 				9B72E56D195ACF5B00FBADDF /* btn_signin@2x.png in Resources */,
 				9B72E579195ACF5B00FBADDF /* participant.png in Resources */,
 				C7201C3F18C4025100476BFA /* Default-568h@2x.png in Resources */,
@@ -806,6 +836,7 @@
 				9B72E56F195ACF5B00FBADDF /* contact.png in Resources */,
 				9B72E569195ACF5B00FBADDF /* btn_register@2x.png in Resources */,
 				C76BA8721886E7E500294AB8 /* Main_iPhone.storyboard in Resources */,
+				9B854AFF1960997C000F6B75 /* confirm_green_background@2x.png in Resources */,
 				9B72E578195ACF5B00FBADDF /* participant-selected-btn.png in Resources */,
 				9B72E562195ACF5B00FBADDF /* account@2x.png in Resources */,
 				9B72E574195ACF5B00FBADDF /* icon_member.png in Resources */,
@@ -830,6 +861,7 @@
 				9BC048A4195AD672007F79F6 /* addConView.xib in Resources */,
 				9B72E57B195ACF5B00FBADDF /* txt_forgot_password.png in Resources */,
 				9BC048EF195AD6BE007F79F6 /* btn_delete.png in Resources */,
+				9B854AFC1960997C000F6B75 /* confirm_gray_background.png in Resources */,
 				9B72E55F195ACF5B00FBADDF /* icon_200_200@2x.png in Resources */,
 				9B72E560195ACF5B00FBADDF /* acc.png in Resources */,
 			);

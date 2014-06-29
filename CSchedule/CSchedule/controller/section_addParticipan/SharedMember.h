@@ -13,6 +13,7 @@
 STRONG NSString* member_email;
 NOPOINTER int member_id;
 NOPOINTER int creator_id;
+NOPOINTER int confirm;
 STRONG NSString * member_name;
 NOPOINTER RoleType shared_role;
 NOPOINTER int activity_id;

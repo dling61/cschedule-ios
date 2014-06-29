@@ -47,12 +47,12 @@
                 [_funcBtns removeObject:_mail_btn];[_funcBtns removeObject:_share_btn];
             }
             break;
-        case ORGANIZER:
-            [_funcBtns addObject:_edit_btn];[_funcBtns addObject:_share_btn];[_funcBtns addObject:_mail_btn];
-            if ([situation isEqualToString:ACTIVITYVC]) {
-                [_funcBtns removeObject:_mail_btn];[_funcBtns removeObject:_share_btn];
-            }
-            break;
+//        case ORGANIZER:
+//            [_funcBtns addObject:_edit_btn];[_funcBtns addObject:_share_btn];[_funcBtns addObject:_mail_btn];
+//            if ([situation isEqualToString:ACTIVITYVC]) {
+//                [_funcBtns removeObject:_mail_btn];[_funcBtns removeObject:_share_btn];
+//            }
+//            break;
         case PARTICIPANT:
             if ([situation isEqualToString:ACTIVITYVC]) {
                 [_funcBtns addObject:_mail_btn];

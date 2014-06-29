@@ -506,29 +506,24 @@ DataManager* sharedDataManager = nil;
     [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:LSTMEMBERUPDATE];
 }
 
--(void) processTimeZonesInfo:(NSDictionary *)userinfo
+-(void) processSettingInfo:(NSDictionary *)userinfo
 {
     NSDictionary* local_timezones = [self allTimezones];
     NSMutableDictionary* local_timezones_new = nil;
     local_timezones_new = [NSMutableDictionary dictionaryWithDictionary:local_timezones];
     NSArray* all_setting_timezones = [[userinfo valueForKey:@"response"] valueForKey:@"timezones"];
-    
     for (NSDictionary* origin_timezones in all_setting_timezones) {
         int a_id = [[origin_timezones valueForKey:@"id"] intValue];
         NSString* a_name = [origin_timezones valueForKey:@"tzname"];
         NSString* display = [origin_timezones valueForKey:@"displayname"];
         int order = [[origin_timezones valueForKey:@"displayorder"] intValue];
-         NSString* abbrt = [origin_timezones valueForKey:@"abbrtzname"];
+        NSString* abbrt = [origin_timezones valueForKey:@"abbrtzname"];
         TimeZone *timezone =[[TimeZone alloc]initWithId:a_id name:a_name displayName:display order:order abbrtz:abbrt];
-        
-
         NSDictionary* timezone_dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSKeyedArchiver archivedDataWithRootObject:timezone], TIMEZONES, @"1", SYNCHRONIZED,@"0",DELETED,nil];
         [local_timezones_new setValue:timezone_dic forKey:[NSString stringWithFormat:@"%d",timezone.timezone_id]];
     }
     [self setAllTimezones:local_timezones_new];
-}
--(void) processAlertsInfo:(NSDictionary *)userinfo
-{
+    
     NSDictionary* local_alerts = [self allAlerts];
     NSMutableDictionary* local_alerts_new = nil;
     local_alerts_new = [NSMutableDictionary dictionaryWithDictionary:local_alerts];
@@ -542,6 +537,8 @@ DataManager* sharedDataManager = nil;
         [local_alerts_new setValue:alert_dic forKey:[NSString stringWithFormat:@"%d",alertInfo.alert_id]];
     }
     [self setAllAlerts:local_alerts_new];
+    
+    
 }
 
 - (void) processUserInfo: (NSDictionary*) userinfo
@@ -661,16 +658,35 @@ DataManager* sharedDataManager = nil;
         NSDate* start = [[DatetimeHelper sharedHelper] StringStyle1ToDate:start_str];
         NSString* end_str = [origin_schedule valueForKey:@"enddatetime"];
         NSDate* end = [[DatetimeHelper sharedHelper] StringStyle1ToDate:end_str];
+        
+        NSArray* participants_arr =  [origin_schedule valueForKey:@"members"];
+        NSMutableArray* participants = [[NSMutableArray alloc] init];
+        
+        for (NSDictionary* participant_dict in participants_arr) {
+            NSString* p_id = [participant_dict valueForKey:@"memberid"];
+            int confirm = [[participant_dict valueForKey:@"confirm"] intValue];
+            NSDictionary* sm_dict = [[self allSharedMembers] valueForKey:[NSString stringWithFormat:@"%@ %d",p_id,s_activity_id]];
+            if (sm_dict) {
+                SharedMember* sm = [NSKeyedUnarchiver unarchiveObjectWithData:[sm_dict valueForKey:SHAREDMEMBER]];
+                sm.confirm= confirm;
+                [participants addObject:sm];
+            }
+
+        }
+        
+        
+        
+        /*
         NSString* participants_str = [origin_schedule valueForKey:@"members"];
         NSArray* participants_id_arr = [participants_str componentsSeparatedByString:@","];
-        NSMutableArray* participants = [[NSMutableArray alloc] init];
+        //NSMutableArray* participants = [[NSMutableArray alloc] init];
         for (NSString* p_id in participants_id_arr) {
             NSDictionary* sm_dict = [[self allSharedMembers] valueForKey:[NSString stringWithFormat:@"%@ %d",p_id,s_activity_id]];
             if (sm_dict) {
                 SharedMember* sm = [NSKeyedUnarchiver unarchiveObjectWithData:[sm_dict valueForKey:SHAREDMEMBER]];
                 [participants addObject:sm];
             }
-        }
+        }*/
         Schedule* schedule = [[Schedule alloc] initWithScheduleID:s_id andActivityid:s_activity_id andDescription:desp andStart:start andEnd:end andParticipants:participants andCreatorid:s_creator_id andUtcoff:utcoff alert:alert];
         NSDictionary* schedule_dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSKeyedArchiver archivedDataWithRootObject:schedule], SCHEDULE, @"1", SYNCHRONIZED,@"0",DELETED,nil];
         [local_schedules_new setValue:schedule_dic forKey:[NSString stringWithFormat:@"%d",schedule.schedule_id]];

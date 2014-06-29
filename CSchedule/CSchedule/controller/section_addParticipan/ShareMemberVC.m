@@ -204,10 +204,16 @@
     RoleType role = sm.shared_role;
     int newrole = -1;
     if (role == NOSHARE) {
-        newrole = ORGANIZER;
+        newrole = PARTICIPANT;
     }
-    else
-        newrole = role + 1;
+    else if(role==PARTICIPANT)
+    {
+        newrole =NOSHARE;
+    }
+    else if(role==OWNER)
+    {
+        return;
+    }
     sm.shared_role = newrole;
     [self setBtnImg:cell.btn byRole:newrole];
 }
@@ -219,19 +225,12 @@
         case NOSHARE:
             img = [UIImage imageNamed:@"no-share.png"];
             break;
-        case ORGANIZER:
-            img = [UIImage imageNamed:@"organizer.png"];
-            break;
         case PARTICIPANT:
             img = [UIImage imageNamed:@"participant.png"];
-            break;
-/*        case VIEWER:
-            img = [UIImage imageNamed:@"viewer.png"];*/
             break;
         case OWNER:
             img = [UIImage imageNamed:@"creator.png"];
             break;
-            
         default:
             break;
     }
@@ -264,8 +263,6 @@
     [sharedmembercell.btn addTarget:self action:@selector(roleChange:) forControlEvents:UIControlEventTouchUpInside];
     return sharedmembercell;
 }
-
-
 #pragma mark -
 #pragma mark UITableView Delegate methods
 

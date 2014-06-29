@@ -47,12 +47,17 @@ typedef enum
 
 typedef enum
 {
-    OWNER,
-    ORGANIZER,
-    PARTICIPANT,
-    NOSHARE
+    OWNER=0,
+    PARTICIPANT=2,
+    NOSHARE=3
 } RoleType;
 
+typedef enum
+{
+    Unknown=0,
+    Confimed=1,
+    Denied=2
+} ConfirmType;
 
 
 #endif

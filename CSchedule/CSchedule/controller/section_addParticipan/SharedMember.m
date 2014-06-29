@@ -17,6 +17,7 @@
 @synthesize shared_role = _shared_role;
 @synthesize member_name = _member_name;
 @synthesize creator_id = _creator_id;
+@synthesize confirm=_confirm;
 
 - (id) initWithMemberid: (int)memberid andAcitityId:(int) activityid andRole: (RoleType) role andName: (NSString*)name andEmail:(NSString*) email andMobile:(NSString*) mobile andCreatorid: (int)creatorid
 {
@@ -28,6 +29,7 @@
         _member_email = email;
         _member_mobile = mobile;
         _creator_id = creatorid;
+        _confirm= Unknown;
     }
     return self;
 }
@@ -46,7 +48,7 @@
     self.creator_id = [decoder decodeIntForKey:@"creatorid"];
     self.activity_id = [decoder decodeIntForKey:@"activityid"];
     self.shared_role = [decoder decodeIntForKey:@"sharedrole"];
-    
+    self.confirm = [decoder decodeIntForKey:@"confirm"];
     return self;
 }
 
@@ -58,6 +60,7 @@
     [encoder encodeInt:self.creator_id forKey:@"creatorid"];
     [encoder encodeInt:self.shared_role forKey:@"sharedrole"];
     [encoder encodeInt:self.activity_id forKey:@"activityid"];
+    [encoder encodeInt:self.confirm forKey:@"confirm"];
 }
 
 

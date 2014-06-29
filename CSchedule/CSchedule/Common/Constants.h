@@ -32,8 +32,7 @@
 #define SCHEDULEPATH                    @"schedules"
 #define FEEDBACKPATH                    @"feedback"
 
-#define TIMEZONEPATH                    @"serversetting/timezones"
-#define ALERTPATH                       @"serversetting/alerts"
+#define SETTINGPATH                    @"serversetting"
 
 #pragma mark -
 #pragma mark notifications
@@ -56,11 +55,9 @@
 #define DELETEACTIVITYSUCCESSNOTE       @"deleteactivitysuccessfully"
 #define DELETEACTIVITYFAILNOTE          @"deleteactivityfail"
 
-#define GETTIMEZONESUCCESSNOTE          @"gettimezonessuccess"
-#define GETTIMEZONEFAILNOTE             @"gettimezonesfail"
 
-#define GETALERTSUCCESSNOTE             @"getalertssuccess"
-#define GETALERTFAILNOTE                @"getalertsfail"
+#define GETSETTINGSUCCESSNOTE          @"getsettingsuccess"
+#define GETSETTINGFAILNOTE             @"getsettingfail"
 
 #define GETCONTACTSUCCESSNOTE           @"getcontactssuccess"
 #define GETCONTACTFAILNOTE              @"getcontanctsfail"

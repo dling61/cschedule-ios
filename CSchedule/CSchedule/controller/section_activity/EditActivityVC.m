@@ -55,11 +55,6 @@
             _deleteButton.hidden=NO;
             _addParticipantButton.hidden=NO;
         }
-        else if (_editing_activity.shared_role == ORGANIZER) //can edit , no delete
-        {
-            _deleteButton.hidden=YES;
-            self.navigationItem.rightBarButtonItems =nil;
-        }
         else{
             //can't edit && delete
             self.navigationItem.rightBarButtonItems =nil;

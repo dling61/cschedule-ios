@@ -83,8 +83,7 @@
 - (void) processSharedmemberInfo:(NSDictionary *)userinfo;
 - (void) processScheduleInfo:(NSDictionary *)userinfo;
 
--(void) processTimeZonesInfo:(NSDictionary *)userinfo;
--(void) processAlertsInfo:(NSDictionary *)userinfo;
+-(void) processSettingInfo:(NSDictionary *)userinfo;
 
 - (void) saveNextActivityid:(int)activityid;
 - (void) saveNextMemberid:(int) memberid;

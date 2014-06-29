@@ -33,11 +33,7 @@
     [[NSUserDefaults standardUserDefaults] setValue:_email_tf.text forKey:USEREMAIL];
     [[NSUserDefaults standardUserDefaults] setValue:_passwd_tf.text forKey:USERPASSWORD];
     [self.dataManager processUserInfo:[note userInfo]];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:SIGNINSUCCESSNOTE object:nil];
-    
-    
-    [[self.syncEngine getTimeZones] start];
-    
+    [[self.syncEngine getSetting] start];
     
 }
 
@@ -51,46 +47,24 @@
     [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Password does not match the email account" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
     _passwd_tf.text = @"";
 }
--(void)getTimezonesSuccess:(NSNotification*) note
+-(void)getSettingSuccess:(NSNotification*) note
 {
     NSLog(@"getTimezonesSuccess %@",note);
+    [self.dataManager processSettingInfo:[note userInfo]];
     
-    [self.dataManager processTimeZonesInfo:[note userInfo]];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:GETTIMEZONESUCCESSNOTE object:nil];
-    [[self.syncEngine getAlerts] start];
-    
-}
--(void)getTimezonesFail:(NSNotification*) note
-{
-    [self.acitiveIndicator show:NO];
-    [self.acitiveIndicator setHidden:YES];
-    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not get list Timezones setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:GETTIMEZONEFAILNOTE object:nil];
-     [self.dataManager evacuateAllData];
-}
-
--(void)getAlertsSuccess:(NSNotification*) note
-{
-     NSLog(@"getAlertsSuccess %@",note);
-    
-    [self.dataManager processAlertsInfo:[note userInfo]];
     
     [self.acitiveIndicator show:NO];
     [self.acitiveIndicator setHidden:YES];
     [self headto:TABPAGES withPackage:nil];
-
     
 }
--(void)getAlertsFail:(NSNotification*) note
+-(void)getSettingFail:(NSNotification*) note
 {
     [self.acitiveIndicator show:NO];
     [self.acitiveIndicator setHidden:YES];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:GETALERTFAILNOTE object:nil];
-    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not get list Alerts setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not get list Setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
      [self.dataManager evacuateAllData];
 }
-
-
 
 - (void) registerForNotifications
 {
@@ -98,11 +72,9 @@
     [self responde:SIGNINSUCCESSNOTE by:@selector(signinSuccess:)];
     [self responde:SIGNINFAILURENOTE by:@selector(signinFail:)];
     
-    [self responde:GETTIMEZONESUCCESSNOTE by:@selector(getTimezonesSuccess:)];
-    [self responde:GETTIMEZONEFAILNOTE by:@selector(getTimezonesFail:)];
-    
-    [self responde:GETALERTSUCCESSNOTE by:@selector(getAlertsSuccess:)];
-    [self responde:GETALERTFAILNOTE by:@selector(getAlertsFail:)];
+    [self responde:GETSETTINGSUCCESSNOTE by:@selector(getSettingSuccess:)];
+    [self responde:GETSETTINGFAILNOTE by:@selector(getSettingFail:)];
+
     
 }
 
@@ -111,7 +83,6 @@
     [self.acitiveIndicator show:YES];
     [self.acitiveIndicator setHidden:NO];
     NSLog(@"_email_tf:%@ _passwd_tf:%@",_email_tf.text, _passwd_tf.text);
-    
     [[self.syncEngine signinwithEmail:_email_tf.text andPassword:_passwd_tf.text] start];
 }
 
