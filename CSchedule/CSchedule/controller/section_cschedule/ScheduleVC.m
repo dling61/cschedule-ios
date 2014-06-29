@@ -235,7 +235,21 @@
     int activity_id = btn.titleLabel.tag;
     SharedMember* sm = [self.dataManager getSharedMemberWithID:member_id andActivityID:activity_id];
     selected_sharedmember = sm;
-    UIActionSheet* sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",nil];
+    UIActionSheet* sheet=nil;
+    if(sm.creator_id==[self.dataManager currentUserid])
+    {
+        if(sm.confirm==Unknown || sm.confirm==Denied)
+        {
+            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",@"Confirm",nil];
+        }
+        else{
+            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",@"Deny",nil];
+        }
+    }
+    else{
+         sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",nil];
+    }
+    
     sheet.tag = 10;
     [sheet showInView:self.view];
 }
@@ -248,7 +262,19 @@
         CGSize size = [sm.member_name sizeWithFont:[UIFont systemFontOfSize:14.0f]];
         UIButton* btn1 = [[UIButton alloc] initWithFrame:CGRectMake(beginXoffset, 0, size.width + 20, size.height + 6)];
         [btn1 setTitle:sm.member_name forState:UIControlStateNormal];
-        [btn1 setBackgroundImage:[[UIImage imageNamed:@"participant-btn.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 7, 0, 7) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
+        if(sm.confirm==Denied)
+        {
+            [btn1 setBackgroundImage:[[UIImage imageNamed:@"confirm_red_background.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 7, 0, 7) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
+        }
+        else if(sm.confirm==Confirmed)
+        {
+            [btn1 setBackgroundImage:[[UIImage imageNamed:@"confirm_green_background.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 7, 0, 7) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [btn1 setBackgroundImage:[[UIImage imageNamed:@"confirm_gray_background.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 7, 0, 7) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
+        }
+        
         btn1.titleLabel.font = [UIFont systemFontOfSize:12.0f];
         [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [btn1 addTarget:self action:@selector(smClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -360,6 +386,8 @@
 }
 #pragma mark -
 #pragma mark UIActionsheet delegate
+
+
 -(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (actionSheet.tag == 10) {
@@ -388,28 +416,41 @@
             }
             case 2:
             {
-                [[UINavigationBar appearance] setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+                [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x067AB5)];
                 [[UINavigationBar appearance] setTitleTextAttributes:
                  [NSDictionary dictionaryWithObjectsAndKeys:
-                  [UIColor blueColor],
+                  [UIColor whiteColor],
                   NSForegroundColorAttributeName,
                   [NSValue valueWithUIOffset:UIOffsetMake(0, -1)],
                   NSBaselineOffsetAttributeName,
                   [UIFont fontWithName:@"Arial-Bold" size:0.0],
                   NSFontAttributeName,
                   nil]];
+                
+                
                 MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
                 if([MFMessageComposeViewController canSendText])
                 {
                     controller.body = @"";
                     controller.recipients = @[selected_sharedmember.member_mobile];
                     controller.messageComposeDelegate = self;
-//                    self.view.hidden = YES;
                     [self presentViewController:controller animated:YES completion:^{
                         
                     }];
                 }
             }
+            case 3:
+            {
+                if(selected_sharedmember==Unknown || selected_sharedmember.confirm==Denied)
+                {
+                     [[[UIAlertView alloc] initWithTitle:@"Message" message:@"Handle Confirm action" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+                }
+                else{
+                     [[[UIAlertView alloc] initWithTitle:@"Message" message:@"Handle Deny action" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+                }
+                
+            }
+                break;
             default:
                 break;
         }
@@ -468,7 +509,9 @@
 
 -(void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
-    [[UINavigationBar appearance] setBackgroundImage:[[UIImage imageNamed:@"bkg_navigation_bar.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 1, 0, 1)] forBarMetrics:UIBarMetricsDefault];
+    
+    
+    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x067AB5)];
     [[UINavigationBar appearance] setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIColor whiteColor],

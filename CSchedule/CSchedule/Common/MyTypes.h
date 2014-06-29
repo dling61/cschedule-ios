@@ -55,7 +55,7 @@ typedef enum
 typedef enum
 {
     Unknown=0,
-    Confimed=1,
+    Confirmed=1,
     Denied=2
 } ConfirmType;
 
