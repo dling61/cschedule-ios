@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B70AADD195F7C150053911F /* TimeZone.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B70AADC195F7C150053911F /* TimeZone.m */; };
+		9B70AAE0195F7C290053911F /* AlertInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B70AADF195F7C290053911F /* AlertInfo.m */; };
 		9B72E55C195ACF5B00FBADDF /* icon114*144.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B72E539195ACF5B00FBADDF /* icon114*144.png */; };
 		9B72E55D195ACF5B00FBADDF /* icon57*57.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B72E53A195ACF5B00FBADDF /* icon57*57.png */; };
 		9B72E55E195ACF5B00FBADDF /* icon_200_200.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B72E53B195ACF5B00FBADDF /* icon_200_200.png */; };
@@ -121,6 +123,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B70AADB195F7C150053911F /* TimeZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeZone.h; sourceTree = "<group>"; };
+		9B70AADC195F7C150053911F /* TimeZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeZone.m; sourceTree = "<group>"; };
+		9B70AADE195F7C290053911F /* AlertInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertInfo.h; sourceTree = "<group>"; };
+		9B70AADF195F7C290053911F /* AlertInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertInfo.m; sourceTree = "<group>"; };
 		9B72E539195ACF5B00FBADDF /* icon114*144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon114*144.png"; sourceTree = "<group>"; };
 		9B72E53A195ACF5B00FBADDF /* icon57*57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon57*57.png"; sourceTree = "<group>"; };
 		9B72E53B195ACF5B00FBADDF /* icon_200_200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_200_200.png; sourceTree = "<group>"; };
@@ -524,6 +530,10 @@
 				9BC048AD195AD67C007F79F6 /* Contact.m */,
 				9BC048AE195AD67C007F79F6 /* Schedule.h */,
 				9BC048AF195AD67C007F79F6 /* Schedule.m */,
+				9B70AADB195F7C150053911F /* TimeZone.h */,
+				9B70AADC195F7C150053911F /* TimeZone.m */,
+				9B70AADE195F7C290053911F /* AlertInfo.h */,
+				9B70AADF195F7C290053911F /* AlertInfo.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -846,6 +856,7 @@
 				9BC048A8195AD672007F79F6 /* OndutyVC.m in Sources */,
 				9BC04898195AD672007F79F6 /* ShareMemberVC.m in Sources */,
 				9BC0488D195AD672007F79F6 /* AppDelegate.m in Sources */,
+				9B70AADD195F7C150053911F /* TimeZone.m in Sources */,
 				9BC048E1195AD67C007F79F6 /* AFPropertyListRequestOperation.m in Sources */,
 				9BC048D9195AD67C007F79F6 /* LblCell.m in Sources */,
 				9BC048A0195AD672007F79F6 /* ResetPasswdVC.m in Sources */,
@@ -878,6 +889,7 @@
 				9BC04897195AD672007F79F6 /* SharedMember.m in Sources */,
 				9BC04896195AD672007F79F6 /* EditActivityVC.m in Sources */,
 				C76BA86B1886E7E500294AB8 /* main.m in Sources */,
+				9B70AAE0195F7C290053911F /* AlertInfo.m in Sources */,
 				9BC04891195AD672007F79F6 /* SyncEngine.m in Sources */,
 				9BC048E0195AD67C007F79F6 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				9BC048E3195AD67C007F79F6 /* AFXMLRequestOperation.m in Sources */,

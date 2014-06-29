@@ -24,4 +24,6 @@
     #import "DataManager.h"
     #import "DatetimeHelper.h"
     #import "MyVC.h"
+    #import "AlertInfo.h"
+    #import "TimeZone.h"
 #endif

@@ -17,9 +17,10 @@
 @synthesize schedule_end = _schedule_end;
 @synthesize participants = _participants;
 @synthesize creator_id = _creator_id;
-@synthesize utcoff = _utcoff;
+@synthesize tzid = _tzid;
+@synthesize alert =_alert;
 
--(id) initWithScheduleID: (int) s_id andActivityid: (int) a_id andDescription: (NSString*) desp andStart: (NSDate*) start andEnd: (NSDate*) end andParticipants:(NSArray*) participants andCreatorid: (int) creatorid andUtcoff: (int) utcoff
+-(id) initWithScheduleID: (int) s_id andActivityid: (int) a_id andDescription: (NSString*) desp andStart: (NSDate*) start andEnd: (NSDate*) end andParticipants:(NSArray*) participants andCreatorid: (int) creatorid andUtcoff: (int) tzid alert:(int) alert
 {
     if (self = [super init]) {
         _schedule_id = s_id;
@@ -29,7 +30,8 @@
         _schedule_end = end;
         _participants = participants;
         _creator_id = creatorid;
-        _utcoff = utcoff;
+        _tzid = tzid;
+        _alert=alert;
     }
     return self;
 }
@@ -48,7 +50,8 @@
     self.creator_id = [decoder decodeIntForKey:@"creatorid"];
     self.activity_id = [decoder decodeIntForKey:@"activityid"];
     self.participants = [decoder decodeObjectForKey:@"participants"];
-    self.utcoff = [decoder decodeIntForKey:@"utcoff"];
+    self.tzid = [decoder decodeIntForKey:@"tzid"];
+    self.alert = [decoder decodeIntForKey:@"alert"];
     
     return self;
 }
@@ -61,7 +64,8 @@
     [encoder encodeInt:self.creator_id forKey:@"creatorid"];
     [encoder encodeInt:self.activity_id forKey:@"activityid"];
     [encoder encodeObject:self.participants forKey:@"participants"];
-    [encoder encodeInt:self.utcoff forKey:@"utcoff"];
+    [encoder encodeInt:self.tzid forKey:@"tzid"];
+    [encoder encodeInt:self.alert forKey:@"alert"];
 }
 
 @end

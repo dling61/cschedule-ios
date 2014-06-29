@@ -136,7 +136,7 @@
 
 - (IBAction) addActivity:(id)sender
 {
-    Activity* newActivity = [[Activity alloc] initWithId:[self.dataManager loadNextActivityid] name:@"" desp:@"" role:0 owner:[self.dataManager currentUserid] start:[NSDate date] end:[NSDate date] alert:0 repeat:0 utcoffset:[[NSTimeZone localTimeZone] secondsFromGMT]];
+    Activity* newActivity = [[Activity alloc] initWithId:[self.dataManager loadNextActivityid] name:@"" desp:@"" role:0 owner:[self.dataManager currentUserid] start:[NSDate date] end:[NSDate date]];
     [self headto:EDITACTIVITYVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:newActivity, ACTIVITY, @(ADD),@"script",nil]];
 }
 

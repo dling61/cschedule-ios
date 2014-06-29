@@ -38,6 +38,12 @@
 /*reset password*/
 - (AFHTTPRequestOperation*) resetPasswordForAccount: (NSString*) email;
 
+/*get timezone list information*/
+- (AFHTTPRequestOperation*) getTimeZones;
+
+/*get alert list information*/
+- (AFHTTPRequestOperation*) getAlerts;
+
 /*get latest updated activity information*/
 - (AFHTTPRequestOperation*) getActivities;
 

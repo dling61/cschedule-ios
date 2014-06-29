@@ -24,6 +24,12 @@
 
 - (NSDate*) lastUpdatetimeMember;
 
+
+
+- (NSArray*) allSettingTimeZones;
+- (NSArray*) allSettingAlerts;
+
+
 // all local activities sorted by keys
 - (NSArray*) allSortedActivities;
 
@@ -76,6 +82,9 @@
 - (void) processContactInfo:(NSDictionary *)userinfo;
 - (void) processSharedmemberInfo:(NSDictionary *)userinfo;
 - (void) processScheduleInfo:(NSDictionary *)userinfo;
+
+-(void) processTimeZonesInfo:(NSDictionary *)userinfo;
+-(void) processAlertsInfo:(NSDictionary *)userinfo;
 
 - (void) saveNextActivityid:(int)activityid;
 - (void) saveNextMemberid:(int) memberid;

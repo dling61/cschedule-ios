@@ -129,18 +129,40 @@ static SyncEngine* sharedEngine = nil;
     return [self sendInfo:info To:MEMBERPATH through:@"GET" withNotifications:notes];
 }
 
+
+/*get timezone list information*/
+- (AFHTTPRequestOperation*) getTimeZones
+{
+    NSDate* lastupdatetime = [[DataManager sharedDataManagerInstance] lastUpdatetimeMember];
+    NSString* lastupdatetime_str = @"";
+    if (lastupdatetime) {
+        lastupdatetime_str = [[DatetimeHelper sharedHelper] dateToStringStyle1:lastupdatetime];
+    }
+    NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[[DataManager sharedDataManagerInstance] currentUserid]],@"ownerid",lastupdatetime_str,@"lastupdatetime", nil];
+    NSDictionary* notes = [NSDictionary dictionaryWithObjectsAndKeys:GETTIMEZONESUCCESSNOTE,@"200",GETTIMEZONEFAILNOTE,@"fail", nil];
+    return [self sendInfo:info To:TIMEZONEPATH through:@"GET" withNotifications:notes];
+}
+
+/*get alert list information*/
+- (AFHTTPRequestOperation*) getAlerts
+{
+    NSDate* lastupdatetime = [[DataManager sharedDataManagerInstance] lastUpdatetimeMember];
+    NSString* lastupdatetime_str = @"";
+    if (lastupdatetime) {
+        lastupdatetime_str = [[DatetimeHelper sharedHelper] dateToStringStyle1:lastupdatetime];
+    }
+    NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[[DataManager sharedDataManagerInstance] currentUserid]],@"ownerid",lastupdatetime_str,@"lastupdatetime", nil];
+    NSDictionary* notes = [NSDictionary dictionaryWithObjectsAndKeys:GETALERTSUCCESSNOTE,@"200",GETALERTFAILNOTE,@"fail", nil];
+    return [self sendInfo:info To:ALERTPATH through:@"GET" withNotifications:notes];
+}
 - (AFHTTPRequestOperation*) postActivity: (Activity*) activity
 {
     NSDictionary* activity_info = [NSDictionary dictionaryWithObjectsAndKeys:
                                    [NSNumber numberWithInt:activity.activity_id],@"serviceid",
                                    activity.activity_name,@"servicename",
                                    activity.activity_description,@"desp",
-                                   [NSNumber numberWithInt:activity.repeat],@"repeat",
                                    @"0000-00-00 00:00:00",@"startdatetime",
-                                   @"0000-00-00 00:00:00",@"enddatetime",
-                                   [NSNumber numberWithInt:activity.utcoffset],@"utcoff",
-                                   [NSNumber numberWithInt:activity.alert],@"alert"
-                                   , nil];
+                                   @"0000-00-00 00:00:00",@"enddatetime", nil];
     NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:activity.owner_id],@"ownerid",activity_info,@"services", nil];
     NSDictionary* notes = [NSDictionary dictionaryWithObjectsAndKeys:POSTACTIVITYSUCCESSNOTE,@"200",POSTACTIVITYFAILNOTE,@"fail", nil];
     return [self sendInfo:info To:ACTIVITYPATH through:@"POST" withNotifications:notes];
@@ -151,12 +173,8 @@ static SyncEngine* sharedEngine = nil;
     NSDictionary* activity_info = [NSDictionary dictionaryWithObjectsAndKeys:
                                    activity.activity_name,@"servicename",
                                    activity.activity_description,@"desp",
-                                   [NSNumber numberWithInt:activity.repeat],@"repeat",
                                    @"0000-00-00 00:00:00",@"startdatetime",
-                                   @"0000-00-00 00:00:00",@"enddatetime",
-                                   [NSNumber numberWithInt:activity.utcoffset],@"utcoff",
-                                   [NSNumber numberWithInt:activity.alert],@"alert"
-                                   , nil];
+                                   @"0000-00-00 00:00:00",@"enddatetime", nil];
     NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:activity.owner_id],@"ownerid",activity_info,@"services", nil];
     NSDictionary* notes = [NSDictionary dictionaryWithObjectsAndKeys:PUTACTIVITYSUCCESSNOTE,@"200",PUTACTIVITYFAILNOTE,@"fail", nil];
     return [self sendInfo:info To:[NSString stringWithFormat:@"%@/%d",ACTIVITYPATH,activity.activity_id] through:@"PUT" withNotifications:notes];
@@ -264,7 +282,8 @@ static SyncEngine* sharedEngine = nil;
                           schedule.schedule_desp,@"desp",
                           [[DatetimeHelper sharedHelper] dateToStringStyle1:schedule.schedule_start],@"startdatetime",
                           [[DatetimeHelper sharedHelper] dateToStringStyle1:schedule.schedule_end],@"enddatetime",
-                          @(schedule.utcoff),@"utcoffset",
+                          @(schedule.tzid),@"tzid",
+                          @(schedule.alert),@"alert",
                           participantids,@"members"
                           , nil];
     NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:schedule_info,@"schedules",@(schedule.activity_id),@"serviceid",@(schedule.creator_id),@"ownerid", nil];
@@ -282,7 +301,8 @@ static SyncEngine* sharedEngine = nil;
                                    schedule.schedule_desp,@"desp",
                                    [[DatetimeHelper sharedHelper] dateToStringStyle1:schedule.schedule_start],@"startdatetime",
                                    [[DatetimeHelper sharedHelper] dateToStringStyle1:schedule.schedule_end],@"enddatetime",
-                                   @(schedule.utcoff),@"utcoffset",
+                                   @(schedule.tzid),@"tzid",
+                                   @(schedule.alert),@"alert",
                                    participantids,@"members"
                                    , nil];
     NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:schedule_info,@"schedules",@(schedule.activity_id),@"serviceid",@(schedule.creator_id),@"ownerid", nil];

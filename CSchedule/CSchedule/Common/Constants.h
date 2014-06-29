@@ -13,8 +13,8 @@
 #define WEAK                            @property (nonatomic, weak)
 #define NOPOINTER                       @property
 
-#define BASEURL                         @"http://apitest2.servicescheduler.net/"
-
+//#define BASEURL                         @"http://apitest2.servicescheduler.net/"
+#define BASEURL                         @"http://apitest1.servicescheduler.net/"
 #define DEVICE                          @"IOS"
 #define SCODE                           @"28e336ac6c9423d946ba02dddd6a2632"
 #define VERSION                         @"1.2.0"
@@ -31,6 +31,9 @@
 #define MEMBERPATH                      @"members"
 #define SCHEDULEPATH                    @"schedules"
 #define FEEDBACKPATH                    @"feedback"
+
+#define TIMEZONEPATH                    @"serversetting/timezones"
+#define ALERTPATH                       @"serversetting/alerts"
 
 #pragma mark -
 #pragma mark notifications
@@ -52,6 +55,12 @@
 #define PUTACTIVITYFAILNOTE             @"putactivityfail"
 #define DELETEACTIVITYSUCCESSNOTE       @"deleteactivitysuccessfully"
 #define DELETEACTIVITYFAILNOTE          @"deleteactivityfail"
+
+#define GETTIMEZONESUCCESSNOTE          @"gettimezonessuccess"
+#define GETTIMEZONEFAILNOTE             @"gettimezonesfail"
+
+#define GETALERTSUCCESSNOTE             @"getalertssuccess"
+#define GETALERTFAILNOTE                @"getalertsfail"
 
 #define GETCONTACTSUCCESSNOTE           @"getcontactssuccess"
 #define GETCONTACTFAILNOTE              @"getcontanctsfail"
@@ -138,6 +147,9 @@
 #define SCHEDULEONDUTYCELL              @"scheduleondutycell"
 #define SCHEDULEDESPCELL                @"scheduledespcell"
 #define SCHEDULEBUTTONCELL              @"schedulebuttoncell"
+
+#define SCHEDULEALERTCELL               @"schedulealertcell"
+#define SCHEDULETIMEZONECELL            @"scheduletimezonecell"
 #define ONDUTYCELL                      @"ondutycell"
 
 
@@ -159,6 +171,9 @@
 #define LSTACTIVITYUPDATE               @"lateupdatetimeofactivity"
 #define LSTMEMBERUPDATE                 @"lateupdatetimeofmember"
 
+#define ALLTIMEZONES                   @"alltimezones"
+#define ALLALERTS                      @"allalerts"
+
 #pragma mark -
 #pragma mark local object keys
 
@@ -169,6 +184,9 @@
 #define CONTACT                         @"contact"
 #define SHAREDMEMBER                    @"sharedmember"
 #define SCHEDULE                        @"schedule"
+#define TIMEZONES                       @"timezones"
+#define ALERTS                          @"alerts"
+
 
 #pragma mark -
 #pragma mark script type

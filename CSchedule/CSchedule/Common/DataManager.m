@@ -35,6 +35,51 @@ DataManager* sharedDataManager = nil;
     return [[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL];
 }
 
+- (NSArray*) allSettingTimeZones
+{
+    NSDictionary* timezones_dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:ALLTIMEZONES];
+    NSMutableArray* timezones_arr = [[NSMutableArray alloc] init];
+    NSArray* allTimezones = [timezones_dict allValues];
+    
+    for (NSDictionary* timezone_dict in allTimezones) {
+        TimeZone* timzone = [NSKeyedUnarchiver unarchiveObjectWithData:[timezone_dict valueForKey:TIMEZONES]];
+            [timezones_arr addObject:timzone];
+    }
+    
+    [timezones_arr sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        TimeZone* sm1 = (TimeZone*)obj1;
+        TimeZone* sm2 = (TimeZone*)obj2;
+        if (sm1.timezone_order > sm2.timezone_order)
+            return NSOrderedDescending;
+        else if (sm1.timezone_order < sm2.timezone_order)
+            return NSOrderedAscending;
+        else
+            return NSOrderedSame;
+    }];
+    return timezones_arr;
+}
+- (NSArray*) allSettingAlerts
+{
+    NSDictionary* alerts_dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:ALLALERTS];
+    NSMutableArray* alerts_arr = [[NSMutableArray alloc] init];
+    NSArray* allkeys = [[alerts_dict allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        if ([obj1 intValue] > [obj2 intValue])
+            return NSOrderedDescending;
+        else if ([obj1 intValue] < [obj2 intValue])
+            return NSOrderedAscending;
+        else
+            return NSOrderedSame;
+    }];
+    for (NSString* key in allkeys)
+    {
+        NSDictionary* alert_dict = [alerts_dict objectForKey:key];
+        AlertInfo* alert = [NSKeyedUnarchiver unarchiveObjectWithData:[alert_dict valueForKey:ALERTS]];
+        [alerts_arr addObject:alert];
+    }
+    return alerts_arr;
+
+}
+
 - (NSArray*) allSortedActivities
 {
     NSDictionary* activities_dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:ALLACTIVITIES];
@@ -199,7 +244,7 @@ DataManager* sharedDataManager = nil;
 {
     NSMutableDictionary* grouped_schedules = [[NSMutableDictionary alloc] init];
     for (Schedule* schedule in raw_schedules) {
-        NSString* date_str = [[DatetimeHelper sharedHelper] GMTDateToSpecificTimeZoneInStringStyle2:schedule.schedule_start andUtcoff:schedule.utcoff];
+        NSString* date_str = [[DatetimeHelper sharedHelper] GMTDateToSpecificTimeZoneInStringStyle2:schedule.schedule_start andUtcoff:schedule.tzid];
         NSArray* group = (NSArray*)[grouped_schedules valueForKey:date_str];
         if (group == nil) {
             NSMutableArray* new_group = [[NSMutableArray alloc] init];
@@ -233,6 +278,21 @@ DataManager* sharedDataManager = nil;
     }] ;
 }
 
+-(NSDictionary*)allTimezones
+{
+    NSDictionary* timezones_dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:ALLTIMEZONES];
+    if (timezones_dict == nil)
+        timezones_dict = [[NSDictionary alloc] init];
+    return timezones_dict;
+}
+
+-(NSDictionary*)allAlerts
+{
+    NSDictionary* alerts_dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:ALLALERTS];
+    if (alerts_dict == nil)
+        alerts_dict = [[NSDictionary alloc] init];
+    return alerts_dict;
+}
 - (NSDictionary*) allActivities
 {
     NSDictionary* activities_dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:ALLACTIVITIES];
@@ -263,6 +323,15 @@ DataManager* sharedDataManager = nil;
     if (schedules_dict == nil)
         schedules_dict = [[NSDictionary alloc] init];
     return schedules_dict;
+}
+
+- (void) setAllTimezones: (NSDictionary*) timezones
+{
+    [[NSUserDefaults standardUserDefaults] setValue:timezones forKey:ALLTIMEZONES];
+}
+- (void) setAllAlerts: (NSDictionary*) alerts
+{
+    [[NSUserDefaults standardUserDefaults] setValue:alerts forKey:ALLALERTS];
 }
 
 - (void) setAllActivities: (NSDictionary*) activities
@@ -437,6 +506,44 @@ DataManager* sharedDataManager = nil;
     [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:LSTMEMBERUPDATE];
 }
 
+-(void) processTimeZonesInfo:(NSDictionary *)userinfo
+{
+    NSDictionary* local_timezones = [self allTimezones];
+    NSMutableDictionary* local_timezones_new = nil;
+    local_timezones_new = [NSMutableDictionary dictionaryWithDictionary:local_timezones];
+    NSArray* all_setting_timezones = [[userinfo valueForKey:@"response"] valueForKey:@"timezones"];
+    
+    for (NSDictionary* origin_timezones in all_setting_timezones) {
+        int a_id = [[origin_timezones valueForKey:@"id"] intValue];
+        NSString* a_name = [origin_timezones valueForKey:@"tzname"];
+        NSString* display = [origin_timezones valueForKey:@"displayname"];
+        int order = [[origin_timezones valueForKey:@"displayorder"] intValue];
+         NSString* abbrt = [origin_timezones valueForKey:@"abbrtzname"];
+        TimeZone *timezone =[[TimeZone alloc]initWithId:a_id name:a_name displayName:display order:order abbrtz:abbrt];
+        
+
+        NSDictionary* timezone_dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSKeyedArchiver archivedDataWithRootObject:timezone], TIMEZONES, @"1", SYNCHRONIZED,@"0",DELETED,nil];
+        [local_timezones_new setValue:timezone_dic forKey:[NSString stringWithFormat:@"%d",timezone.timezone_id]];
+    }
+    [self setAllTimezones:local_timezones_new];
+}
+-(void) processAlertsInfo:(NSDictionary *)userinfo
+{
+    NSDictionary* local_alerts = [self allAlerts];
+    NSMutableDictionary* local_alerts_new = nil;
+    local_alerts_new = [NSMutableDictionary dictionaryWithDictionary:local_alerts];
+    NSArray* all_setting_alerts = [[userinfo valueForKey:@"response"] valueForKey:@"alerts"];
+    
+    for (NSDictionary* origin_alert in all_setting_alerts) {
+        int a_id = [[origin_alert valueForKey:@"id"] intValue];
+        NSString* a_name = [origin_alert valueForKey:@"aname"];
+        AlertInfo *alertInfo =[[AlertInfo alloc]initWithId:a_id name:a_name];
+        NSDictionary* alert_dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSKeyedArchiver archivedDataWithRootObject:alertInfo], ALERTS, @"1", SYNCHRONIZED,@"0",DELETED,nil];
+        [local_alerts_new setValue:alert_dic forKey:[NSString stringWithFormat:@"%d",alertInfo.alert_id]];
+    }
+    [self setAllAlerts:local_alerts_new];
+}
+
 - (void) processUserInfo: (NSDictionary*) userinfo
 {
     [self saveCurrentUserid:[[[userinfo valueForKey:@"response"] valueForKey:@"ownerid"] intValue]];
@@ -462,10 +569,7 @@ DataManager* sharedDataManager = nil;
         NSDate* startdatetime = [[DatetimeHelper sharedHelper] StringStyle1ToDate:[origin_activity valueForKey:@"startdatetime"]];
         NSDate* enddatetime = [[DatetimeHelper sharedHelper] StringStyle1ToDate:[origin_activity valueForKey:@"enddatetime"]];
         int role = [[origin_activity valueForKey:@"sharedrole"] intValue];
-        int alert = [[origin_activity valueForKey:@"alert"] intValue];
-        int repeat = [[origin_activity valueForKey:@"repeat"] intValue];
-        int utcoff = [[origin_activity valueForKey:@"utcoff"] intValue];
-        Activity* activity = [[Activity alloc] initWithId:a_id name:a_name desp:desp role:role owner:owner_id start:startdatetime end:enddatetime alert:alert repeat:repeat utcoffset:utcoff];
+        Activity* activity = [[Activity alloc] initWithId:a_id name:a_name desp:desp role:role owner:owner_id start:startdatetime end:enddatetime];
         NSDictionary* activity_dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSKeyedArchiver archivedDataWithRootObject:activity], ACTIVITY, @"1", SYNCHRONIZED,@"0",DELETED,nil];
         [local_activities_new setValue:activity_dic forKey:[NSString stringWithFormat:@"%d",activity.activity_id]];
     }
@@ -550,7 +654,8 @@ DataManager* sharedDataManager = nil;
         int s_id = [[origin_schedule valueForKey:@"scheduleid"] intValue];
         int s_creator_id = [[origin_schedule valueForKey:@"creatorid"] intValue];
         int s_activity_id = [[origin_schedule valueForKey:@"serviceid"] intValue];
-        int utcoff = [[origin_schedule valueForKey:@"utcoff"] intValue];
+        int utcoff = [[origin_schedule valueForKey:@"tzid"] intValue];
+        int alert = [[origin_schedule valueForKey:@"alert"] intValue];
         NSString* desp = [origin_schedule valueForKey:@"desp"];
         NSString* start_str = [origin_schedule valueForKey:@"startdatetime"];
         NSDate* start = [[DatetimeHelper sharedHelper] StringStyle1ToDate:start_str];
@@ -566,7 +671,7 @@ DataManager* sharedDataManager = nil;
                 [participants addObject:sm];
             }
         }
-        Schedule* schedule = [[Schedule alloc] initWithScheduleID:s_id andActivityid:s_activity_id andDescription:desp andStart:start andEnd:end andParticipants:participants andCreatorid:s_creator_id andUtcoff:utcoff];
+        Schedule* schedule = [[Schedule alloc] initWithScheduleID:s_id andActivityid:s_activity_id andDescription:desp andStart:start andEnd:end andParticipants:participants andCreatorid:s_creator_id andUtcoff:utcoff alert:alert];
         NSDictionary* schedule_dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSKeyedArchiver archivedDataWithRootObject:schedule], SCHEDULE, @"1", SYNCHRONIZED,@"0",DELETED,nil];
         [local_schedules_new setValue:schedule_dic forKey:[NSString stringWithFormat:@"%d",schedule.schedule_id]];
     }
@@ -656,6 +761,9 @@ DataManager* sharedDataManager = nil;
     [self setAllContacts:nil];
     [self setAllSchedules:nil];
     [self setAllSharedmembers:nil];
+    [self setAllAlerts:nil];
+    [self setAllTimezones:nil];
+    
 }
 
 - (BOOL) IsFirsttimeOpen

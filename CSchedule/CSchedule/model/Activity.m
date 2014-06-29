@@ -17,11 +17,8 @@
 @synthesize owner_id = _owner_id;
 @synthesize startdatetime = _startdatetime;
 @synthesize enddatetime = _enddatetime;
-@synthesize alert = _alert;
-@synthesize repeat = _repeat;
-@synthesize utcoffset = _utcoffset;
 
-- (id) initWithId:(int)a_id name:(NSString*)a_name desp:(NSString*)desp role:(int)a_role owner: (int)owne_id start:(NSDate*) a_start end:(NSDate*) a_end alert:(int) alert repeat: (int) repeat utcoffset: (int) utcoff
+- (id) initWithId:(int)a_id name:(NSString*)a_name desp:(NSString*)desp role:(int)a_role owner: (int)owne_id start:(NSDate*) a_start end:(NSDate*) a_end
 {
     if (self = [super init]) {
         _activity_id = a_id;
@@ -31,9 +28,6 @@
         _owner_id = owne_id;
         _startdatetime = a_start;
         _enddatetime = a_end;
-        _alert = alert;
-        _repeat = repeat;
-        _utcoffset = utcoff;
     }
     return self;
 }
@@ -52,9 +46,6 @@
     self.owner_id = [decoder decodeIntForKey:@"ownerid"];
     self.startdatetime = [decoder decodeObjectForKey:@"start"];
     self.enddatetime = [decoder decodeObjectForKey:@"end"];
-    self.alert = [decoder decodeIntForKey:@"alert"];
-    self.repeat = [decoder decodeIntForKey:@"repeat"];
-    self.utcoffset = [decoder decodeIntegerForKey:@"utcoff"];
     
     return self;
 }
@@ -67,9 +58,6 @@
     [encoder encodeInt:self.owner_id forKey:@"ownerid"];
     [encoder encodeObject:self.startdatetime forKey:@"start"];
     [encoder encodeObject:self.enddatetime forKey:@"end"];
-    [encoder encodeInt:self.alert forKey:@"alert"];
-    [encoder encodeInt:self.repeat forKey:@"repeat"];
-    [encoder encodeInt:self.utcoffset forKey:@"utcoff"];
 }
 
 @end

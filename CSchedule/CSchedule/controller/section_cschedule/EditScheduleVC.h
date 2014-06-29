@@ -7,6 +7,12 @@
 //
 
 #import "MyVC.h"
+typedef enum
+{
+    ACTIVITY_OPTION =1,
+    TIMEZONE,
+    ALERT,
+} PickerCScheduleOption;
 
 @interface EditScheduleVC : MyVC <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource,UIPickerViewDelegate, UITextViewDelegate,UIAlertViewDelegate>
 
@@ -16,7 +22,13 @@ WEAK IBOutlet UIDatePicker* datePicker;
 STRONG UIView* datepickerContainer;
 STRONG UIView* pickerContainer;
 STRONG Schedule* editing_schedule;
+STRONG UILabel* timezone_lbl;
+STRONG UILabel* alert_lbl;
+STRONG NSArray* alert_types;
+STRONG NSArray* timezone_types;
+STRONG NSArray* picker_data;
 NOPOINTER (assign,nonatomic) int numberSection;
+NOPOINTER PickerCScheduleOption current_picker_option;
 
 - (IBAction) datepickerCancel: (id)sender;
 - (IBAction) datepickerDone: (id)sender;

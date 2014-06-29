@@ -24,8 +24,9 @@
     UILabel* activity_lbl;
     UILabel* start_lbl;
     UILabel* end_lbl;
-    int selectedrow;
+    int _picker_selected_row;
 }
+
 
 @synthesize table = _table;
 @synthesize editing_schedule = _editing_schedule;
@@ -33,6 +34,16 @@
 @synthesize datePicker = _datePicker;
 @synthesize pickerContainer = _pickerContainer;
 @synthesize datepickerContainer = _datepickerContainer;
+@synthesize alert_types = _alert_types;
+@synthesize timezone_types = _timezone_types;
+@synthesize picker_data = _picker_data;
+
+@synthesize timezone_lbl = _timezone_lbl;
+@synthesize alert_lbl = _alert_lbl;
+
+@synthesize current_picker_option = _current_picker_option;
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,22 +68,22 @@
     if(script ==ADD)
     {
         self.title = ADDSCHEDULEVC;
-        self.numberSection= 4;
+        self.numberSection= 6;
     }
     else if(script == VIEW){
         self.title = VIEWSCHEDULEVC;
         self.navigationItem.rightBarButtonItem = nil;
-        self.numberSection= 4;
+        self.numberSection= 6;
     }
     else{
         self.title = EDITSCHEDULEVC;
         Activity* activity = [self.dataManager getActivityWithID:_editing_schedule.activity_id];
         if (activity.shared_role == OWNER ) { //can Edit && delete
-            self.numberSection= 5;
+            self.numberSection= 7;
         }
         else if(activity.shared_role == ORGANIZER) // can Edit , no delete
         {
-         self.numberSection= 4;
+         self.numberSection= 6;
         }
 
     }
@@ -85,6 +96,9 @@
     [self unpack];
     
     myActivities = [self.dataManager myActivities];
+    _timezone_types = [self.dataManager allSettingTimeZones];
+    _alert_types =[self.dataManager allSettingAlerts];
+    
     _pickerContainer = [[[NSBundle mainBundle] loadNibNamed:@"ActivityPickerView" owner:self options:nil] objectAtIndex:0];
     _datepickerContainer = [[[NSBundle mainBundle] loadNibNamed:@"DatePickerView" owner:self options:nil] objectAtIndex:0];
 }
@@ -166,18 +180,43 @@
     [self responde:DELETESCHEDULEFAILNOTE by:@selector(deleteScheduleFail:)];
 
 }
-
-- (void) showPickerContainer
+-(void) showPickerViewWithOption: (PickerCScheduleOption) option
 {
+    int picker_selected_index = 0;
+    switch (option) {
+        case ACTIVITY_OPTION:
+            _picker_data = myActivities;
+            
+            //picker_selected_index = [myActivities indexOfObject:@(_editing_schedule.activity_id)];
+            break;
+        case TIMEZONE:
+            if (script == EDIT) {
+                return;
+            }
+            _picker_data = _timezone_types;
+            //picker_selected_index = [_timezone_utcoffs indexOfObject:@(_editing_schedule.tzid)];
+            break;
+        case ALERT:
+            _picker_data = _alert_types;
+            //picker_selected_index = _editing_schedule.alert;
+            break;
+        default:
+            return;
+    }
+    if (picker_selected_index == NSNotFound || picker_selected_index < 0) {
+        picker_selected_index = 0;
+    }
     [_picker reloadAllComponents];
+    [_picker selectRow:picker_selected_index inComponent:0 animated:NO];
+    
     [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
         _pickerContainer.center = CGPointMake(_pickerContainer.center.x, _pickerContainer.center.y - MYPICKERVIEWHEIGHT - TABBARHEIGHT);
         _pickerContainer.alpha = 1.0f;
     } completion:^(BOOL finished) {
         
     }];
+    [self tableFade];
 }
-
 - (void) hidePickerContainer
 {
     [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
@@ -187,6 +226,7 @@
         
     }];
 }
+
 
 - (void) showDatePickerContainer
 {
@@ -297,13 +337,34 @@
 
 - (IBAction) pickerDone: (id)sender
 {
-    Activity* activity = [myActivities objectAtIndex:selectedrow];
-    _editing_schedule.activity_id = activity.activity_id;
-    _editing_schedule.utcoff = activity.utcoffset;
-//    [_datePicker setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:_editing_schedule.utcoff]];
-    [_table reloadData];
     [self hidePickerContainer];
+    switch (_current_picker_option) {
+        case ACTIVITY_OPTION:
+        {
+            Activity* activity = [myActivities objectAtIndex:_picker_selected_row];
+            _editing_schedule.activity_id = activity.activity_id;
+            [_table reloadData];
+        }
+            break;
+        case TIMEZONE:
+        {
+            TimeZone* timezone = [_timezone_types objectAtIndex:_picker_selected_row];
+            _editing_schedule.tzid = timezone.timezone_id;
+        }
+            break;
+        case ALERT:
+        {
+            AlertInfo* alertInfo = [_alert_types objectAtIndex:_picker_selected_row];
+            _editing_schedule.alert = alertInfo.alert_id;
+        }
+            break;
+        default:
+            break;
+    }
+    
     [self tableOut];
+    
+   
 }
 
 - (IBAction) EditScheduleDone:(id)sender
@@ -377,6 +438,12 @@
         case 4:
             return 1;
             break;
+        case 5:
+            return 1;
+            break;
+        case 6:
+            return 1;
+            break;
         default:
             return 0;
             break;
@@ -427,13 +494,43 @@
         }
         case 2:
         {
+            LblCell* timeZonecell = [tableView dequeueReusableCellWithIdentifier:SCHEDULETIMEZONECELL];
+            _timezone_lbl = timeZonecell.lbl;
+            if([self getTimezoneWithID:_editing_schedule.tzid])
+            {
+                //int zone_index=[[self getTimezoneWithID:_editing_schedule.tzid]timezone_id];
+                _timezone_lbl.text = [[self getTimezoneWithID:_editing_schedule.tzid]timezone_name];
+            }
+            else{
+                _timezone_lbl.text=@"";
+            }
+            cell = timeZonecell;
+            break;
+        }
+        case 3:
+        {
+            LblCell* alertcell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEALERTCELL];
+            _alert_lbl = alertcell.lbl;
+            if([self getAlertWithID:_editing_schedule.alert])
+            {
+               alertcell.lbl.text = [[self getAlertWithID:_editing_schedule.alert]alert_name];
+            }
+            else{
+                alertcell.lbl.text=@"";
+            }
+
+            cell = alertcell;
+            break;
+        }
+        case 4:
+        {
             LblCell* ondutycell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEONDUTYCELL];
             ondutycell.lbl.text = [self partipant_str];
             cell = ondutycell;
             break;
         }
 
-        case 3:
+        case 5:
         {
             TVCell* notecell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEDESPCELL];
             desp_tv = notecell.txt_area;
@@ -449,7 +546,7 @@
             cell = notecell;
             break;
         }
-        case 4:
+        case 6:
         {
             ButtonActionCell* buttoncell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEBUTTONCELL];
             cell = buttoncell;
@@ -477,8 +574,8 @@
     }
     switch (indexPath.section) {
         case 0:
-            [self showPickerContainer];
-            [self tableFade];
+            _current_picker_option = ACTIVITY_OPTION;
+            [self showPickerViewWithOption:_current_picker_option];
             break;
         case 1:
         {
@@ -494,9 +591,17 @@
             break;
         }
         case 2:
-            [self headto:ONDUTYVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:[self involvedMembers],@"members",@(_editing_schedule.activity_id),ACTIVITY, nil]];
+            _current_picker_option = TIMEZONE;
+            [self showPickerViewWithOption:_current_picker_option];
+            break;
+        case 3:
+            _current_picker_option = ALERT;
+            [self showPickerViewWithOption:_current_picker_option];
             break;
         case 4:
+            [self headto:ONDUTYVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:[self involvedMembers],@"members",@(_editing_schedule.activity_id),ACTIVITY, nil]];
+            break;
+        case 6:
             [self del];
             break;
         default:
@@ -506,7 +611,7 @@
 
 - (float) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 3) {
+    if (indexPath.section == 5) {
         return 120.0f;
     }
     return 50.0f;
@@ -522,13 +627,25 @@
 
 -(NSInteger) pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [myActivities count];
+    return [_picker_data count];
 }
 
 -(NSString*) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    Activity* activity = [myActivities objectAtIndex:row];
-    return activity.activity_name;
+    if(_current_picker_option==ACTIVITY_OPTION)
+    {
+        Activity* activity = [_picker_data objectAtIndex:row];
+        return activity.activity_name;
+    }
+    else if(_current_picker_option==TIMEZONE){
+        TimeZone* timezone = [_picker_data objectAtIndex:row];
+        return timezone.timezone_name;
+    }
+    else{
+        AlertInfo* alertInfo = [_picker_data objectAtIndex:row];
+        return alertInfo.alert_name;
+    }
+    
 }
 
 #pragma mark -
@@ -536,9 +653,30 @@
 
 -(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    Activity* activity = [myActivities objectAtIndex:row];
-    selectedrow = row;
-    activity_lbl.text = activity.activity_name;
+    _picker_selected_row = row;
+    switch (_current_picker_option) {
+        case ALERT:
+        {
+            AlertInfo *alertInfo =[_alert_types objectAtIndex:row];
+            _alert_lbl.text =alertInfo.alert_name;
+        }
+            break;
+        case ACTIVITY_OPTION:
+        {
+            Activity* activity = [myActivities objectAtIndex:row];
+            activity_lbl.text = activity.activity_name;
+            break;
+        }
+        case TIMEZONE:
+        {
+            TimeZone *timezone =[_timezone_types objectAtIndex:row];
+            _timezone_lbl.text =timezone.timezone_name;
+        }
+            break;
+        default:
+            break;
+    }
+
 }
 
 #pragma mark -
@@ -554,14 +692,16 @@ shouldChangeTextInRange:(NSRange)rang
         if (textView.text.length == 0) {
             textView.text = @"Notes";
         }
+        [_table setContentOffset:CGPointMake(0, NAVBARHEIGHT) animated:YES];
     }
-    [_table setContentOffset:CGPointMake(0, NAVBARHEIGHT) animated:YES];
+    [_table setContentOffset:CGPointMake(0, 200.0) animated:YES];
+    //[_table setContentOffset:CGPointMake(0, NAVBARHEIGHT) animated:YES];
     return YES;
 }
 
 - (void) textViewDidBeginEditing:(UITextView *)textView
 {
-    [_table setContentOffset:CGPointMake(0, 150.0) animated:YES];
+    [_table setContentOffset:CGPointMake(0, 200.0) animated:YES];
     if ([textView.text isEqualToString:@"Notes"]) {
         textView.text = @"";
     }
@@ -576,4 +716,27 @@ shouldChangeTextInRange:(NSRange)rang
     }
 }
 
+- (TimeZone*) getTimezoneWithID:(int)timezone_id
+{
+    for(TimeZone *timezone in _timezone_types)
+    {
+        if(timezone.timezone_id == timezone_id)
+        {
+            return timezone;
+        }
+    }
+    return nil;
+    
+}
+- (AlertInfo*) getAlertWithID:(int)alert_id
+{
+    for(AlertInfo *alertinfo in _alert_types)
+    {
+        if(alertinfo.alert_id == alert_id)
+        {
+            return alertinfo;
+        }
+    }
+    return nil;
+}
 @end

@@ -218,7 +218,7 @@
 
 -(IBAction) addSchedule:(id)sender
 {
-    Schedule* newschedule = [[Schedule alloc] initWithScheduleID:[self.dataManager loadNextScheduleid] andActivityid:-1 andDescription:@"" andStart:[NSDate date] andEnd:[NSDate dateWithTimeInterval:3600 sinceDate:[NSDate date]] andParticipants:[[NSArray alloc] init] andCreatorid:[self.dataManager currentUserid] andUtcoff:0];
+    Schedule* newschedule = [[Schedule alloc] initWithScheduleID:[self.dataManager loadNextScheduleid] andActivityid:-1 andDescription:@"" andStart:[NSDate date] andEnd:[NSDate dateWithTimeInterval:3600 sinceDate:[NSDate date]] andParticipants:[[NSArray alloc] init] andCreatorid:[self.dataManager currentUserid] andUtcoff:0 alert:0];
     [self headto:EDITSCHEDULEVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:newschedule,SCHEDULE,@(ADD),@"script", nil]];
 }
 

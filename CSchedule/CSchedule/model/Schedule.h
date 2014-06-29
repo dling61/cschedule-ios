@@ -13,12 +13,13 @@
 NOPOINTER int schedule_id;
 NOPOINTER int activity_id;
 NOPOINTER int creator_id;
-NOPOINTER int utcoff;
+NOPOINTER int tzid;
+NOPOINTER int alert;
 STRONG NSString* schedule_desp;
 STRONG NSDate* schedule_start;
 STRONG NSDate* schedule_end;
 STRONG NSArray* participants;
 
--(id) initWithScheduleID: (int) s_id andActivityid: (int) a_id andDescription: (NSString*) desp andStart: (NSDate*) start andEnd: (NSDate*) end andParticipants:(NSArray*) participants andCreatorid: (int) creatorid andUtcoff: (int) utcoff;
+-(id) initWithScheduleID: (int) s_id andActivityid: (int) a_id andDescription: (NSString*) desp andStart: (NSDate*) start andEnd: (NSDate*) end andParticipants:(NSArray*) participants andCreatorid: (int) creatorid andUtcoff: (int) tzid alert:(int) alert;
 
 @end
