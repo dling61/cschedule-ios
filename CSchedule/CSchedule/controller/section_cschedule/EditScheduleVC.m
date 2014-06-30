@@ -40,10 +40,9 @@
 
 @synthesize timezone_lbl = _timezone_lbl;
 @synthesize alert_lbl = _alert_lbl;
-
+@synthesize mySharedMember=_mySharedMember;
 @synthesize current_picker_option = _current_picker_option;
-
-
+@synthesize isChangeDuty=_isChangeDuty;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -58,13 +57,37 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    _isChangeDuty=NO;
+    _datePicker.datePickerMode= UIDatePickerModeDateAndTime;
     
+    
+}
+-(void)checkSharedMember
+{
+    _mySharedMember=nil;
+    NSString *currentUserEmail= [self.dataManager currentUseremail];
+    for (SharedMember *memberInfo in _editing_schedule.participants)
+    {
+        if([memberInfo.member_email isEqualToString:currentUserEmail])
+        {
+            _mySharedMember= memberInfo;
+            break;
+        }
+        
+    }
 }
 
 - (void) unpack
 {
     _editing_schedule = [self.package valueForKey:SCHEDULE];
     script = [[self.package valueForKey:@"script"] intValue];
+    
+    [self configTableview];
+    
+}
+-(void)configTableview
+{
+    [self checkSharedMember];
     if(script ==ADD)
     {
         self.title = ADDSCHEDULEVC;
@@ -73,13 +96,42 @@
     else if(script == VIEW){
         self.title = VIEWSCHEDULEVC;
         self.navigationItem.rightBarButtonItem = nil;
-        self.numberSection= 6;
+        if(_mySharedMember!=nil)
+        {
+            if(_mySharedMember.confirm==Unknown)
+            {
+                self.numberSection= 8;
+                
+            }
+            else if(_mySharedMember.confirm==Confirmed ||_mySharedMember.confirm==Denied)
+            {
+                self.numberSection= 7;
+            }
+        }
+        else{
+            self.numberSection= 6;
+        }
+        
     }
     else{
         self.title = EDITSCHEDULEVC;
-        self.numberSection= 7;
+        if(_mySharedMember!=nil)
+        {
+            if(_mySharedMember.confirm==Unknown)
+            {
+                self.numberSection= 9;
+                
+            }
+            else if(_mySharedMember.confirm==Confirmed ||_mySharedMember.confirm==Denied)
+            {
+                self.numberSection= 8;
+            }
+        }
+        else{
+            self.numberSection= 7;
+        }
     }
-    
+
 }
 
 - (void)initProperties
@@ -109,9 +161,8 @@
 
 - (void) editParticipantsDone: (NSNotification*) note
 {
-    
+    _isChangeDuty=YES;
     NSArray* participants = [[note userInfo] valueForKey:@"newmembers"];
-    
     // Update list participants
    for (SharedMember *oldMember in _editing_schedule.participants)
    {
@@ -125,6 +176,7 @@
    }
     
     _editing_schedule.participants = participants;
+    //[self configTableview];
     [_table reloadData];
 }
 
@@ -172,6 +224,32 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)confirmSharedMemberSuccess: (NSNotification*) note
+{
+    
+    for (SharedMember *memberInfo in _editing_schedule.participants)
+    {
+        if(memberInfo.member_id ==_mySharedMember.member_id)
+        {
+            memberInfo.confirm= _mySharedMember.confirm;
+            break;
+        }
+        
+    }
+    [self.dataManager saveSchedule:_editing_schedule synced:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATESCHEDULESUCCESSNOTE object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+
+    
+}
+- (void)confirmSharedMemberFail: (NSNotification*) note
+{
+    [self.dataManager saveSchedule:_editing_schedule synced:NO];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATESCHEDULESUCCESSNOTE object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
 - (void)registerForNotifications
 {
     [super registerForNotifications];
@@ -184,6 +262,9 @@
     
     [self responde:DELETESCHEDULESUCCESSNOTE by:@selector(deleteScheduleSuccess:)];
     [self responde:DELETESCHEDULEFAILNOTE by:@selector(deleteScheduleFail:)];
+    
+    [self responde:CONFIRMSTATUSSUCCESSNOTE by:@selector(confirmSharedMemberSuccess:)];
+    [self responde:CONFIRMSTATUSFAILNOTE by:@selector(confirmSharedMemberFail:)];
 
 }
 -(void) showPickerViewWithOption: (PickerCScheduleOption) option
@@ -372,7 +453,14 @@
 
 - (IBAction) EditScheduleDone:(id)sender
 {
-    _editing_schedule.schedule_desp = desp_tv.text;
+    if(desp_tv.text==nil)
+    {
+        _editing_schedule.schedule_desp=@"";
+    }
+    else{
+        _editing_schedule.schedule_desp = desp_tv.text;
+    }
+    
     if (script == ADD) {
         [[self.syncEngine postSchedule:_editing_schedule] start];
     }
@@ -410,6 +498,37 @@
     }
     return participantids;
 }
+
+-(void)callActionButtonWithType:(ButtonCellType)typeCell
+{
+    if(_isChangeDuty)
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"The members was changed. Please update the information before you can do this action!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        return;
+    }
+    else{
+        switch (typeCell) {
+            case DeleteButtonCell:
+            {
+                [self del];
+            }
+                break;
+            case ConfirmButtonCell:
+                _mySharedMember.confirm= Confirmed;
+                [[self.syncEngine confirmSharedMember:_mySharedMember.member_id schedule:_editing_schedule.schedule_id confirmType:Confirmed]start];
+                break;
+            case DenyButtonCell:
+                _mySharedMember.confirm= Denied;
+                [[self.syncEngine confirmSharedMember:_mySharedMember.member_id schedule:_editing_schedule.schedule_id confirmType:Denied]start];
+                break;
+                
+            default:
+                break;
+        }
+
+    }
+}
+
 -(void) del
 {
     [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Are you sure you want to delete this schedule ?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
@@ -445,6 +564,12 @@
             return 1;
             break;
         case 6:
+            return 1;
+            break;
+        case 7:
+            return 1;
+            break;
+        case 8:
             return 1;
             break;
         default:
@@ -501,7 +626,6 @@
             _timezone_lbl = timeZonecell.lbl;
             if([self getTimezoneWithID:_editing_schedule.tzid])
             {
-                //int zone_index=[[self getTimezoneWithID:_editing_schedule.tzid]timezone_id];
                 _timezone_lbl.text = [[self getTimezoneWithID:_editing_schedule.tzid]timezone_name];
             }
             else{
@@ -552,9 +676,69 @@
         case 6:
         {
             ButtonActionCell* buttoncell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEBUTTONCELL];
+            if(script == VIEW){
+                if(_mySharedMember.confirm==Unknown || _mySharedMember.confirm==Denied)
+                {
+                    [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_confirm.png"]];
+                    buttoncell.cellType= ConfirmButtonCell;
+                }
+                else{
+                    [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_deny.png"]];
+                    buttoncell.cellType= DenyButtonCell;
+                }
+                
+            }
+            else
+            {
+                [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_delete.png"]];
+                buttoncell.cellType= DeleteButtonCell;
+            }
+            
             cell = buttoncell;
             break;
 
+        }
+            break;
+        case 7:
+        {
+            ButtonActionCell* buttoncell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEBUTTONCELL];
+             if(script == VIEW){
+                 if(_mySharedMember.confirm==Unknown)
+                 {
+                     [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_deny.png"]];
+                     buttoncell.cellType= DenyButtonCell;
+                 }
+             }
+             else
+             {
+                 if(_mySharedMember.confirm==Unknown ||_mySharedMember.confirm==Denied )
+                 {
+                     [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_confirm.png"]];
+                     buttoncell.cellType= ConfirmButtonCell;
+                 }
+                 else{
+                     [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_deny.png"]];
+                     buttoncell.cellType= DenyButtonCell;
+                 }
+                 
+             }
+            cell = buttoncell;
+            break;
+            
+        }
+            break;
+        case 8:
+        {
+            ButtonActionCell* buttoncell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEBUTTONCELL];
+            if(_mySharedMember.confirm==Unknown)
+            {
+                [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_deny.png"]];
+                buttoncell.cellType= DenyButtonCell;
+            }
+            
+            cell = buttoncell;
+            break;
+            
         }
             break;
         default:
@@ -572,40 +756,72 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (script == VIEW) {
-        return;
-    }
     switch (indexPath.section) {
         case 0:
-            _current_picker_option = ACTIVITY_OPTION;
-            [self showPickerViewWithOption:_current_picker_option];
+            if(script != VIEW)
+            {
+                _current_picker_option = ACTIVITY_OPTION;
+                [self showPickerViewWithOption:_current_picker_option];
+            }
             break;
         case 1:
         {
-            if (indexPath.row == 0) {
-                startorend = 0;
-            }
-            else
+            if(script != VIEW)
             {
-                startorend = 1;
+                if (indexPath.row == 0) {
+                    startorend = 0;
+                }
+                else
+                {
+                    startorend = 1;
+                }
+                [self showDatePickerContainer];
+                [self tableFade];
             }
-            [self showDatePickerContainer];
-            [self tableFade];
+            
             break;
         }
         case 2:
-            _current_picker_option = TIMEZONE;
-            [self showPickerViewWithOption:_current_picker_option];
+            if(script != VIEW)
+            {
+                _current_picker_option = TIMEZONE;
+                [self showPickerViewWithOption:_current_picker_option];
+                
+            }
+            
             break;
         case 3:
-            _current_picker_option = ALERT;
-            [self showPickerViewWithOption:_current_picker_option];
+            if(script != VIEW)
+            {
+                _current_picker_option = ALERT;
+                [self showPickerViewWithOption:_current_picker_option];
+            }
+            
             break;
         case 4:
-            [self headto:ONDUTYVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:[self involvedMembers],@"members",@(_editing_schedule.activity_id),ACTIVITY, nil]];
+            if(script != VIEW)
+            {
+                [self headto:ONDUTYVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:[self involvedMembers],@"members",@(_editing_schedule.activity_id),ACTIVITY, nil]];
+            }
+            
             break;
         case 6:
-            [self del];
+        {
+            ButtonActionCell *buttonCell =(ButtonActionCell*)[tableView cellForRowAtIndexPath:indexPath];
+            [self callActionButtonWithType:buttonCell.cellType];
+        }
+            break;
+        case 7:
+        {
+            ButtonActionCell *buttonCell =(ButtonActionCell*)[tableView cellForRowAtIndexPath:indexPath];
+            [self callActionButtonWithType:buttonCell.cellType];
+        }
+            break;
+        case 8:
+        {
+            ButtonActionCell *buttonCell =(ButtonActionCell*)[tableView cellForRowAtIndexPath:indexPath];
+            [self callActionButtonWithType:buttonCell.cellType];
+        }
             break;
         default:
             break;

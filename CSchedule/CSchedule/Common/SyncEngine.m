@@ -329,11 +329,11 @@ static SyncEngine* sharedEngine = nil;
     return [self sendInfo:info To:FEEDBACKPATH through:@"POST" withNotifications:notes];
 }
 
-- (AFHTTPRequestOperation*) confirmSharedMember: (SharedMember*) sharedmember  schedule: (int) schedule_id
+- (AFHTTPRequestOperation*) confirmSharedMember: (int) memberId  schedule: (int) schedule_id confirmType:(int)valueConfirm;
 {
-    NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[[DataManager sharedDataManagerInstance] currentUserid]],@"ownerid", @(sharedmember.confirm),@"confirm",nil];
+    NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[[DataManager sharedDataManagerInstance] currentUserid]],@"ownerid", @(valueConfirm),@"confirm",nil];
       NSDictionary* notes = [NSDictionary dictionaryWithObjectsAndKeys:CONFIRMSTATUSSUCCESSNOTE,@"200",CONFIRMSTATUSFAILNOTE,@"fail", nil];
-    return [self sendInfo:info To:[NSString stringWithFormat:@"%@/%d/onduty/%d",SCHEDULEPATH,schedule_id,sharedmember.member_id] through:@"PUT" withNotifications:notes];
+    return [self sendInfo:info To:[NSString stringWithFormat:@"%@/%d/onduty/%d",SCHEDULEPATH,schedule_id,memberId] through:@"PUT" withNotifications:notes];
     
     
 }

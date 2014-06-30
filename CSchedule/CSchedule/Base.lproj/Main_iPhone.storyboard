@@ -814,6 +814,9 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="buttonImage" destination="XJV-FM-5c8" id="Cxl-Xr-Pc7"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

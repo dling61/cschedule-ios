@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B7056831961C34800825A90 /* btn_confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B70567F1961C34800825A90 /* btn_confirm.png */; };
+		9B7056841961C34800825A90 /* btn_confirm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B7056801961C34800825A90 /* btn_confirm@2x.png */; };
+		9B7056851961C34800825A90 /* btn_deny.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B7056811961C34800825A90 /* btn_deny.png */; };
+		9B7056861961C34800825A90 /* btn_deny@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B7056821961C34800825A90 /* btn_deny@2x.png */; };
 		9B70AADD195F7C150053911F /* TimeZone.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B70AADC195F7C150053911F /* TimeZone.m */; };
 		9B70AAE0195F7C290053911F /* AlertInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B70AADF195F7C290053911F /* AlertInfo.m */; };
 		9B72E55C195ACF5B00FBADDF /* icon114*144.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B72E539195ACF5B00FBADDF /* icon114*144.png */; };
@@ -130,6 +134,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B70567F1961C34800825A90 /* btn_confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_confirm.png; sourceTree = "<group>"; };
+		9B7056801961C34800825A90 /* btn_confirm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_confirm@2x.png"; sourceTree = "<group>"; };
+		9B7056811961C34800825A90 /* btn_deny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_deny.png; sourceTree = "<group>"; };
+		9B7056821961C34800825A90 /* btn_deny@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_deny@2x.png"; sourceTree = "<group>"; };
 		9B70AADB195F7C150053911F /* TimeZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeZone.h; sourceTree = "<group>"; };
 		9B70AADC195F7C150053911F /* TimeZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeZone.m; sourceTree = "<group>"; };
 		9B70AADE195F7C290053911F /* AlertInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertInfo.h; sourceTree = "<group>"; };
@@ -637,6 +645,10 @@
 		9BC048E8195AD6BE007F79F6 /* newButton */ = {
 			isa = PBXGroup;
 			children = (
+				9B70567F1961C34800825A90 /* btn_confirm.png */,
+				9B7056801961C34800825A90 /* btn_confirm@2x.png */,
+				9B7056811961C34800825A90 /* btn_deny.png */,
+				9B7056821961C34800825A90 /* btn_deny@2x.png */,
 				9BC048E9195AD6BE007F79F6 /* btn_add_participant.png */,
 				9BC048EA195AD6BE007F79F6 /* btn_add_participant@2x.png */,
 				9BC048EB195AD6BE007F79F6 /* btn_delete.png */,
@@ -842,6 +854,7 @@
 				9B72E569195ACF5B00FBADDF /* btn_register@2x.png in Resources */,
 				C76BA8721886E7E500294AB8 /* Main_iPhone.storyboard in Resources */,
 				9B854AFF1960997C000F6B75 /* confirm_green_background@2x.png in Resources */,
+				9B7056851961C34800825A90 /* btn_deny.png in Resources */,
 				9B72E578195ACF5B00FBADDF /* participant-selected-btn.png in Resources */,
 				9B72E562195ACF5B00FBADDF /* account@2x.png in Resources */,
 				9B72E574195ACF5B00FBADDF /* icon_member.png in Resources */,
@@ -855,13 +868,16 @@
 				9B72E57A195ACF5B00FBADDF /* refresh.png in Resources */,
 				9B72E564195ACF5B00FBADDF /* bkg_navigation_bar.png in Resources */,
 				9B72E577195ACF5B00FBADDF /* participant-btn.png in Resources */,
+				9B7056831961C34800825A90 /* btn_confirm.png in Resources */,
 				9B72E568195ACF5B00FBADDF /* btn_register.png in Resources */,
 				9B72E576195ACF5B00FBADDF /* organizer.png in Resources */,
 				9B72E575195ACF5B00FBADDF /* no-share.png in Resources */,
 				9B72E572195ACF5B00FBADDF /* creator@2x.png in Resources */,
+				9B7056841961C34800825A90 /* btn_confirm@2x.png in Resources */,
 				9BC048A5195AD672007F79F6 /* DatePickerView.xib in Resources */,
 				9B72E566195ACF5B00FBADDF /* btn_bkg.png in Resources */,
 				9BC048F0195AD6BE007F79F6 /* btn_delete@2x.png in Resources */,
+				9B7056861961C34800825A90 /* btn_deny@2x.png in Resources */,
 				9BC048A6195AD672007F79F6 /* MyPickerView.xib in Resources */,
 				9BC048A4195AD672007F79F6 /* addConView.xib in Resources */,
 				9B72E57B195ACF5B00FBADDF /* txt_forgot_password.png in Resources */,

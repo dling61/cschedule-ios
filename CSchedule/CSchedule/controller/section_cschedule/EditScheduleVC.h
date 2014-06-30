@@ -27,8 +27,11 @@ STRONG UILabel* alert_lbl;
 STRONG NSArray* alert_types;
 STRONG NSArray* timezone_types;
 STRONG NSArray* picker_data;
+STRONG SharedMember *mySharedMember;
+
 NOPOINTER (assign,nonatomic) int numberSection;
 NOPOINTER PickerCScheduleOption current_picker_option;
+NOPOINTER BOOL isChangeDuty;
 
 - (IBAction) datepickerCancel: (id)sender;
 - (IBAction) datepickerDone: (id)sender;

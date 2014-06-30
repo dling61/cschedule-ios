@@ -39,8 +39,7 @@
 
 - (void) signinFail:(NSNotification*) note
 {
-    //    NSLog(@"signin success");
-    
+    NSLog(@"signin success %@",note);
     [self.acitiveIndicator show:NO];
     [self.acitiveIndicator setHidden:YES];
     
@@ -49,10 +48,7 @@
 }
 -(void)getSettingSuccess:(NSNotification*) note
 {
-    NSLog(@"getTimezonesSuccess %@",note);
     [self.dataManager processSettingInfo:[note userInfo]];
-    
-    
     [self.acitiveIndicator show:NO];
     [self.acitiveIndicator setHidden:YES];
     [self headto:TABPAGES withPackage:nil];

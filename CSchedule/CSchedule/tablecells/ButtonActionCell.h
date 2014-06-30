@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ButtonActionCell : UITableViewCell
-
+WEAK IBOutlet UIImageView* buttonImage;
+NOPOINTER ButtonCellType cellType;
 @end

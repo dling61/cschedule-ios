@@ -144,16 +144,6 @@
     [[self.syncEngine getContacts] start];
 }
 
-- (void)confirmSharedMemberSuccess: (NSNotification*) note
-{
-    [self.acitiveIndicator show:YES];
-    self.acitiveIndicator.hidden = NO;
-    [self.syncEngine getAllSchedulesForActivities:[self.dataManager allSortedActivities]];
-}
-- (void)confirmSharedMemberFail: (NSNotification*) note
-{
-    
-}
 
 - (void) refreshTable
 {
@@ -188,8 +178,6 @@
     [self responde:GETALLSHAREDMEMBERSNOTE by:@selector(getAllsharedMembersDone:)];
     [self responde:GETCONTACTSUCCESSNOTE by:@selector(getContactsSuccess:)];
     
-    [self responde:CONFIRMSTATUSSUCCESSNOTE by:@selector(confirmSharedMemberSuccess:)];
-    [self responde:CONFIRMSTATUSFAILNOTE by:@selector(confirmSharedMemberFail:)];
 }
 
 -(IBAction) today: (id)sender
@@ -252,6 +240,8 @@
     SharedMember* sm = [self.dataManager getSharedMemberWithID:member_id andActivityID:activity_id];
     selected_sharedmember = sm;
     UIActionSheet* sheet=nil;
+    sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",nil];
+    /*
     if(sm.creator_id==[self.dataManager currentUserid])
     {
         if(sm.confirm==Unknown || sm.confirm==Denied)
@@ -262,10 +252,7 @@
             sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",@"Deny",nil];
         }
     }
-    else{
-         sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",nil];
-    }
-    
+    */
     sheet.tag = 10;
     [sheet showInView:self.view];
 }
@@ -457,6 +444,7 @@
                     }];
                 }
             }
+                /*
             case 3:
             {
                 if(selected_sharedmember.confirm==Unknown || selected_sharedmember.confirm==Denied)
@@ -476,6 +464,7 @@
                 
             }
                 break;
+                 */
             default:
                 break;
         }

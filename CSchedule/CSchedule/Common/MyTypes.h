@@ -59,5 +59,12 @@ typedef enum
     Denied=2
 } ConfirmType;
 
+typedef enum
+{
+    DeleteButtonCell=0,
+    ConfirmButtonCell,
+    DenyButtonCell
+} ButtonCellType;
+
 
 #endif

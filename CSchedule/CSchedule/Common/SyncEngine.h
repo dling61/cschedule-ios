@@ -62,7 +62,7 @@
 
 - (AFHTTPRequestOperation*) deleteSharedMember: (SharedMember*) sharedmember;
 
-- (AFHTTPRequestOperation*) confirmSharedMember: (SharedMember*) sharedmember  schedule: (int) schedule_id;
+- (AFHTTPRequestOperation*) confirmSharedMember: (int) memberId  schedule: (int) schedule_id confirmType:(int)valueConfirm;
 
 - (AFHTTPRequestOperation*) getSharedMembersForActivity: (int) activity_id;
 
