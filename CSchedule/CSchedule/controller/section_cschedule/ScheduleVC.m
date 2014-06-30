@@ -241,18 +241,6 @@
     selected_sharedmember = sm;
     UIActionSheet* sheet=nil;
     sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",nil];
-    /*
-    if(sm.creator_id==[self.dataManager currentUserid])
-    {
-        if(sm.confirm==Unknown || sm.confirm==Denied)
-        {
-            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",@"Confirm",nil];
-        }
-        else{
-            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",@"Deny",nil];
-        }
-    }
-    */
     sheet.tag = 10;
     [sheet showInView:self.view];
 }
@@ -366,28 +354,6 @@
         [self headto:EDITSCHEDULEVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:selected_schedule, SCHEDULE, @(VIEW),@"script",nil]];
     }
     
-    /*
-     
-    //Activity* activity = [self.dataManager getActivityWithID:schedule.activity_id];
-    UIActionSheet* sheet = nil;
-    if (activity.shared_role == OWNER) {
-        sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Edit",@"Delete", nil];
-        sheet.destructiveButtonIndex = 1;
-        sheet.tag = 20;
-    }
-    else if (activity.shared_role == ORGANIZER)
-    {
-        sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Edit", nil];
-        sheet.tag = 20;
-        
-    }
-    else
-    {
-        sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"View", nil];
-        sheet.tag = 30;
-    }
-    [sheet showInView:self.view];
-     */
 }
 #pragma mark -
 #pragma mark UIActionsheet delegate
@@ -444,27 +410,6 @@
                     }];
                 }
             }
-                /*
-            case 3:
-            {
-                if(selected_sharedmember.confirm==Unknown || selected_sharedmember.confirm==Denied)
-                {
-                    selected_sharedmember.confirm= Confirmed;
-                    [[self.syncEngine confirmSharedMember:selected_sharedmember schedule:self.scheduleButtonSelected]start];
-                    
-                     //[[[UIAlertView alloc] initWithTitle:@"Message" message:@"Handle Confirm action" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
-                }
-                else{
-                    
-                    selected_sharedmember.confirm= Denied;
-                    [[self.syncEngine confirmSharedMember:selected_sharedmember schedule:self.scheduleButtonSelected]start];
-                    
-                     //[[[UIAlertView alloc] initWithTitle:@"Message" message:@"Handle Deny action" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
-                }
-                
-            }
-                break;
-                 */
             default:
                 break;
         }
