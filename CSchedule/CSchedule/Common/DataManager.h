@@ -28,7 +28,7 @@
 
 - (NSArray*) allSettingTimeZones;
 - (NSArray*) allSettingAlerts;
-
+- (NSArray*) allAppSetting;
 
 // all local activities sorted by keys
 - (NSArray*) allSortedActivities;

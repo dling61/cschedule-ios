@@ -27,4 +27,5 @@
     #import "AlertInfo.h"
     #import "TimeZone.h"
     #import "SharedMemberButton.h"
+    #import "AppSettingInfo.h"
 #endif

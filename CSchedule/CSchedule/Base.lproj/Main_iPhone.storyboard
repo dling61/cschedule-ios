@@ -1340,7 +1340,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yjg-xp-x9h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1121" y="-1049"/>
+            <point key="canvasLocation" x="-1155" y="-945"/>
         </scene>
         <!--Navigation Controller - Calendar-->
         <scene sceneID="gdA-Zb-lrn">
@@ -1401,7 +1401,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Mys-bV-DAY"/>
+        <segue reference="1W7-D3-O8K"/>
         <segue reference="ggf-GO-rdY"/>
     </inferredMetricsTieBreakers>
 </document>

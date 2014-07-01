@@ -176,6 +176,7 @@
 #define LSTACTIVITYUPDATE               @"lateupdatetimeofactivity"
 #define LSTMEMBERUPDATE                 @"lateupdatetimeofmember"
 
+#define ALLAPPSETTING                  @"allappsetting"
 #define ALLTIMEZONES                   @"alltimezones"
 #define ALLALERTS                      @"allalerts"
 
@@ -191,6 +192,7 @@
 #define SCHEDULE                        @"schedule"
 #define TIMEZONES                       @"timezones"
 #define ALERTS                          @"alerts"
+#define APPVERSION                      @"appversion"
 
 
 #pragma mark -

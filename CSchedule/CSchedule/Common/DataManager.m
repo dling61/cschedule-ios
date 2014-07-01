@@ -11,7 +11,6 @@
 DataManager* sharedDataManager = nil;
 
 @implementation DataManager
-
 + (DataManager*) sharedDataManagerInstance
 {
     if (sharedDataManager == nil) {
@@ -33,6 +32,19 @@ DataManager* sharedDataManager = nil;
 - (NSString*) currentUseremail
 {
     return [[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL];
+}
+- (NSArray*) allAppSetting
+{
+    NSDictionary* appVersion_dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:ALLAPPSETTING];
+    NSMutableArray* appVersion_arr = [[NSMutableArray alloc] init];
+    NSArray* allAppVersions = [appVersion_dict allValues];
+    
+    for (NSDictionary* appDict_dict in allAppVersions) {
+        AppSettingInfo* appVersion = [NSKeyedUnarchiver unarchiveObjectWithData:[appDict_dict valueForKey:APPVERSION]];
+        [appVersion_arr addObject:appVersion];
+    }
+    
+    return appVersion_arr;
 }
 
 - (NSArray*) allSettingTimeZones
@@ -293,6 +305,15 @@ DataManager* sharedDataManager = nil;
         alerts_dict = [[NSDictionary alloc] init];
     return alerts_dict;
 }
+-(NSDictionary*)allAppSettingDict
+{
+    NSDictionary* alerts_dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:ALLAPPSETTING];
+    if (alerts_dict == nil)
+        alerts_dict = [[NSDictionary alloc] init];
+    return alerts_dict;
+}
+
+
 - (NSDictionary*) allActivities
 {
     NSDictionary* activities_dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:ALLACTIVITIES];
@@ -325,6 +346,10 @@ DataManager* sharedDataManager = nil;
     return schedules_dict;
 }
 
+- (void) setAppSetting: (NSDictionary*) settingapps
+{
+    [[NSUserDefaults standardUserDefaults] setValue:settingapps forKey:ALLAPPSETTING];
+}
 - (void) setAllTimezones: (NSDictionary*) timezones
 {
     [[NSUserDefaults standardUserDefaults] setValue:timezones forKey:ALLTIMEZONES];
@@ -519,10 +544,11 @@ DataManager* sharedDataManager = nil;
         int order = [[origin_timezones valueForKey:@"displayorder"] intValue];
         NSString* abbrt = [origin_timezones valueForKey:@"abbrtzname"];
         TimeZone *timezone =[[TimeZone alloc]initWithId:a_id name:a_name displayName:display order:order abbrtz:abbrt];
-        NSDictionary* timezone_dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSKeyedArchiver archivedDataWithRootObject:timezone], TIMEZONES, @"1", SYNCHRONIZED,@"0",DELETED,nil];
+        NSDictionary* timezone_dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSKeyedArchiver archivedDataWithRootObject:timezone], TIMEZONES, @"1", SYNCHRONIZED,nil];
         [local_timezones_new setValue:timezone_dic forKey:[NSString stringWithFormat:@"%d",timezone.timezone_id]];
     }
     [self setAllTimezones:local_timezones_new];
+    
     
     NSDictionary* local_alerts = [self allAlerts];
     NSMutableDictionary* local_alerts_new = nil;
@@ -533,10 +559,29 @@ DataManager* sharedDataManager = nil;
         int a_id = [[origin_alert valueForKey:@"id"] intValue];
         NSString* a_name = [origin_alert valueForKey:@"aname"];
         AlertInfo *alertInfo =[[AlertInfo alloc]initWithId:a_id name:a_name];
-        NSDictionary* alert_dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSKeyedArchiver archivedDataWithRootObject:alertInfo], ALERTS, @"1", SYNCHRONIZED,@"0",DELETED,nil];
+        NSDictionary* alert_dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSKeyedArchiver archivedDataWithRootObject:alertInfo], ALERTS, @"1", SYNCHRONIZED,nil];
         [local_alerts_new setValue:alert_dic forKey:[NSString stringWithFormat:@"%d",alertInfo.alert_id]];
     }
     [self setAllAlerts:local_alerts_new];
+    
+    
+    NSDictionary* local_appSettings = [self allAppSettingDict];
+    NSMutableDictionary* local_appsetting_new = nil;
+    local_appsetting_new = [NSMutableDictionary dictionaryWithDictionary:local_appSettings];
+    NSArray* all_setting_apps = [[userinfo valueForKey:@"response"] valueForKey:@"appversions"];
+    for (NSDictionary* origin_app in all_setting_apps) {
+        int a_id = [[origin_app valueForKey:@"id"] intValue];
+        NSString* a_version = [origin_app valueForKey:@"appversion"];
+        NSString* os = [origin_app valueForKey:@"os"];
+        int enforce = [[origin_app valueForKey:@"enforce"] intValue];
+        float osversion = [[origin_app valueForKey:@"osversion"] floatValue];
+        
+        AppSettingInfo *appInfo =[[AppSettingInfo alloc]initWithAppID:a_id app_version:a_version enforce:enforce os:os osversion:osversion];
+        NSDictionary* app_dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSKeyedArchiver archivedDataWithRootObject:appInfo], APPVERSION, @"1", SYNCHRONIZED,nil];
+        [local_appsetting_new setValue:app_dic forKey:[NSString stringWithFormat:@"%d",appInfo.app_id]];
+    }
+    [self setAppSetting:local_appsetting_new];
+    
     
     
 }
@@ -779,13 +824,13 @@ DataManager* sharedDataManager = nil;
     [self setAllSharedmembers:nil];
     [self setAllAlerts:nil];
     [self setAllTimezones:nil];
+    [self setAppSetting:nil];
     
 }
 
 - (BOOL) IsFirsttimeOpen
 {
     if ([[[NSUserDefaults standardUserDefaults] valueForKey:FIRSTOPEN] boolValue] == YES) {
-//        [[NSUserDefaults standardUserDefaults] setValue:@"not first time" forKey:FIRSTOPEN];
         return YES;
     }
     return NO;

@@ -50,31 +50,84 @@
 -(void)getSettingSuccess:(NSNotification*) note
 {
     [self.dataManager processSettingInfo:[note userInfo]];
-    NSString *tokenString =[[NSUserDefaults standardUserDefaults] objectForKey:keyDeviceToken];
-    if(tokenString.length >0)
+    if([self checkAppVersionAvailable])
     {
-        NSString * uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-        [self.acitiveIndicator setLabelText:@"Adding Token..."];
-        [[self.syncEngine setToken:tokenString deviceId:uniqueIdentifier] start];
-
+        NSString *tokenString =[[NSUserDefaults standardUserDefaults] objectForKey:keyDeviceToken];
+        if(tokenString.length >0)
+        {
+            NSString * uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+            [self.acitiveIndicator setLabelText:@"Adding Token..."];
+            [[self.syncEngine setToken:tokenString deviceId:uniqueIdentifier] start];
+            
+            
+        }
+        else{
+            [self.acitiveIndicator show:NO];
+            [self.acitiveIndicator setHidden:YES];
+            [self headto:TABPAGES withPackage:nil];
+            
+        }
     }
     else{
+        
         [self.acitiveIndicator show:NO];
         [self.acitiveIndicator setHidden:YES];
-        [self headto:TABPAGES withPackage:nil];
-        
+        [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:@"App is out of update" delegate:self cancelButtonTitle:@"Update" otherButtonTitles:nil] show];
+        return;
     }
+
+    
     
    
     
     
     
 }
+
+#pragma mark Popview button Method
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        
+        NSString *iTunesLink = @"https://itunes.apple.com/au/app/apple-store/id820026700?mt=8";
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+    }
+}
+-(BOOL)checkAppVersionAvailable
+{
+    
+    NSArray* allAppSettings = [self.dataManager allAppSetting];
+    for(AppSettingInfo *appSetting in allAppSettings)
+    {
+        if([appSetting.os isEqualToString:DEVICE])
+        {
+            if(appSetting.enforce==0)
+            {
+                return YES;
+            }
+            else{
+                //NSDictionary *infoDictionary = [[NSBundle mainBundle]infoDictionary];
+                //NSString * appVersion    = infoDictionary[(NSString*)kCFBundleVersionKey];
+                float iOSVersion =[[[UIDevice currentDevice] systemVersion] floatValue];
+                if([VERSION isEqualToString:appSetting.app_version] && iOSVersion== appSetting.osversion)
+                {
+                    
+                    return YES;
+                }
+                
+                return NO;
+            }
+        }
+    }
+    
+    return YES;
+}
 -(void)getSettingFail:(NSNotification*) note
 {
     [self.acitiveIndicator show:NO];
     [self.acitiveIndicator setHidden:YES];
-    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not get list Setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not get list Setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
      [self.dataManager evacuateAllData];
 }
 

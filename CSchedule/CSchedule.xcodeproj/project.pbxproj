@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B42781F1962DC810011034E /* AppSettingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B42781E1962DC810011034E /* AppSettingInfo.m */; };
 		9B7056831961C34800825A90 /* btn_confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B70567F1961C34800825A90 /* btn_confirm.png */; };
 		9B7056841961C34800825A90 /* btn_confirm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B7056801961C34800825A90 /* btn_confirm@2x.png */; };
 		9B7056851961C34800825A90 /* btn_deny.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B7056811961C34800825A90 /* btn_deny.png */; };
@@ -134,6 +135,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B42781D1962DC800011034E /* AppSettingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppSettingInfo.h; sourceTree = "<group>"; };
+		9B42781E1962DC810011034E /* AppSettingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingInfo.m; sourceTree = "<group>"; };
 		9B70567F1961C34800825A90 /* btn_confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_confirm.png; sourceTree = "<group>"; };
 		9B7056801961C34800825A90 /* btn_confirm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_confirm@2x.png"; sourceTree = "<group>"; };
 		9B7056811961C34800825A90 /* btn_deny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_deny.png; sourceTree = "<group>"; };
@@ -573,6 +576,8 @@
 				9B70AADC195F7C150053911F /* TimeZone.m */,
 				9B70AADE195F7C290053911F /* AlertInfo.h */,
 				9B70AADF195F7C290053911F /* AlertInfo.m */,
+				9B42781D1962DC800011034E /* AppSettingInfo.h */,
+				9B42781E1962DC810011034E /* AppSettingInfo.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -934,6 +939,7 @@
 				9BC048DC195AD67C007F79F6 /* AFHTTPClient.m in Sources */,
 				9BC048DE195AD67C007F79F6 /* AFImageRequestOperation.m in Sources */,
 				9BC048D6195AD67C007F79F6 /* Contact.m in Sources */,
+				9B42781F1962DC810011034E /* AppSettingInfo.m in Sources */,
 				9BC048E4195AD67C007F79F6 /* UIImageView+AFNetworking.m in Sources */,
 				9BC048D5195AD67C007F79F6 /* Activity.m in Sources */,
 				9BC048DA195AD67C007F79F6 /* TFCell.m in Sources */,
