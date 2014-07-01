@@ -11,10 +11,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    /*
-    [[UINavigationBar appearance] setBackgroundImage:[[UIImage imageNamed:@"bkg_navigation_bar.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 1, 0, 1)] forBarMetrics:UIBarMetricsDefault];
-    */
-    
     [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x067AB5)];
     [[UINavigationBar appearance] setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
@@ -22,14 +18,14 @@
       NSForegroundColorAttributeName,
       [NSValue valueWithUIOffset:UIOffsetMake(0, -1)],
       NSBaselineOffsetAttributeName,
-      [UIFont fontWithName:@"Arial-Bold" size:0.0],
+      [UIFont fontWithName:@"Arial-Bold" size:20.0],
       NSFontAttributeName,
       nil]];
-    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"btn_bkg.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 5, 2, 5)] forState:UIControlStateNormal
-                                          barMetrics:UIBarMetricsDefault];
+    
     [[UIBarButtonItem appearance] setTintColor:[UIColor whiteColor]];
     [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:YES] forKey:FIRSTOPEN];
-    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
     return YES;
 }
 							

@@ -54,14 +54,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSArray* myactivities = [self.dataManager myActivities];
-    if (myactivities.count > 0) {
-        [self.navigationItem.rightBarButtonItem setEnabled:YES];
-    }
-    else
-    {
-        [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    }
+    [self checkRightBarButton];
     [self refreshTable];
 }
 
@@ -70,6 +63,18 @@
 //    [self restoreInitialState];
 }
 
+-(void)checkRightBarButton
+{
+    NSArray* myactivities = [self.dataManager myActivities];
+    if (myactivities.count > 0) {
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    }
+    else
+    {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    }
+
+}
 - (void) initAppearance
 {
     [super initAppearance];
@@ -101,9 +106,18 @@
 
 - (void)getActivitiesSuccess: (NSNotification*) note
 {
+    
     [self.dataManager processActivityInfo:[note userInfo]];
     NSArray* _activities = [self.dataManager allSortedActivities];
-    //    [_table reloadData];
+    if (_activities.count > 0) {
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    }
+    else
+    {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    }
+    
+    
     NSMutableArray* ops = [[NSMutableArray alloc] init];
     for (Activity* activity in _activities) {
         [ops addObject:[self.syncEngine getSharedMembersForActivity:activity.activity_id]];
@@ -143,7 +157,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:GETALLSHAREDMEMBERSNOTE object:nil];
     [[self.syncEngine getContacts] start];
 }
-
 
 - (void) refreshTable
 {
@@ -394,7 +407,7 @@
                   NSForegroundColorAttributeName,
                   [NSValue valueWithUIOffset:UIOffsetMake(0, -1)],
                   NSBaselineOffsetAttributeName,
-                  [UIFont fontWithName:@"Arial-Bold" size:0.0],
+                  [UIFont fontWithName:@"Arial-Bold" size:20.0],
                   NSFontAttributeName,
                   nil]];
                 
@@ -468,8 +481,6 @@
 
 -(void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
-    
-    
     [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x067AB5)];
     [[UINavigationBar appearance] setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
@@ -477,7 +488,7 @@
       NSForegroundColorAttributeName,
       [NSValue valueWithUIOffset:UIOffsetMake(0, -1)],
       NSBaselineOffsetAttributeName,
-      [UIFont fontWithName:@"Arial-Bold" size:0.0],
+      [UIFont fontWithName:@"Arial-Bold" size:20.0],
       NSFontAttributeName,
       nil]];
     [self dismissViewControllerAnimated:YES completion:^{

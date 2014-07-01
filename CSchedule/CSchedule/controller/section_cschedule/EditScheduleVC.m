@@ -453,21 +453,30 @@
 
 - (IBAction) EditScheduleDone:(id)sender
 {
-    if(desp_tv.text==nil)
+    if(_editing_schedule.activity_id >0)
     {
-        _editing_schedule.schedule_desp=@"";
+        if(desp_tv.text==nil)
+        {
+            _editing_schedule.schedule_desp=@"";
+        }
+        else{
+            _editing_schedule.schedule_desp = desp_tv.text;
+        }
+        
+        if (script == ADD) {
+            [[self.syncEngine postSchedule:_editing_schedule] start];
+        }
+        else
+        {
+            [[self.syncEngine updateSchedule:_editing_schedule] start];
+        }
     }
     else{
-        _editing_schedule.schedule_desp = desp_tv.text;
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please select an Activity!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        return;
     }
     
-    if (script == ADD) {
-        [[self.syncEngine postSchedule:_editing_schedule] start];
-    }
-    else
-    {
-        [[self.syncEngine updateSchedule:_editing_schedule] start];
-    }
+    
 }
 
 - (NSString*) partipant_str

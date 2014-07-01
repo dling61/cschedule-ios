@@ -35,6 +35,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="M9T-cH-QQq"/>
                         <barButtonItem title="Done" id="OEj-wE-Fxj"/>
                     </items>
+                    <color key="barTintColor" red="0.16470588235294117" green="0.50196078431372548" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                 </toolbar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

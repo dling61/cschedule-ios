@@ -15,8 +15,6 @@ NOPOINTER   RoleType shared_role;
 NOPOINTER   int owner_id;
 STRONG      NSString* activity_name;
 STRONG      NSString* activity_description;
-STRONG      NSDate* startdatetime;
-STRONG      NSDate* enddatetime;
 
 - (id) initWithId:(int)a_id name:(NSString*)a_name desp:(NSString*)desp role: (int)a_role owner: (int)owne_id start:(NSDate*) a_start end:(NSDate*) a_end;
 

@@ -150,9 +150,7 @@ static SyncEngine* sharedEngine = nil;
     NSDictionary* activity_info = [NSDictionary dictionaryWithObjectsAndKeys:
                                    [NSNumber numberWithInt:activity.activity_id],@"serviceid",
                                    activity.activity_name,@"servicename",
-                                   activity.activity_description,@"desp",
-                                   @"0000-00-00 00:00:00",@"startdatetime",
-                                   @"0000-00-00 00:00:00",@"enddatetime", nil];
+                                   activity.activity_description,@"desp", nil];
     NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:activity.owner_id],@"ownerid",activity_info,@"services", nil];
     NSDictionary* notes = [NSDictionary dictionaryWithObjectsAndKeys:POSTACTIVITYSUCCESSNOTE,@"200",POSTACTIVITYFAILNOTE,@"fail", nil];
     return [self sendInfo:info To:ACTIVITYPATH through:@"POST" withNotifications:notes];
@@ -162,12 +160,10 @@ static SyncEngine* sharedEngine = nil;
 {
     NSDictionary* activity_info = [NSDictionary dictionaryWithObjectsAndKeys:
                                    activity.activity_name,@"servicename",
-                                   activity.activity_description,@"desp",
-                                   @"0000-00-00 00:00:00",@"startdatetime",
-                                   @"0000-00-00 00:00:00",@"enddatetime", nil];
+                                   activity.activity_description,@"desp", nil];
     NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:activity.owner_id],@"ownerid",activity_info,@"services", nil];
     NSDictionary* notes = [NSDictionary dictionaryWithObjectsAndKeys:PUTACTIVITYSUCCESSNOTE,@"200",PUTACTIVITYFAILNOTE,@"fail", nil];
-    return [self sendInfo:info To:[NSString stringWithFormat:@"%@/%d",ACTIVITYPATH,activity.activity_id] through:@"PUT" withNotifications:notes];
+    return [self sendInfo:info To:[NSString stringWithFormat:@"%@/%d",ACTIVITYPATH,activity.activity_id] through:@"PUT" withNotifications:notes]; 
 }
 
 - (AFHTTPRequestOperation*) postContact: (Contact*) contact

@@ -37,6 +37,9 @@
     [super initAppearance];
     self.navigationItem.leftBarButtonItem = nil;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [_table reloadData];
+}
 
 - (void)didReceiveMemoryWarning
 {
