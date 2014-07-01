@@ -11,6 +11,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+    
     [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x067AB5)];
     [[UINavigationBar appearance] setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
@@ -55,6 +59,38 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    
+    const char *data = [deviceToken bytes];
+    NSMutableString *token = [NSMutableString string];
+    
+    for (int i = 0; i < [deviceToken length]; i++) {
+        [token appendFormat:@"%02.2hhX", data[i]];
+    }
+    NSLog(@"token :%@",token);
+    
+    [[NSUserDefaults standardUserDefaults] setObject:token forKey:keyDeviceToken];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:keyDeviceToken];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    if (error.code == 3010) {
+        NSLog(@"Push notifications are not supported in the iOS Simulator.");
+    } else {
+        // show some alert or otherwise handle the failure to register.
+        NSLog(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
+	}
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"%@",userInfo);
+    //[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 @end

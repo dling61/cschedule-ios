@@ -33,6 +33,7 @@
     [[NSUserDefaults standardUserDefaults] setValue:_email_tf.text forKey:USEREMAIL];
     [[NSUserDefaults standardUserDefaults] setValue:_passwd_tf.text forKey:USERPASSWORD];
     [self.dataManager processUserInfo:[note userInfo]];
+    [self.acitiveIndicator setLabelText:@"Loading..."];
     [[self.syncEngine getSetting] start];
     
 }
@@ -49,9 +50,24 @@
 -(void)getSettingSuccess:(NSNotification*) note
 {
     [self.dataManager processSettingInfo:[note userInfo]];
-    [self.acitiveIndicator show:NO];
-    [self.acitiveIndicator setHidden:YES];
-    [self headto:TABPAGES withPackage:nil];
+    NSString *tokenString =[[NSUserDefaults standardUserDefaults] objectForKey:keyDeviceToken];
+    if(tokenString.length >0)
+    {
+        NSString * uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        [self.acitiveIndicator setLabelText:@"Adding Token..."];
+        [[self.syncEngine setToken:tokenString deviceId:uniqueIdentifier] start];
+
+    }
+    else{
+        [self.acitiveIndicator show:NO];
+        [self.acitiveIndicator setHidden:YES];
+        [self headto:TABPAGES withPackage:nil];
+        
+    }
+    
+   
+    
+    
     
 }
 -(void)getSettingFail:(NSNotification*) note
@@ -60,6 +76,23 @@
     [self.acitiveIndicator setHidden:YES];
     [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not get list Setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
      [self.dataManager evacuateAllData];
+}
+
+-(void)setTokenSuccess:(NSNotification*) note
+{
+    NSLog(@"set Token success %@",note);
+    [self.acitiveIndicator show:NO];
+    [self.acitiveIndicator setHidden:YES];
+    [self headto:TABPAGES withPackage:nil];
+    
+}
+-(void)setTokenFail:(NSNotification*) note
+{
+     NSLog(@"set Token fail %@",note);
+    [self.acitiveIndicator show:NO];
+    [self.acitiveIndicator setHidden:YES];
+    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not set Token for account" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+    [self.dataManager evacuateAllData];
 }
 
 - (void) registerForNotifications
@@ -71,14 +104,19 @@
     [self responde:GETSETTINGSUCCESSNOTE by:@selector(getSettingSuccess:)];
     [self responde:GETSETTINGFAILNOTE by:@selector(getSettingFail:)];
 
+    [self responde:SETTOKENSUCCESSNOTE by:@selector(setTokenSuccess:)];
+    [self responde:SETTOKENFAILURENOTE by:@selector(setTokenFail:)];
     
 }
+
+
 
 - (IBAction) signin:(id)sender
 {
     [self.acitiveIndicator show:YES];
     [self.acitiveIndicator setHidden:NO];
     NSLog(@"_email_tf:%@ _passwd_tf:%@",_email_tf.text, _passwd_tf.text);
+    [self.acitiveIndicator setLabelText:@"Login..."];
     [[self.syncEngine signinwithEmail:_email_tf.text andPassword:_passwd_tf.text] start];
 }
 

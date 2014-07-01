@@ -106,6 +106,14 @@ static SyncEngine* sharedEngine = nil;
     return [self sendInfo:info To:RESETPWPATH through:@"POST" withNotifications:notes];
 }
 
+/*set Token*/
+- (AFHTTPRequestOperation*) setToken: (NSString*) tokenString deviceId: (NSString*)deviceId
+{
+    NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:tokenString,@"token",[NSNumber numberWithInt:[[DataManager sharedDataManagerInstance] currentUserid]],@"userid",deviceId,@"udid", nil];
+    NSDictionary* notes = [NSDictionary dictionaryWithObjectsAndKeys:SETTOKENSUCCESSNOTE,@"200",SETTOKENFAILURENOTE,@"fail", nil];
+    return [self sendInfo:info To:SETTOKENPATH through:@"POST" withNotifications:notes];
+}
+
 - (AFHTTPRequestOperation*) getActivities
 {
     NSDate* lastupdatetime = [[DataManager sharedDataManagerInstance] lastUpdatetimeActivity];

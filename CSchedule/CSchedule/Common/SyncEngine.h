@@ -35,6 +35,8 @@
 /*create an account*/
 - (AFHTTPRequestOperation*) registerwithEmail: (NSString*) email andPassword: (NSString*) password andName: (NSString*)name andMobile: (NSString*) mobile;
 
+/*set Token*/
+- (AFHTTPRequestOperation*) setToken: (NSString*) tokenString deviceId: (NSString*)deviceId;
 /*reset password*/
 - (AFHTTPRequestOperation*) resetPasswordForAccount: (NSString*) email;
 

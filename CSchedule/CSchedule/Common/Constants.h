@@ -28,6 +28,7 @@
 #define SIGNINPATH                      @"creator?action=signin"
 #define REGISTERPATH                    @"creator?action=register"
 #define RESETPWPATH                     @"creator?action=resetpw"
+#define SETTOKENPATH                    @"creator?action=settoken"
 #define ACTIVITYPATH                    @"services"
 #define MEMBERPATH                      @"members"
 #define SCHEDULEPATH                    @"schedules"
@@ -46,6 +47,9 @@
 
 #define RESETPWSUCCESSNOTE              @"resetpasswordsuccessnote"
 #define RESETPWFAILNOTE                 @"resetpasswordfailnote"
+
+#define SETTOKENSUCCESSNOTE             @"settokensuccess"
+#define SETTOKENFAILURENOTE             @"settokenfailed"
 
 #define GETACTIVITYSUCCESSNOTE          @"getactivitiesuccess"
 #define GETACTIVITYFAILNOTE             @"getactivitiesfail"
@@ -177,7 +181,7 @@
 
 #pragma mark -
 #pragma mark local object keys
-
+#define keyDeviceToken                  @"DEVICE_TOKEN"
 #define SYNCHRONIZED                    @"synchronized"
 #define DELETED                         @"deleted"
 

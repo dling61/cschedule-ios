@@ -341,7 +341,7 @@
                                 <rect key="frame" x="0.0" y="61" width="320" height="507"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Activity Name" textAlignment="center" minimumFontSize="17" id="OGZ-1j-oE1" userLabel="activityName">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Activity Name (*)" textAlignment="center" minimumFontSize="17" id="OGZ-1j-oE1" userLabel="activityName">
                                         <rect key="frame" x="0.0" y="20" width="320" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -800,7 +800,7 @@
                                             <outlet property="txt_area" destination="q1r-js-rN4" id="qVg-4d-vuc"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="schedulebuttoncell" rowHeight="50" id="OU2-2a-JJ6" customClass="ButtonActionCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="schedulebuttoncell" rowHeight="50" id="OU2-2a-JJ6" customClass="ButtonActionCell">
                                         <rect key="frame" x="0.0" y="509" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OU2-2a-JJ6" id="ruE-iP-8fZ">
