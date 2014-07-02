@@ -17,7 +17,7 @@
 #define BASEURL                         @"http://apitest1.servicescheduler.net/"
 #define DEVICE                          @"IOS"
 #define SCODE                           @"28e336ac6c9423d946ba02dddd6a2632"
-#define VERSION                         @"1.3.0"
+#define VERSION                         @"1.4.0"
 
 #define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < 0.1 )
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
