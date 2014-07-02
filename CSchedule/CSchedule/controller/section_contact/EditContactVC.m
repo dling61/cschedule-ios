@@ -165,12 +165,12 @@
     TFCell* cell = (TFCell*) [tableView dequeueReusableCellWithIdentifier:TFCELL];
     switch (indexPath.row) {
         case 0:
-            cell.tf.placeholder = @"Name";
+            cell.tf.placeholder = @"Name (*)";
             cell.tf.text = _editing_contact.contact_name;
             _name_tf = cell.tf;
             break;
         case 1:
-            cell.tf.placeholder = @"Email";
+            cell.tf.placeholder = @"Email (*)";
             cell.tf.text = _editing_contact.contact_email;
             _email_tf = cell.tf;
             break;

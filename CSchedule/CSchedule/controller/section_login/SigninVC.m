@@ -72,7 +72,7 @@
         
         [self.acitiveIndicator show:NO];
         [self.acitiveIndicator setHidden:YES];
-        [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:@"App is out of update" delegate:self cancelButtonTitle:@"Update" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:@"App is out of update." delegate:self cancelButtonTitle:@"Update" otherButtonTitles:nil] show];
         return;
     }
 
@@ -90,7 +90,7 @@
 {
     if (buttonIndex == 0) {
         
-        NSString *iTunesLink = @"https://itunes.apple.com/au/app/apple-store/id820026700?mt=8";
+        NSString *iTunesLink = @"https://itunes.apple.com/us/app/cschedule/id596231825?mt=8";
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
     }
 }
@@ -205,7 +205,7 @@
     cell.tf.delegate=self;
     switch (indexPath.row) {
         case 0:
-            cell.tf.placeholder = @"Email";
+            cell.tf.placeholder = @"Email (*)";
             _email_tf = cell.tf;
             if ([self.from isEqualToString:REGISTERVC]) {
                 _email_tf.text = [self.package valueForKey:@"useremail"];
@@ -215,14 +215,12 @@
                 if ([self.dataManager currentUseremail] != nil) {
                     _email_tf.text = [self.dataManager currentUseremail];
                 }
-//                 _email_tf.text = @"xue5@yahoo.com";
             }
             break;
         case 1:
-            cell.tf.placeholder = @"Password";
+            cell.tf.placeholder = @"Password (*)";
             _passwd_tf = cell.tf;
             [_passwd_tf setSecureTextEntry:YES];
- //           _passwd_tf.text = @"123";
             if ([[NSUserDefaults standardUserDefaults] valueForKeyPath:USERPASSWORD] != nil) {
                 _passwd_tf.text = [[NSUserDefaults standardUserDefaults] valueForKeyPath:USERPASSWORD];
             }

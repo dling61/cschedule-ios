@@ -602,7 +602,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="table" destination="YA3-iw-GyR" id="YZH-Cx-yVW"/>
-                        <segue destination="PtA-W9-CSb" kind="push" identifier="Edit schedule" id="zcL-HM-ADz"/>
+                        <segue destination="PtA-W9-CSb" kind="push" identifier="Edit Schedule" id="zcL-HM-ADz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2MK-yR-bru" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -837,7 +837,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="table" destination="nZr-UV-tJb" id="aIz-bq-X5J"/>
-                        <segue destination="fzy-9L-wU9" kind="push" identifier="Onduty" id="Jsl-RC-flS"/>
+                        <segue destination="fzy-9L-wU9" kind="push" identifier="Participant" id="Jsl-RC-flS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6fr-qr-hXY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -899,7 +899,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yid-9d-Yib" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="949" y="-1352"/>
+            <point key="canvasLocation" x="941" y="-1344"/>
         </scene>
         <!--SettingVC-->
         <scene sceneID="euo-cu-fIY">
@@ -921,7 +921,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accout" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k33-TR-oi4">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k33-TR-oi4">
                                                     <rect key="frame" x="20" y="11" width="75" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>

@@ -109,17 +109,17 @@
     cell.tf.delegate = self;
     switch (indexPath.section) {
         case 0:
-            cell.tf.placeholder = @"Email";
+            cell.tf.placeholder = @"Email (*)";
             _email_tf = cell.tf;
             break;
         case 1:
             if (indexPath.row == 0) {
-                cell.tf.placeholder = @"User name";
+                cell.tf.placeholder = @"Full Name (*)";
                 _name_tf = cell.tf;
             }
             else if (indexPath.row == 1)
             {
-                cell.tf.placeholder = @"Password";
+                cell.tf.placeholder = @"Password (*)";
                 _password_tf = cell.tf;
                 _password_tf.secureTextEntry = YES;
             }
