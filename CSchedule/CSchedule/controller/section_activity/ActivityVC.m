@@ -179,22 +179,39 @@
         [desp_lbl removeFromSuperview];
     }
     Activity* activity = [_activities_ontable objectAtIndex:indexPath.row];
+    NSArray * former_sharedmembers = [self.dataManager allSortedSharedmembersForActivityid:activity.activity_id];
+    NSMutableString* text = [[NSMutableString alloc] init];
+    int cnt = 0;
+    for (SharedMember* sm in former_sharedmembers) {
+        if (cnt == 0) {
+            [text appendString:sm.member_name];
+        }
+        else
+        {
+            [text appendFormat:@", %@",sm.member_name];
+        }
+        cnt++;
+    }
+    if (text.length == 0) {
+        [text appendString:@"No participants yet"];
+    }
     cell.activity_name_lbl.text = activity.activity_name;
-    NSString* text = activity.activity_description;
+
+    /*
     if (text == nil || text.length == 0) {
         text = @"No description";
     }
+     */
     UIFont* font = [UIFont fontWithName:@"Helvetica" size:12.0f];
     CGSize labelSize = [text sizeWithFont:font constrainedToSize:CGSizeMake(300.0, 70.0)
                                                         lineBreakMode:NSLineBreakByTruncatingTail];
     UILabel* new_desp_lbl = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 30.0, labelSize.width, labelSize.height)];
     new_desp_lbl.font = font;
-    new_desp_lbl.textColor = [UIColor grayColor];
+    new_desp_lbl.textColor = UIColorFromRGB(0X2A80E0); //[UIColor grayColor];
     new_desp_lbl.text = text;//activity.activity_description;
     new_desp_lbl.tag = ACTIVITY_DESP_LBL;
     new_desp_lbl.numberOfLines = 5;
     [cell.contentView addSubview:new_desp_lbl];
-//    }
     return cell;
 }
 
