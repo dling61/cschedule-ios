@@ -57,7 +57,6 @@
 {
     [self.dataManager processActivityInfo:[note userInfo]];
     _activities_ontable = [self.dataManager allSortedActivities];
-//    [_table reloadData];
     NSMutableArray* ops = [[NSMutableArray alloc] init];
     for (Activity* activity in _activities_ontable) {
         [ops addObject:[self.syncEngine getSharedMembersForActivity:activity.activity_id]];
@@ -69,7 +68,6 @@
 {
     _activities_ontable = [self.dataManager allSortedActivities];
     [_table reloadData];
-//    [self.acitiveIndicator show:NO];
 }
 
 - (void)addActivitySuccess: (NSNotification*) note

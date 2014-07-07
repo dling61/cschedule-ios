@@ -52,19 +52,9 @@
     for (SharedMember* sm in deletedones) {
         [self.dataManager deleteSharedmember:sm.member_id of:_activity_id Synced:YES];
     }
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATEACTIVITYSUCCESSNOTE object:nil];
     [self.navigationController popToRootViewControllerAnimated:YES];
     
-    /*
-    if (script == ADD) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-
-    }
-    else
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-     */
 }
 
 - (void) addContactSuccess: (NSNotification*) note
@@ -195,48 +185,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
--(IBAction) roleChange:(id)sender
-{
-    UIButton* btn = (UIButton*)sender;
-    LblBtnCell* cell = (LblBtnCell*)[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:btn.tag inSection:0]];
-    SharedMember* sm = [_sharedmembers_ontable objectAtIndex:btn.tag];
-    RoleType role = sm.shared_role;
-    int newrole = -1;
-    if (role == NOSHARE) {
-        newrole = PARTICIPANT;
-    }
-    else if(role==PARTICIPANT)
-    {
-        newrole =NOSHARE;
-    }
-    else if(role==OWNER)
-    {
-        return;
-    }
-    sm.shared_role = newrole;
-    [self setBtnImg:cell.btn byRole:newrole];
-}
-
-- (void) setBtnImg:(UIButton*) btn byRole:(RoleType)role
-{
-    UIImage* img = nil;
-    switch (role) {
-        case NOSHARE:
-            img = [UIImage imageNamed:@"no-share.png"];
-            break;
-        case PARTICIPANT:
-            img = [UIImage imageNamed:@"participant.png"];
-            break;
-        case OWNER:
-            img = [UIImage imageNamed:@"creator.png"];
-            break;
-        default:
-            break;
-    }
-    [btn setBackgroundImage:img forState:UIControlStateNormal];
-}
-
 #pragma mark -
 #pragma mark UITableView Datasource methods
 
@@ -255,12 +203,26 @@
     LblBtnCell* sharedmembercell = (LblBtnCell*) [tableView dequeueReusableCellWithIdentifier:SHAREMEMBERCELL];
     SharedMember* sharedmember = [_sharedmembers_ontable objectAtIndex:indexPath.row];
     sharedmembercell.lbl.text = sharedmember.member_name;
-    [self setBtnImg:sharedmembercell.btn byRole:sharedmember.shared_role];
+    
+    switch (sharedmember.shared_role) {
+        case NOSHARE:
+            sharedmembercell.btn.hidden=YES;
+            sharedmembercell.accessoryType = UITableViewCellAccessoryNone;
+            break;
+        case PARTICIPANT:
+            sharedmembercell.btn.hidden=YES;
+            sharedmembercell.accessoryType = UITableViewCellAccessoryCheckmark;
+            break;
+        case OWNER:
+            sharedmembercell.btn.hidden=NO;
+            [sharedmembercell.btn setImage:[UIImage imageNamed:@"creator.png"] forState:UIControlStateNormal];
+            break;
+        default:
+            break;
+    }
     if (sharedmember.shared_role == OWNER) {
         [sharedmembercell setBackgroundColor:[UIColor colorWithRed:0.9f green:0.9f blue:0.9f alpha:1.0f]];
     }
-    sharedmembercell.btn.tag = indexPath.row;
-    [sharedmembercell.btn addTarget:self action:@selector(roleChange:) forControlEvents:UIControlEventTouchUpInside];
     return sharedmembercell;
 }
 #pragma mark -
@@ -269,6 +231,25 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    LblBtnCell* cell = (LblBtnCell*)[_table cellForRowAtIndexPath:indexPath];
+    SharedMember* sm = [_sharedmembers_ontable objectAtIndex:indexPath.row];
+    RoleType role = sm.shared_role;
+    int newrole = -1;
+    if (role == NOSHARE) {
+        newrole = PARTICIPANT;
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+    else if(role==PARTICIPANT)
+    {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        newrole =NOSHARE;
+    }
+    else if(role==OWNER)
+    {
+        return;
+    }
+    sm.shared_role = newrole;
     
 }
 

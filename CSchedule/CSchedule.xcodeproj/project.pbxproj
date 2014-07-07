@@ -48,6 +48,8 @@
 		9B72E57B195ACF5B00FBADDF /* txt_forgot_password.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B72E559195ACF5B00FBADDF /* txt_forgot_password.png */; };
 		9B72E57C195ACF5B00FBADDF /* txt_forgot_password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B72E55A195ACF5B00FBADDF /* txt_forgot_password@2x.png */; };
 		9B72E57D195ACF5B00FBADDF /* viewer.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B72E55B195ACF5B00FBADDF /* viewer.png */; };
+		9B75F976196B150800F3FD6D /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B75F974196B150800F3FD6D /* checkmark.png */; };
+		9B75F977196B150800F3FD6D /* checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B75F975196B150800F3FD6D /* checkmark@2x.png */; };
 		9B769651195C97D700E48FA7 /* ButtonActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B769650195C97D700E48FA7 /* ButtonActionCell.m */; };
 		9B854AFC1960997C000F6B75 /* confirm_gray_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B854AF61960997C000F6B75 /* confirm_gray_background.png */; };
 		9B854AFD1960997C000F6B75 /* confirm_gray_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B854AF71960997C000F6B75 /* confirm_gray_background@2x.png */; };
@@ -179,6 +181,8 @@
 		9B72E559195ACF5B00FBADDF /* txt_forgot_password.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = txt_forgot_password.png; sourceTree = "<group>"; };
 		9B72E55A195ACF5B00FBADDF /* txt_forgot_password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "txt_forgot_password@2x.png"; sourceTree = "<group>"; };
 		9B72E55B195ACF5B00FBADDF /* viewer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewer.png; sourceTree = "<group>"; };
+		9B75F974196B150800F3FD6D /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
+		9B75F975196B150800F3FD6D /* checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkmark@2x.png"; sourceTree = "<group>"; };
 		9B76964F195C97D700E48FA7 /* ButtonActionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonActionCell.h; sourceTree = "<group>"; };
 		9B769650195C97D700E48FA7 /* ButtonActionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonActionCell.m; sourceTree = "<group>"; };
 		9B854AF61960997C000F6B75 /* confirm_gray_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = confirm_gray_background.png; sourceTree = "<group>"; };
@@ -650,6 +654,8 @@
 		9BC048E8195AD6BE007F79F6 /* newButton */ = {
 			isa = PBXGroup;
 			children = (
+				9B75F974196B150800F3FD6D /* checkmark.png */,
+				9B75F975196B150800F3FD6D /* checkmark@2x.png */,
 				9B70567F1961C34800825A90 /* btn_confirm.png */,
 				9B7056801961C34800825A90 /* btn_confirm@2x.png */,
 				9B7056811961C34800825A90 /* btn_deny.png */,
@@ -844,6 +850,7 @@
 				9B854B001960997C000F6B75 /* confirm_red_background.png in Resources */,
 				9B72E571195ACF5B00FBADDF /* creator.png in Resources */,
 				9B72E56C195ACF5B00FBADDF /* btn_signin.png in Resources */,
+				9B75F976196B150800F3FD6D /* checkmark.png in Resources */,
 				9B854B011960997C000F6B75 /* confirm_red_background@2x.png in Resources */,
 				9B72E55E195ACF5B00FBADDF /* icon_200_200.png in Resources */,
 				9B72E565195ACF5B00FBADDF /* bkg_navigation_bar@2x.png in Resources */,
@@ -871,6 +878,7 @@
 				9B72E57D195ACF5B00FBADDF /* viewer.png in Resources */,
 				9B72E56E195ACF5B00FBADDF /* calendar.png in Resources */,
 				9B72E57A195ACF5B00FBADDF /* refresh.png in Resources */,
+				9B75F977196B150800F3FD6D /* checkmark@2x.png in Resources */,
 				9B72E564195ACF5B00FBADDF /* bkg_navigation_bar.png in Resources */,
 				9B72E577195ACF5B00FBADDF /* participant-btn.png in Resources */,
 				9B7056831961C34800825A90 /* btn_confirm.png in Resources */,

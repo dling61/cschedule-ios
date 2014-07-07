@@ -530,6 +530,8 @@
                 _mySharedMember.confirm= Denied;
                 [[self.syncEngine confirmSharedMember:_mySharedMember.member_id schedule:_editing_schedule.schedule_id confirmType:Denied]start];
                 break;
+            case ButtonNone:
+                break;
                 
             default:
                 break;
@@ -685,24 +687,16 @@
         case 6:
         {
             ButtonActionCell* buttoncell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEBUTTONCELL];
-            if(script == VIEW){
-                if(_mySharedMember.confirm==Unknown || _mySharedMember.confirm==Denied)
-                {
-                    [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_confirm.png"]];
-                    buttoncell.cellType= ConfirmButtonCell;
-                }
-                else{
-                    [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_deny.png"]];
-                    buttoncell.cellType= DenyButtonCell;
-                }
-                
-            }
-            else
-            {
-                [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_delete.png"]];
-                buttoncell.cellType= DeleteButtonCell;
-            }
             
+            if(_mySharedMember.confirm==Unknown || _mySharedMember.confirm==Denied)
+            {
+                [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_confirm.png"]];
+                buttoncell.cellType= ConfirmButtonCell;
+            }
+            else{
+                [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_deny.png"]];
+                buttoncell.cellType= DenyButtonCell;
+            }
             cell = buttoncell;
             break;
 
@@ -717,17 +711,20 @@
                      [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_deny.png"]];
                      buttoncell.cellType= DenyButtonCell;
                  }
+                 else{
+                     buttoncell.cellType=ButtonNone;
+                 }
              }
              else
              {
-                 if(_mySharedMember.confirm==Unknown ||_mySharedMember.confirm==Denied )
+                 if(_mySharedMember.confirm==Unknown)
                  {
-                     [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_confirm.png"]];
-                     buttoncell.cellType= ConfirmButtonCell;
-                 }
-                 else{
                      [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_deny.png"]];
                      buttoncell.cellType= DenyButtonCell;
+                 }
+                 else{
+                     [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_delete.png"]];
+                     buttoncell.cellType= DeleteButtonCell;
                  }
                  
              }
@@ -741,8 +738,11 @@
             ButtonActionCell* buttoncell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEBUTTONCELL];
             if(_mySharedMember.confirm==Unknown)
             {
-                [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_deny.png"]];
-                buttoncell.cellType= DenyButtonCell;
+                [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_delete.png"]];
+                buttoncell.cellType= DeleteButtonCell;
+            }
+            else{
+                buttoncell.cellType=ButtonNone;
             }
             
             cell = buttoncell;

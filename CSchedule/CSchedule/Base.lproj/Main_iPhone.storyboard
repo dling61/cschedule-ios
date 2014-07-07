@@ -231,7 +231,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="AZl-jH-51Q">
-                                                    <rect key="frame" x="196" y="6" width="104" height="37"/>
+                                                    <rect key="frame" x="208" y="6" width="104" height="37"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <state key="normal">
@@ -364,7 +364,7 @@
                                         </connections>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Wf6-yS-8dU" userLabel="deleteButton">
-                                        <rect key="frame" x="10" y="257" width="300" height="44"/>
+                                        <rect key="frame" x="10" y="264" width="300" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <state key="normal" image="btn_delete.png">
@@ -1402,6 +1402,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="1W7-D3-O8K"/>
-        <segue reference="mxI-VI-9bV"/>
+        <segue reference="ggf-GO-rdY"/>
     </inferredMetricsTieBreakers>
 </document>

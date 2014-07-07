@@ -393,9 +393,9 @@
     float totallength = 0.0f;
     for (UIButton* btn in smbtns)
         totallength += btn.frame.size.width;
-    UIScrollView* scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 32, 280, 30)];
+    UIScrollView* scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 32, 280, 25)];
     scroll.tag = 10;
-    scroll.contentSize = CGSizeMake(totallength, 30);
+    scroll.contentSize = CGSizeMake(totallength, 25);
     for (UIButton* btn in smbtns)
         [scroll addSubview:btn];
     [schedulecell.contentView addSubview:scroll];
