@@ -158,6 +158,18 @@
     [[self.syncEngine getContacts] start];
 }
 
+
+- (void)confirmSharedMemberSuccess: (NSNotification*) note
+{
+    [self.acitiveIndicator setLabelText:@"Loading..."];
+    [self.syncEngine getAllSchedulesForActivities:[self.dataManager allSortedActivities]];
+}
+- (void)confirmSharedMemberFail: (NSNotification*) note
+{
+    [self.acitiveIndicator show:NO];
+    self.acitiveIndicator.hidden = YES;
+}
+
 - (void) refreshTable
 {
     NSArray* schedules = nil;
@@ -191,6 +203,9 @@
     [self responde:GETALLSHAREDMEMBERSNOTE by:@selector(getAllsharedMembersDone:)];
     [self responde:GETCONTACTSUCCESSNOTE by:@selector(getContactsSuccess:)];
     
+    
+    [self responde:CONFIRMSTATUSSUCCESSNOTE by:@selector(confirmSharedMemberSuccess:)];
+    [self responde:CONFIRMSTATUSFAILNOTE by:@selector(confirmSharedMemberFail:)];
 }
 
 -(IBAction) today: (id)sender
@@ -228,6 +243,7 @@
 {
     [self.acitiveIndicator show:YES];
     self.acitiveIndicator.hidden = NO;
+    [self.acitiveIndicator setLabelText:@"Loading..."];
     [self.syncEngine getAllSchedulesForActivities:[self.dataManager allSortedActivities]];
 }
 
@@ -243,22 +259,61 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (SharedMember*) checkSharedMemberWithID:(int)memberid schedule:(Schedule*) scheduleInfo
+{
+   
+    for (SharedMember *memberInfo in scheduleInfo.participants)
+    {
+        if(memberInfo.member_id== memberid)
+        {
+            return memberInfo;
+        }
+        
+    }
+    return nil;
+}
 -(void) smClicked: (id)sender
 {
     SharedMemberButton* btn = (SharedMemberButton*) sender;
     int member_id = btn.tag;
-    int activity_id = btn.titleLabel.tag;
-    self.scheduleButtonSelected= btn.schedule_id;
-    
-    SharedMember* sm = [self.dataManager getSharedMemberWithID:member_id andActivityID:activity_id];
+    //int activity_id = btn.titleLabel.tag;
+    self.scheduleButtonSelected= btn.scheduleInfo;
+   // SharedMember* sm = [self.dataManager getSharedMemberWithID:member_id andActivityID:activity_id];
+    SharedMember* sm = [self checkSharedMemberWithID:member_id schedule:self.scheduleButtonSelected];
     selected_sharedmember = sm;
-    UIActionSheet* sheet=nil;
-    sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",nil];
-    sheet.tag = 10;
-    [sheet showInView:self.view];
+    NSString *currentUserEmail= [self.dataManager currentUseremail];
+    if([sm.member_email isEqualToString:currentUserEmail])
+    {
+        UIActionSheet* sheet=nil;
+        if(sm.confirm==Unknown)
+        {
+            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Confirm",@"Deny",nil];
+            sheet.tag = 12;
+            [sheet showInView:self.view];
+        }else if(sm.confirm==Denied)
+        {
+            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Confirm",nil];
+            sheet.tag = 12;
+            [sheet showInView:self.view];
+        }else
+        {
+            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Deny",nil];
+            sheet.tag = 12;
+            [sheet showInView:self.view];
+        }
+        
+    }
+    else{
+        UIActionSheet* sheet=nil;
+        sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",nil];
+        sheet.tag = 10;
+        [sheet showInView:self.view];
+    }
+    
+   
 }
 
--(NSArray*) createBtnsForSMs :(NSArray*) smembers withcschedule:(int)schedule_id
+-(NSArray*) createBtnsForSMs :(NSArray*) smembers withcschedule:(Schedule*)scheduleInfo
 {
     NSMutableArray* btns = [[NSMutableArray alloc] init];
     float beginXoffset = 0.0f;
@@ -284,8 +339,7 @@
         [btn1 addTarget:self action:@selector(smClicked:) forControlEvents:UIControlEventTouchUpInside];
         btn1.tag = sm.member_id;
         btn1.titleLabel.tag = sm.activity_id;
-        btn1.schedule_id= schedule_id;
-        //btn1.titleLabel.text=@"1244555";
+        btn1.scheduleInfo= scheduleInfo;
         beginXoffset += btn1.frame.size.width + 5.0f;
         [btns addObject:btn1];
     }
@@ -335,7 +389,7 @@
     schedulecell.time_lbl.text = [NSString stringWithFormat:@"%@ to %@",
                                   [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:schedule.schedule_start andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]],
                                   [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:schedule.schedule_end andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]]];
-    NSArray* smbtns = [self createBtnsForSMs:schedule.participants withcschedule:schedule.schedule_id];
+    NSArray* smbtns = [self createBtnsForSMs:schedule.participants withcschedule:schedule];
     float totallength = 0.0f;
     for (UIButton* btn in smbtns)
         totallength += btn.frame.size.width;
@@ -431,22 +485,26 @@
     }
     else
     {
-        switch (buttonIndex) {
-            case 0:
-                if (actionSheet.tag == 20) {
-                    [self edit];
-                }
-                else
-                {
-                    [self inspect];
-                }
-                break;
-            case 1:
-                [self del];
-                break;
-            default:
-                break;
+        
+        NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
+        if([title isEqual: @"Confirm"])
+        {
+            NSLog(@"Confirm");
+            [self.acitiveIndicator show:YES];
+            self.acitiveIndicator.hidden = NO;
+            [self.acitiveIndicator setLabelText:@"Saving..."];
+            [[self.syncEngine confirmSharedMember:selected_sharedmember.member_id schedule:self.scheduleButtonSelected.schedule_id confirmType:Confirmed]start];
         }
+        if([title isEqual: @"Deny"])
+        {
+            NSLog(@"Deny");
+            [self.acitiveIndicator show:YES];
+            self.acitiveIndicator.hidden = NO;
+            [self.acitiveIndicator setLabelText:@"Saving..."];
+            [[self.syncEngine confirmSharedMember:selected_sharedmember.member_id schedule:self.scheduleButtonSelected.schedule_id confirmType:Denied]start];
+            
+        }
+        
     }
     
 }

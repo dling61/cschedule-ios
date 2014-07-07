@@ -10,7 +10,7 @@
 
 @interface SharedMemberButton : UIButton
 {
-    int schedule_id;
+    Schedule *scheduleInfo;
 }
-NOPOINTER   int schedule_id;
+STRONG Schedule* scheduleInfo;
 @end

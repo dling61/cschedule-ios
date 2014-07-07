@@ -9,7 +9,7 @@
 #import "SharedMemberButton.h"
 
 @implementation SharedMemberButton
-@synthesize schedule_id;
+@synthesize scheduleInfo;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
