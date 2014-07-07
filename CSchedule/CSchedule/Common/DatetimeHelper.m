@@ -29,8 +29,8 @@ DatetimeHelper* sharedDatetimeHelper = nil;
     if (self = [super init]) {
         _calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         _dateformatter = [[NSDateFormatter alloc] init];
-        _weekdayStrs = @[@"Sun",@"Mon",@"Tue",@"Wed",@"Thu",@"Fri",@"Sat"];
-        _monthStrs = @[@"Jan.",@"Feb.",@"Mar.",@"Apr.",@"May",@"June", @"July",@"Aug.",@"Sept.",@"Oct.",@"Nov.",@"Dec."];
+        _weekdayStrs = @[@"Sunday",@"Monday",@"Tuesday",@"Wednesday",@"Thursday",@"Friday",@"Saturday"];
+        _monthStrs = @[@"January",@"February",@"March",@"April",@"May",@"June", @"July",@"August",@"September",@"October",@"November",@"Decemcber"];
     }
     return self;
 }
@@ -57,6 +57,17 @@ DatetimeHelper* sharedDatetimeHelper = nil;
     NSInteger month = [components month];
     NSInteger day = [components day];
     return [NSString stringWithFormat:@"%@, %@ %d, %d",_weekdayStrs[weekday - 1],_monthStrs[month - 1],day,year];
+}
+
+- (NSString*) GMTDateToSpecificTimeZoneInStringStyle4: (NSDate*) date andUtcoff:(int)utcoff
+{
+    [_calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:utcoff]];
+    NSDateComponents* components = [_calendar components:NSCalendarUnitYear | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitWeekday fromDate:date];
+    NSInteger weekday = [components weekday];
+    NSInteger year = [components year];
+    NSInteger month = [components month];
+    NSInteger day = [components day];
+    return [NSString stringWithFormat:@"%@,                              %@ %d, %d",_weekdayStrs[weekday - 1],_monthStrs[month - 1],day,year];
 }
 
 - (NSString*) GMTDateToSpecificTimeZoneInStringStyle3: (NSDate*) date andUtcoff:(int)utcoff

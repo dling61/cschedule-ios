@@ -263,7 +263,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="table" destination="rU1-bG-JCx" id="Wrz-hX-VRU"/>
-                        <segue destination="ABo-Ld-jYG" kind="push" identifier="Edit Contact" id="ggf-GO-rdY"/>
+                        <segue destination="ABo-Ld-jYG" kind="push" identifier="Contact Info" id="ggf-GO-rdY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tb9-hR-uqG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -322,7 +322,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="table" destination="slS-nR-myV" id="me7-KW-ExB"/>
-                        <segue destination="vdi-4l-vIp" kind="push" identifier="Edit Activity" id="8Zk-te-acY"/>
+                        <segue destination="vdi-4l-vIp" kind="push" identifier="Activity Info" id="8Zk-te-acY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iIq-UR-7pQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -364,7 +364,7 @@
                                         </connections>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Wf6-yS-8dU" userLabel="deleteButton">
-                                        <rect key="frame" x="9" y="203" width="300" height="44"/>
+                                        <rect key="frame" x="10" y="257" width="300" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <state key="normal" image="btn_delete.png">
@@ -375,7 +375,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xCl-Y1-RK3" userLabel="addParticalButton">
-                                        <rect key="frame" x="9" y="261" width="300" height="44"/>
+                                        <rect key="frame" x="10" y="207" width="300" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <state key="normal" image="btn_add_participant.png">
@@ -512,20 +512,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" id="YA3-iw-GyR">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" sectionHeaderHeight="22" sectionFooterHeight="22" id="YA3-iw-GyR">
                                 <rect key="frame" x="0.0" y="109" width="320" height="410"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="schedulecell" rowHeight="80" id="yDd-a8-vYb" customClass="ScheduleCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="80"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="schedulecell" rowHeight="65" id="yDd-a8-vYb" customClass="ScheduleCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="65"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yDd-a8-vYb" id="vKa-k5-IDl">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="thj-G6-c8y">
-                                                    <rect key="frame" x="10" y="3" width="139" height="36"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="thj-G6-c8y">
+                                                    <rect key="frame" x="10" y="5" width="144" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -602,7 +602,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="table" destination="YA3-iw-GyR" id="YZH-Cx-yVW"/>
-                        <segue destination="PtA-W9-CSb" kind="push" identifier="Edit Schedule" id="zcL-HM-ADz"/>
+                        <segue destination="PtA-W9-CSb" kind="push" identifier="Schedule Info" id="zcL-HM-ADz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2MK-yR-bru" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1198,7 +1198,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="table" destination="C5Z-Ws-Dyv" id="aMz-KT-rYv"/>
-                        <segue destination="ABo-Ld-jYG" kind="push" identifier="Edit Contact" id="mxI-VI-9bV"/>
+                        <segue destination="ABo-Ld-jYG" kind="push" identifier="Contact Info" id="mxI-VI-9bV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eMM-oL-PhD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1402,6 +1402,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="1W7-D3-O8K"/>
-        <segue reference="ggf-GO-rdY"/>
+        <segue reference="mxI-VI-9bV"/>
     </inferredMetricsTieBreakers>
 </document>

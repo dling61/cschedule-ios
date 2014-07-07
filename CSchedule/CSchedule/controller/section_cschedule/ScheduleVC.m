@@ -173,7 +173,7 @@
     _table_headers = [[NSMutableArray alloc] init];
     for (NSArray* arr in groups) {
         Schedule* s = [arr objectAtIndex:0];
-        [_table_headers addObject:[self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:s.schedule_start andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]]];
+        [_table_headers addObject:[self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle4:s.schedule_start andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]]];
     }
     [_table reloadData];
 }
@@ -324,11 +324,13 @@
     [[schedulecell viewWithTag:10] removeFromSuperview];
     Schedule* schedule = [[_groupedSchedules_ontable objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     Activity* activity = [self.dataManager getActivityWithID:schedule.activity_id];
+    /*
     UIFont* font = [UIFont boldSystemFontOfSize:17.0f];
     CGSize labelSize = [activity.activity_name sizeWithFont:font
                                                  constrainedToSize:CGSizeMake(150.0, 50.0)
                                                      lineBreakMode:NSLineBreakByTruncatingTail];
     [schedulecell.name_lbl setFrame:CGRectMake(10.0, 5.0, labelSize.width, labelSize.height)];
+    */
     schedulecell.name_lbl.text = activity.activity_name;
     schedulecell.time_lbl.text = [NSString stringWithFormat:@"%@ to %@",
                                   [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:schedule.schedule_start andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]],
@@ -337,7 +339,7 @@
     float totallength = 0.0f;
     for (UIButton* btn in smbtns)
         totallength += btn.frame.size.width;
-    UIScrollView* scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(20, 50, 280, 30)];
+    UIScrollView* scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 32, 280, 30)];
     scroll.tag = 10;
     scroll.contentSize = CGSizeMake(totallength, 30);
     for (UIButton* btn in smbtns)

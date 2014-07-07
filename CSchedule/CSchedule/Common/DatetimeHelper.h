@@ -28,6 +28,6 @@ STRONG NSArray* monthStrs;
 
 /*convert a GMT time to a specific time zone and presents in format: "HH:mm am/pm"*/
 - (NSString*) GMTDateToSpecificTimeZoneInStringStyle3: (NSDate*) date andUtcoff:(int)utcoff;
-
+- (NSString*) GMTDateToSpecificTimeZoneInStringStyle4: (NSDate*) date andUtcoff:(int)utcoff;
 
 @end
