@@ -67,7 +67,7 @@ DatetimeHelper* sharedDatetimeHelper = nil;
     NSInteger year = [components year];
     NSInteger month = [components month];
     NSInteger day = [components day];
-    return [NSString stringWithFormat:@"%@,                              %@ %d, %d",_weekdayStrs[weekday - 1],_monthStrs[month - 1],day,year];
+    return [NSString stringWithFormat:@"%@                             %@ %d, %d",_weekdayStrs[weekday - 1],_monthStrs[month - 1],day,year];
 }
 
 - (NSString*) GMTDateToSpecificTimeZoneInStringStyle3: (NSDate*) date andUtcoff:(int)utcoff

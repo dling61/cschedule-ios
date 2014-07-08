@@ -64,22 +64,27 @@ static SyncEngine* sharedEngine = nil;
     NSLog(@"path %@ parameter is %@",path,info);
     NSURLRequest* request = [self requestWithMethod:method andPath:path andParameters:info];
     return [_client HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-    NSDictionary* response_info = nil;
-    if (responseObject) {
-        NSData* data = [NSData dataWithBytes:[responseObject bytes] length:[responseObject length]];
+        
+        NSDictionary* response_info = nil;
+        if (responseObject) {
+            NSData* data = [NSData dataWithBytes:[responseObject bytes] length:[responseObject length]];
+            NSError* err = nil;
+            response_info = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
 #ifdef DEBUG
-        NSLog(@"responde is %@",[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+            NSLog(@"responde is %@",response_info);
 #endif
-        NSError* err = nil;
-        response_info = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
-    }
-    NSString* response_code_str = [NSString stringWithFormat:@"%d",[[operation response] statusCode]];
-#ifdef DEBUG
-        NSLog(@"responde code for path %@ is %@",path,response_code_str);
-#endif
-    [[NSNotificationCenter defaultCenter] postNotificationName:[notes valueForKey:response_code_str] object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:response_info,@"response",path,@"path",nil]];
-
+            
+        }
+        NSString* response_code_str = [NSString stringWithFormat:@"%d",[[operation response] statusCode]];
+        if([response_code_str isEqualToString:@"200"])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:[notes valueForKey:response_code_str] object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:response_info,@"response",path,@"path",nil]];
+        }
+        else{
+            [[NSNotificationCenter defaultCenter] postNotificationName:[notes valueForKey:@"fail"] object:nil];
+        }
+        
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [[NSNotificationCenter defaultCenter] postNotificationName:[notes valueForKey:@"fail"] object:nil];
     }];

@@ -688,15 +688,24 @@
         {
             ButtonActionCell* buttoncell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEBUTTONCELL];
             
-            if(_mySharedMember.confirm==Unknown || _mySharedMember.confirm==Denied)
+            if(_mySharedMember!=nil)
             {
-                [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_confirm.png"]];
-                buttoncell.cellType= ConfirmButtonCell;
+                if(_mySharedMember.confirm==Unknown || _mySharedMember.confirm==Denied)
+                {
+                    [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_confirm.png"]];
+                    buttoncell.cellType= ConfirmButtonCell;
+                }
+                else{
+                    [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_deny.png"]];
+                    buttoncell.cellType= DenyButtonCell;
+                }
+
             }
             else{
-                [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_deny.png"]];
-                buttoncell.cellType= DenyButtonCell;
+                [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_delete.png"]];
+                buttoncell.cellType= DeleteButtonCell;
             }
+            
             cell = buttoncell;
             break;
 
