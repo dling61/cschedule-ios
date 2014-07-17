@@ -144,8 +144,10 @@
      NSLog(@"set Token fail %@",note);
     [self.acitiveIndicator show:NO];
     [self.acitiveIndicator setHidden:YES];
-    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not set Token for account" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
-    [self.dataManager evacuateAllData];
+    [self headto:TABPAGES withPackage:nil];
+    
+    //[[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not set Token for account" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+    //[self.dataManager evacuateAllData];
 }
 
 - (void) registerForNotifications
