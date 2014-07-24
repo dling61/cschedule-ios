@@ -122,17 +122,14 @@
     _editing_contact.contact_name = _name_tf.text;
     _editing_contact.contact_email = _email_tf.text;
     _editing_contact.contact_mobile = _mobile_tf.text;
-    
-    if (_editing_contact.contact_email == nil || _editing_contact.contact_email.length == 0) {
-        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Both an email and user name are required" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
-        return;
-    }
-    
     if (_editing_contact.contact_name == nil || _editing_contact.contact_name.length == 0) {
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Both an email and user name are required" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
         return;
     }
-    
+    if (_editing_contact.contact_email == nil || _editing_contact.contact_email.length == 0 || ![self IsValidEmail:_editing_contact.contact_email]) {
+        [[[UIAlertView alloc] initWithTitle:@"Lack information" message:@"You should enter a true email address" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+        return;
+    }
     if (_script == ADD) {
         [[self.syncEngine postContact:_editing_contact] start];
     }
@@ -145,7 +142,12 @@
 {
     [self del];
 }
-
+-(BOOL) IsValidEmail: (NSString *)checkString
+{
+    NSString *stricterFilterString = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", stricterFilterString];
+    return [emailTest evaluateWithObject:checkString];
+}
 
 #pragma mark -
 #pragma mark UITableView Datasource methods

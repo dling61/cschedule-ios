@@ -75,12 +75,17 @@
         [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:@"App is out of update." delegate:self cancelButtonTitle:@"Update" otherButtonTitles:nil] show];
         return;
     }
+    
+    
+}
+-(void)getSettingFail:(NSNotification*) note
+{
 
     
-    
-   
-    
-    
+    [self.acitiveIndicator show:NO];
+    [self.acitiveIndicator setHidden:YES];
+    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not get list Setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    [self.dataManager evacuateAllData];
     
 }
 
@@ -122,13 +127,6 @@
     }
     
     return YES;
-}
--(void)getSettingFail:(NSNotification*) note
-{
-    [self.acitiveIndicator show:NO];
-    [self.acitiveIndicator setHidden:YES];
-    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not get list Setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-     [self.dataManager evacuateAllData];
 }
 
 -(void)setTokenSuccess:(NSNotification*) note
