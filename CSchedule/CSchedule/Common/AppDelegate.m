@@ -89,8 +89,16 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"%@",userInfo);
-    //[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    NSLog(@"didReceiveRemoteNotification %@",userInfo);
+    NSDictionary *aps=[userInfo objectForKey:@"aps"];
+    if([aps objectForKey:@"alert"])
+    {
+        NSString *alertString =[aps objectForKey:@"alert"];
+        [[[UIAlertView alloc] initWithTitle:@"Push notication" message:alertString delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
+    }
+    else{
+        [[[UIAlertView alloc] initWithTitle:@"Push notication" message:@"You have a new push notification" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
+    }
 }
 
 @end
