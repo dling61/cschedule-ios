@@ -287,17 +287,17 @@
         UIActionSheet* sheet=nil;
         if(sm.confirm==Unknown)
         {
-            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Confirm",@"Deny",nil];
+            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Confirmation" otherButtonTitles:@"Confirm",@"Deny",nil];
             sheet.tag = 12;
             [sheet showInView:self.view];
         }else if(sm.confirm==Denied)
         {
-            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Confirm",nil];
+            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Confirmation" otherButtonTitles:@"Confirm",nil];
             sheet.tag = 12;
             [sheet showInView:self.view];
         }else
         {
-            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Deny",nil];
+            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Confirmation" otherButtonTitles:@"Deny",nil];
             sheet.tag = 12;
             [sheet showInView:self.view];
         }
@@ -305,7 +305,7 @@
     }
     else{
         UIActionSheet* sheet=nil;
-        sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",nil];
+        sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Contact Participant" otherButtonTitles:@"Call",@"Mail",@"SMS",nil];
         sheet.tag = 10;
         [sheet showInView:self.view];
     }
@@ -433,12 +433,14 @@
     if (actionSheet.tag == 10) {
         switch (buttonIndex) {
             case 0:
+                break;
+            case 1:
             {
                 NSString* call = [NSString stringWithFormat:@"tel://%@",selected_sharedmember.member_mobile];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:call]];
                 break;
             }
-            case 1:
+            case 2:
             {
                 MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
                 [[picker navigationBar] setTintColor:[UIColor whiteColor]];
@@ -454,7 +456,7 @@
                 }];
                 break;
             }
-            case 2:
+            case 3:
             {
                 [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x067AB5)];
                 [[UINavigationBar appearance] setTitleTextAttributes:
@@ -495,7 +497,7 @@
             [self.acitiveIndicator setLabelText:@"Saving..."];
             [[self.syncEngine confirmSharedMember:selected_sharedmember.member_id schedule:self.scheduleButtonSelected.schedule_id confirmType:Confirmed]start];
         }
-        if([title isEqual: @"Deny"])
+        else if([title isEqual: @"Deny"])
         {
             NSLog(@"Deny");
             [self.acitiveIndicator show:YES];
