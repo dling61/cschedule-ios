@@ -166,6 +166,8 @@
         case 4:
             [self.dataManager evacuateAllData];
             [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:YES] forKey:FIRSTOPEN];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
             [self dismissViewControllerAnimated:YES completion:^{
                 
             }];

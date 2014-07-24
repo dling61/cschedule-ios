@@ -836,4 +836,13 @@ DataManager* sharedDataManager = nil;
     return NO;
 }
 
+- (BOOL) haveANewActivity
+{
+    if ([[[NSUserDefaults standardUserDefaults] valueForKey:ADDING_NEW_ACTIVITY] boolValue] == YES) {
+        return YES;
+    }
+    return NO;
+}
+
+
 @end

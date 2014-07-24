@@ -530,7 +530,7 @@
                 _mySharedMember.confirm= Denied;
                 [[self.syncEngine confirmSharedMember:_mySharedMember.member_id schedule:_editing_schedule.schedule_id confirmType:Denied]start];
                 break;
-            case ButtonNone:
+            case AddParticiantButtonCell:
                 break;
                 
             default:
@@ -720,9 +720,6 @@
                      [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_deny.png"]];
                      buttoncell.cellType= DenyButtonCell;
                  }
-                 else{
-                     buttoncell.cellType=ButtonNone;
-                 }
              }
              else
              {
@@ -750,10 +747,6 @@
                 [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_delete.png"]];
                 buttoncell.cellType= DeleteButtonCell;
             }
-            else{
-                buttoncell.cellType=ButtonNone;
-            }
-            
             cell = buttoncell;
             break;
             

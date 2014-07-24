@@ -38,6 +38,7 @@
 	// Do any additional setup after loading the view.
     self.title = ACTIVITYVC;
     if ([self.dataManager IsFirsttimeOpen]) {
+        
         [self refreshTable];
     }
     else
@@ -48,6 +49,15 @@
     }
 }
 
+-(void) viewWillAppear:(BOOL)animated
+{
+    if([self.dataManager haveANewActivity])
+    {
+        self.acitiveIndicator.hidden = NO;
+        [self.acitiveIndicator show: YES];
+        [[self.syncEngine getActivities] start];
+    }
+}
 - (void) viewWillDisappear:(BOOL)animated
 {
     [self restoreState];
@@ -72,6 +82,7 @@
 
 - (void)addActivitySuccess: (NSNotification*) note
 {
+    //[[self.syncEngine getActivities] start];
     [self refreshTable];
 }
 
@@ -88,6 +99,8 @@
 
 - (void)getAllsharedMembersDone: (NSNotification*) note
 {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:ADDING_NEW_ACTIVITY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [self.acitiveIndicator show:NO];
     self.acitiveIndicator.hidden = YES;
     [self refreshTable];

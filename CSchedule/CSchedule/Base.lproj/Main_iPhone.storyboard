@@ -337,57 +337,105 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="Ou2-ya-kU3" userLabel="infoView">
-                                <rect key="frame" x="0.0" y="61" width="320" height="507"/>
-                                <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Activity Name (*)" textAlignment="center" minimumFontSize="17" id="OGZ-1j-oE1" userLabel="activityName">
-                                        <rect key="frame" x="0.0" y="20" width="320" height="35"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="wYn-XL-4dU">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="activitytitlecell" rowHeight="50" id="D6D-e2-3Pw" customClass="TFCell">
+                                        <rect key="frame" x="0.0" y="119" width="320" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D6D-e2-3Pw" id="XfH-tz-AXe">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Activity Name" textAlignment="center" minimumFontSize="17" id="G3u-Fa-2Kb">
+                                                    <rect key="frame" x="20" y="7" width="280" height="36"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="delegate" destination="vdi-4l-vIp" id="H13-LZ-HUX"/>
+                                            <outlet property="tf" destination="G3u-Fa-2Kb" id="53e-3J-MRm"/>
                                         </connections>
-                                    </textField>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Notes" id="xja-Gl-Akk" userLabel="notesTextView">
-                                        <rect key="frame" x="0.0" y="69" width="320" height="116"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <inset key="contentInset" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                        <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="activitydespcell" rowHeight="120" id="2k9-y0-GS5" customClass="TVCell">
+                                        <rect key="frame" x="0.0" y="169" width="320" height="120"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2k9-y0-GS5" id="Bb8-65-vqZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Notes" id="BW5-s6-Ra5">
+                                                    <rect key="frame" x="15" y="0.0" width="293" height="116"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                                </textView>
+                                            </subviews>
+                                        </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="delegate" destination="vdi-4l-vIp" id="73h-79-GUl"/>
+                                            <outlet property="txt_area" destination="BW5-s6-Ra5" id="ej9-tL-ZOe"/>
                                         </connections>
-                                    </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Wf6-yS-8dU" userLabel="deleteButton">
-                                        <rect key="frame" x="10" y="264" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <state key="normal" image="btn_delete.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="sharedmembercell" rowHeight="50" id="aTh-Gu-jGk" customClass="LblBtnCell">
+                                        <rect key="frame" x="0.0" y="289" width="320" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aTh-Gu-jGk" id="ee7-KD-oNv">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ghP-mW-X7l">
+                                                    <rect key="frame" x="20" y="14" width="280" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="sxD-n7-9jJ">
+                                                    <rect key="frame" x="208" y="6" width="104" height="37"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <state key="normal">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                        </tableViewCellContentView>
                                         <connections>
-                                            <action selector="touchOnDeleteActivity:" destination="vdi-4l-vIp" eventType="touchUpInside" id="Vqk-r0-aIc"/>
+                                            <outlet property="btn" destination="sxD-n7-9jJ" id="cAO-dH-l8h"/>
+                                            <outlet property="lbl" destination="ghP-mW-X7l" id="eFW-zu-G70"/>
                                         </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xCl-Y1-RK3" userLabel="addParticalButton">
-                                        <rect key="frame" x="10" y="207" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <state key="normal" image="btn_add_participant.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="schedulebuttoncell" rowHeight="50" id="UQH-EI-oz6" customClass="ButtonActionCell">
+                                        <rect key="frame" x="0.0" y="339" width="320" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UQH-EI-oz6" id="gEj-ne-FRa">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="btn_delete.png" id="laL-vI-bm7">
+                                                    <rect key="frame" x="10" y="5" width="300" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <action selector="touchOnAddParticipantButton:" destination="vdi-4l-vIp" eventType="touchUpInside" id="CR9-Ft-WpI"/>
+                                            <outlet property="buttonImage" destination="laL-vI-bm7" id="2vI-Nm-Kgi"/>
                                         </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.84583050271739135" green="0.84583050271739135" blue="0.84583050271739135" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="vdi-4l-vIp" id="Efr-9A-iUn"/>
+                                    <outlet property="delegate" destination="vdi-4l-vIp" id="y3T-sR-wR4"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -400,11 +448,8 @@
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="addParticipantButton" destination="xCl-Y1-RK3" id="ssd-3T-Wxh"/>
-                        <outlet property="deleteButton" destination="Wf6-yS-8dU" id="NJG-3o-oHh"/>
-                        <outlet property="desp_tv" destination="xja-Gl-Akk" id="sUd-45-Q7u"/>
-                        <outlet property="name_tf" destination="OGZ-1j-oE1" id="NTj-XU-a9p"/>
                         <outlet property="saveButton" destination="Hav-aM-2dh" id="cG8-5p-aj5"/>
+                        <outlet property="table" destination="wYn-XL-4dU" id="ovn-dH-nfm"/>
                         <segue destination="K7x-5k-ghS" kind="push" identifier="Share" id="nBw-NG-4oj"/>
                     </connections>
                 </viewController>
@@ -1390,7 +1435,6 @@
     <resources>
         <image name="Handshake30.png" width="30" height="30"/>
         <image name="account.png" width="30" height="30"/>
-        <image name="btn_add_participant.png" width="300" height="44"/>
         <image name="btn_delete.png" width="300" height="44"/>
         <image name="btn_register.png" width="300" height="44"/>
         <image name="btn_reset_password.png" width="300" height="44"/>

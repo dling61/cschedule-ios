@@ -15,16 +15,17 @@ typedef enum
     REPEAT
 } PickerOption;
 
-@interface EditActivityVC : MyVC < UITextFieldDelegate, UITextViewDelegate,UIAlertViewDelegate>
+@interface EditActivityVC : MyVC <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate,UIAlertViewDelegate>
 
 STRONG Activity* editing_activity;
-WEAK IBOutlet UITextField* name_tf;
-WEAK IBOutlet UITextView* desp_tv;
-WEAK IBOutlet UIButton *deleteButton;
-WEAK IBOutlet UIButton *addParticipantButton;
+WEAK IBOutlet UITableView* table;
+
+STRONG IBOutlet UITextField* name_tf;
+STRONG IBOutlet UITextView* desp_tv;
+STRONG NSArray* former_sharedmembers;
 WEAK IBOutlet UIBarButtonItem *saveButton;
 
+NOPOINTER (assign,nonatomic) int numberSection;
+
 -(IBAction) EditActivityDone: (id)sender;
--(IBAction) touchOnDeleteActivity:(id)sender;
--(IBAction) touchOnAddParticipantButton:(id)sender;
 @end

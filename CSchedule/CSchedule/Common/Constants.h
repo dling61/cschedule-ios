@@ -177,7 +177,7 @@
 
 #pragma mark -
 #pragma mark local data keys
-
+#define ADDING_NEW_ACTIVITY             @"addNewActivity"
 #define FIRSTOPEN                       @"whetherfirsttime"
 #define USERID                          @"currentuserid"
 #define USERNAME                        @"currentusername"
