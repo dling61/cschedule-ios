@@ -41,6 +41,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.title = SCHEDULEVC;
+    _statusLabel.text= CSCHEDULE_NO_ITEM_MESSAGE;
     [self.acitiveIndicator show:YES];
     [self.acitiveIndicator setHidden:NO];
     if ([self.dataManager IsFirsttimeOpen]) {
@@ -54,6 +55,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    _statusLabel.hidden=YES;
     [self checkRightBarButton];
     [self refreshTable];
 }
@@ -175,11 +177,24 @@
     NSArray* schedules = nil;
     if (segmentIndex == 0) {
         schedules = [self.dataManager allSortedSchedules];
+        
     }
     else
     {
         schedules = [self.dataManager mySortedSchedules];
     }
+    
+    if(schedules.count>0)
+    {
+        _statusLabel.hidden=YES;
+        _table.hidden=NO;
+    }
+    else{
+        _statusLabel.hidden=NO;
+        _table.hidden=YES;
+
+    }
+    
     NSArray* groups = [self.dataManager groupedSchedules:schedules];
     _groupedSchedules_ontable = groups;
     _table_headers = [[NSMutableArray alloc] init];

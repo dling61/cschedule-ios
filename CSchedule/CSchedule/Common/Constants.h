@@ -171,6 +171,8 @@
 #define ACTIVITY_NAME_EMPTY_MESSAGE @"An activity name is required"
 #define ACTIVITY_DELETE_MESSAGE @"Are you sure you want to delete this activity and related schedules ?"
 
+#define CSCHEDULE_NO_ITEM_MESSAGE @"No cschedule"
+
 
 
 #pragma mark -

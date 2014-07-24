@@ -15,6 +15,7 @@
 
 WEAK IBOutlet UITableView* table;
 WEAK IBOutlet UIBarButtonItem* today_barbtn;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 -(IBAction) today: (id)sender;
 -(IBAction) allme: (id)sender;

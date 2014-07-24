@@ -515,7 +515,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" sectionHeaderHeight="22" sectionFooterHeight="22" id="YA3-iw-GyR">
                                 <rect key="frame" x="0.0" y="109" width="320" height="410"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="schedulecell" rowHeight="65" id="yDd-a8-vYb" customClass="ScheduleCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="65"/>
@@ -590,8 +589,14 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lA8-Bw-npQ">
+                                <rect key="frame" x="60" y="210" width="200" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="DvF-JD-Kae">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="AEW-Ab-dyu">
@@ -601,6 +606,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="statusLabel" destination="lA8-Bw-npQ" id="Pvq-kK-o8c"/>
                         <outlet property="table" destination="YA3-iw-GyR" id="YZH-Cx-yVW"/>
                         <segue destination="PtA-W9-CSb" kind="push" identifier="Schedule Info" id="zcL-HM-ADz"/>
                     </connections>
