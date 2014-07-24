@@ -113,7 +113,7 @@
 #pragma mark -
 #pragma mark VC titles
 
-#define REGISTERVC                      @"Register"
+#define REGISTERVC                      @"Create Account"
 #define SIGNINVC                        @"Sign in"
 #define FORGETPWVC                      @"Forget password"
 #define TABPAGES                        @"tabpages"
@@ -156,6 +156,21 @@
 #define SCHEDULEALERTCELL               @"schedulealertcell"
 #define SCHEDULETIMEZONECELL            @"scheduletimezonecell"
 #define ONDUTYCELL                      @"ondutycell"
+
+
+#pragma mark -
+#pragma mark Message Define
+
+#define LOGIN_FAIL_MESSAGE @"Invalid email or password"
+#define FORCE_APP_UPDATE_MESSAGE @"App is out of update."
+#define GET_SETTING_FAIL_MESSAGE @"Can not get list Setting"
+#define EMAIL_INVALID_MESSAGE @"You should enter an invalid email address"
+#define USERNAME_EMPTY_MESSAGE @"Name cannot be empty" 
+#define PASSWORD_EMPTY_MESSAGE @"Password cannot be empty" 
+#define CONTACT_NAME_EMPTY_MESSAGE @"Contact name cannot empty"
+#define ACTIVITY_NAME_EMPTY_MESSAGE @"An activity name is required"
+#define ACTIVITY_DELETE_MESSAGE @"Are you sure you want to delete this activity and related schedules ?"
+
 
 
 #pragma mark -

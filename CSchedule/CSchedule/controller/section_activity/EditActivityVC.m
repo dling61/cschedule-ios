@@ -170,7 +170,7 @@
     _editing_activity.activity_description = _desp_tv.text;
     
     if (_editing_activity.activity_name == nil || _editing_activity.activity_name.length == 0) {
-        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"An activity name is required" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:ACTIVITY_NAME_EMPTY_MESSAGE delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
         return;
     }
     if (_script == ADD) {
@@ -183,7 +183,7 @@
 }
 -(IBAction) touchOnDeleteActivity:(id)sender
 {
-    [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Are you sure you want to delete this activity and related schedules" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"Yes", nil] show];
+    [[[UIAlertView alloc] initWithTitle:@"Warning" message:ACTIVITY_DELETE_MESSAGE delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"Yes", nil] show];
 }
 -(IBAction) touchOnAddParticipantButton:(id)sender
 {

@@ -44,7 +44,7 @@
     [self.acitiveIndicator show:NO];
     [self.acitiveIndicator setHidden:YES];
     
-    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Password does not match the email account" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+    [[[UIAlertView alloc] initWithTitle:@"Error" message:LOGIN_FAIL_MESSAGE delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
     _passwd_tf.text = @"";
 }
 -(void)getSettingSuccess:(NSNotification*) note
@@ -72,7 +72,7 @@
         
         [self.acitiveIndicator show:NO];
         [self.acitiveIndicator setHidden:YES];
-        [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:@"App is out of update." delegate:self cancelButtonTitle:@"Update" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:FORCE_APP_UPDATE_MESSAGE delegate:self cancelButtonTitle:@"Update" otherButtonTitles:nil] show];
         return;
     }
     
@@ -84,7 +84,7 @@
     
     [self.acitiveIndicator show:NO];
     [self.acitiveIndicator setHidden:YES];
-    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not get list Setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    [[[UIAlertView alloc] initWithTitle:@"Error" message:GET_SETTING_FAIL_MESSAGE delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     [self.dataManager evacuateAllData];
     
 }

@@ -69,15 +69,15 @@
 {
     NSLog(@"_email_tf.text :%@",_email_tf.text);
     if (_email_tf.text == nil || _email_tf.text.length == 0 || ![self IsValidEmail:_email_tf.text]) {
-        [[[UIAlertView alloc] initWithTitle:@"Lack information" message:@"You should enter a true email address" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Lack information" message:EMAIL_INVALID_MESSAGE  delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
         return;
     }
     if (_name_tf.text == nil || _name_tf.text.length == 0) {
-        [[[UIAlertView alloc] initWithTitle:@"Lack information" message:@"Name cannot be empty" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Lack information" message:USERNAME_EMPTY_MESSAGE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
         return;
     }
     if (_password_tf.text == nil || _password_tf.text.length == 0) {
-        [[[UIAlertView alloc] initWithTitle:@"Lack information" message:@"Password cannot be empty" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Lack information" message:PASSWORD_EMPTY_MESSAGE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
         return;
     }
     
