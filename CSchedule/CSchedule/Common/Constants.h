@@ -164,7 +164,7 @@
 #define LOGIN_FAIL_MESSAGE @"Invalid email or password"
 #define FORCE_APP_UPDATE_MESSAGE @"App is out of update."
 #define GET_SETTING_FAIL_MESSAGE @"Can not get list Setting"
-#define EMAIL_INVALID_MESSAGE @"You should enter an invalid email address"
+#define EMAIL_INVALID_MESSAGE @"You should enter an valid email address"
 #define USERNAME_EMPTY_MESSAGE @"Name cannot be empty" 
 #define PASSWORD_EMPTY_MESSAGE @"Password cannot be empty" 
 #define CONTACT_NAME_EMPTY_MESSAGE @"Contact name cannot empty"
