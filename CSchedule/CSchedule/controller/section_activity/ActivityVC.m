@@ -37,6 +37,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.title = ACTIVITYVC;
+    _statusLabel.text= CSCHEDULE_NO_ITEM_MESSAGE;
+    _statusLabel.hidden=YES;
     if ([self.dataManager IsFirsttimeOpen]) {
         
         [self refreshTable];
@@ -77,6 +79,16 @@
 - (void) refreshTable
 {
     _activities_ontable = [self.dataManager allSortedActivities];
+    if(_activities_ontable.count>0)
+    {
+        _statusLabel.hidden=YES;
+        _table.hidden=NO;
+        
+    }
+    else{
+        _statusLabel.hidden=NO;
+        _table.hidden=YES;
+    }
     [_table reloadData];
 }
 

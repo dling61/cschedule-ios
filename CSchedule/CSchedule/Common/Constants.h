@@ -171,7 +171,7 @@
 #define ACTIVITY_NAME_EMPTY_MESSAGE @"An activity name is required"
 #define ACTIVITY_DELETE_MESSAGE @"Are you sure you want to delete this activity and related schedules ?"
 
-#define CSCHEDULE_NO_ITEM_MESSAGE @"No cschedule"
+#define CSCHEDULE_NO_ITEM_MESSAGE @"When you have already created a schedule or you are participating in an activity created by someone else, you’ll see it here."
 
 
 

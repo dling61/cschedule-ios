@@ -42,6 +42,7 @@
 	// Do any additional setup after loading the view.
     self.title = SCHEDULEVC;
     _statusLabel.text= CSCHEDULE_NO_ITEM_MESSAGE;
+    _statusLabel.hidden=YES;
     [self.acitiveIndicator show:YES];
     [self.acitiveIndicator setHidden:NO];
     if ([self.dataManager IsFirsttimeOpen]) {
