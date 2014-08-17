@@ -30,12 +30,22 @@
 - (void) signinSuccess:(NSNotification*) note
 {
 //    NSLog(@"signin success");
-    [[NSUserDefaults standardUserDefaults] setValue:_email_tf.text forKey:USEREMAIL];
-    [[NSUserDefaults standardUserDefaults] setValue:_passwd_tf.text forKey:USERPASSWORD];
     [self.dataManager processUserInfo:[note userInfo]];
-    [self.acitiveIndicator setLabelText:@"Loading..."];
-    [[self.syncEngine getSetting] start];
-    
+    if([self.dataManager currentUserid] >0)
+    {
+        [[NSUserDefaults standardUserDefaults] setValue:_email_tf.text forKey:USEREMAIL];
+        [[NSUserDefaults standardUserDefaults] setValue:_passwd_tf.text forKey:USERPASSWORD];
+        
+        [self.acitiveIndicator setLabelText:@"Loading..."];
+        [[self.syncEngine getSetting] start];
+    }
+    else{
+        [self.acitiveIndicator show:NO];
+        [self.acitiveIndicator setHidden:YES];
+        
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:LOGIN_FAIL_MESSAGE delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+        _passwd_tf.text = @"";
+    }
 }
 
 - (void) signinFail:(NSNotification*) note

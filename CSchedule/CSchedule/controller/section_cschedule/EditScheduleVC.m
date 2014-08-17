@@ -96,6 +96,9 @@
     else if(script == VIEW){
         self.title = VIEWSCHEDULEVC;
         self.navigationItem.rightBarButtonItem = nil;
+         self.numberSection= 6;
+        /*
+        
         if(_mySharedMember!=nil)
         {
             if(_mySharedMember.confirm==Unknown)
@@ -111,10 +114,14 @@
         else{
             self.numberSection= 6;
         }
+         */
         
     }
     else{
         self.title = EDITSCHEDULEVC;
+        self.numberSection= 7;
+        
+        /*
         if(_mySharedMember!=nil)
         {
             if(_mySharedMember.confirm==Unknown)
@@ -130,6 +137,7 @@
         else{
             self.numberSection= 7;
         }
+         */
     }
 
 }
@@ -688,6 +696,11 @@
         {
             ButtonActionCell* buttoncell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEBUTTONCELL];
             
+            [buttoncell.buttonImage setImage:[UIImage imageNamed:@"btn_delete.png"]];
+            buttoncell.cellType= DeleteButtonCell;
+            
+            /*
+            
             if(_mySharedMember!=nil)
             {
                 if(_mySharedMember.confirm==Unknown || _mySharedMember.confirm==Denied)
@@ -706,6 +719,7 @@
                 buttoncell.cellType= DeleteButtonCell;
             }
             
+             */
             cell = buttoncell;
             break;
 
