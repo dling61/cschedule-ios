@@ -173,6 +173,7 @@
 
 #define CSCHEDULE_NO_ITEM_MESSAGE @"When you have already created a schedule or you are participating in an activity created by someone else, you’ll see it here."
 
+#define ACTIVITY_NO_ITEM_MESSAGE @"When you have already created an activity or you are participating in an activity created by someone else, you’ll see it here."
 
 
 #pragma mark -
