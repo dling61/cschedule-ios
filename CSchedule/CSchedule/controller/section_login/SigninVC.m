@@ -30,6 +30,12 @@
 - (void) signinSuccess:(NSNotification*) note
 {
 //    NSLog(@"signin success");
+    
+    [self.dataManager evacuateAllData];
+    [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:YES] forKey:FIRSTOPEN];
+    
+
+    
     [self.dataManager processUserInfo:[note userInfo]];
     if([self.dataManager currentUserid] >0)
     {
@@ -46,6 +52,7 @@
         [[[UIAlertView alloc] initWithTitle:@"Error" message:LOGIN_FAIL_MESSAGE delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
         _passwd_tf.text = @"";
     }
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void) signinFail:(NSNotification*) note
