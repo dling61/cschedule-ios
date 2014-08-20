@@ -34,7 +34,12 @@ DatetimeHelper* sharedDatetimeHelper = nil;
     }
     return self;
 }
-
+- (NSString*) dateToStringWithTimeZoneUTC: (NSDate*) date
+{
+    [_dateformatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+    [_dateformatter setDateFormat:DATESTYLE1];
+    return [_dateformatter stringFromDate:date];
+}
 - (NSString*) dateToStringStyle1: (NSDate*) date
 {
     [_dateformatter setDateFormat:DATESTYLE1];
@@ -43,14 +48,15 @@ DatetimeHelper* sharedDatetimeHelper = nil;
 
 - (NSDate*) StringStyle1ToDate: (NSString*) date_str
 {
-    [_dateformatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    [_dateformatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+    //[_dateformatter setTimeZone:[NSTimeZone systemTimeZone]];
     [_dateformatter setDateFormat:DATESTYLE1];
     return [_dateformatter dateFromString:date_str];
 }
 
-- (NSString*) GMTDateToSpecificTimeZoneInStringStyle2: (NSDate*) date andUtcoff:(int)utcoff
+- (NSString*) GMTDateToSpecificTimeZoneInStringStyle2: (NSDate*) date andTimeZone:(NSTimeZone*)timeZone
 {
-    [_calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:utcoff]];
+    [_calendar setTimeZone:timeZone];
     NSDateComponents* components = [_calendar components:NSCalendarUnitYear | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitWeekday fromDate:date];
     NSInteger weekday = [components weekday];
     NSInteger year = [components year];
@@ -59,20 +65,20 @@ DatetimeHelper* sharedDatetimeHelper = nil;
     return [NSString stringWithFormat:@"%@, %@ %d, %d",_weekdayStrs[weekday - 1],_monthStrs[month - 1],day,year];
 }
 
-- (NSString*) GMTDateToSpecificTimeZoneInStringStyle4: (NSDate*) date andUtcoff:(int)utcoff
+- (NSString*) GMTDateToSpecificTimeZoneInStringStyle4: (NSDate*) date andTimeZone:(NSTimeZone*)timeZone
 {
-    [_calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:utcoff]];
+    [_calendar setTimeZone:timeZone];
     NSDateComponents* components = [_calendar components:NSCalendarUnitYear | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitWeekday fromDate:date];
     NSInteger weekday = [components weekday];
     NSInteger year = [components year];
     NSInteger month = [components month];
     NSInteger day = [components day];
-    return [NSString stringWithFormat:@"%@                             %@ %d, %d",_weekdayStrs[weekday - 1],_monthStrs[month - 1],day,year];
+    return [NSString stringWithFormat:@"%@                          %@ %d, %d",_weekdayStrs[weekday - 1],_monthStrs[month - 1],day,year];
 }
 
-- (NSString*) GMTDateToSpecificTimeZoneInStringStyle3: (NSDate*) date andUtcoff:(int)utcoff
+- (NSString*) GMTDateToSpecificTimeZoneInStringStyle3: (NSDate*) date andTimeZone:(NSTimeZone*)timeZone
 {
-    [_calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:utcoff]];
+    [_calendar setTimeZone:timeZone];
     NSDateComponents* components = [_calendar components:NSCalendarUnitHour | NSCalendarUnitMinute fromDate:date];
     NSInteger hour = [components hour];
     NSInteger minute = [components minute];

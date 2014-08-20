@@ -256,7 +256,10 @@ DataManager* sharedDataManager = nil;
 {
     NSMutableDictionary* grouped_schedules = [[NSMutableDictionary alloc] init];
     for (Schedule* schedule in raw_schedules) {
-        NSString* date_str = [[DatetimeHelper sharedHelper] GMTDateToSpecificTimeZoneInStringStyle2:schedule.schedule_start andUtcoff:schedule.tzid];
+        
+        NSTimeZone* timeZone = [NSTimeZone systemTimeZone];
+        
+        NSString* date_str = [[DatetimeHelper sharedHelper] GMTDateToSpecificTimeZoneInStringStyle2:schedule.schedule_start andTimeZone:timeZone];
         NSArray* group = (NSArray*)[grouped_schedules valueForKey:date_str];
         if (group == nil) {
             NSMutableArray* new_group = [[NSMutableArray alloc] init];

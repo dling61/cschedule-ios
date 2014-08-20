@@ -201,7 +201,9 @@
     _table_headers = [[NSMutableArray alloc] init];
     for (NSArray* arr in groups) {
         Schedule* s = [arr objectAtIndex:0];
-        [_table_headers addObject:[self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle4:s.schedule_start andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]]];
+        
+        NSTimeZone* timeZone = [NSTimeZone systemTimeZone];
+        [_table_headers addObject:[self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle4:s.schedule_start andTimeZone:timeZone]];
     }
     [_table reloadData];
 }
@@ -402,9 +404,10 @@
     [schedulecell.name_lbl setFrame:CGRectMake(10.0, 5.0, labelSize.width, labelSize.height)];
     */
     schedulecell.name_lbl.text = activity.activity_name;
+    NSTimeZone* timeZone = [NSTimeZone systemTimeZone];
     schedulecell.time_lbl.text = [NSString stringWithFormat:@"%@ to %@",
-                                  [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:schedule.schedule_start andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]],
-                                  [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:schedule.schedule_end andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]]];
+                                  [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:schedule.schedule_start andTimeZone:timeZone],
+                                  [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:schedule.schedule_end andTimeZone:timeZone]];
     NSArray* smbtns = [self createBtnsForSMs:schedule.participants withcschedule:schedule];
     float totallength = 0.0f;
     for (UIButton* btn in smbtns)

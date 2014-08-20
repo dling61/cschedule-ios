@@ -280,8 +280,8 @@ static SyncEngine* sharedEngine = nil;
     NSDictionary* schedule_info = [NSDictionary dictionaryWithObjectsAndKeys:
                           [NSNumber numberWithInt:schedule.schedule_id],@"scheduleid",
                           schedule.schedule_desp,@"desp",
-                          [[DatetimeHelper sharedHelper] dateToStringStyle1:schedule.schedule_start],@"startdatetime",
-                          [[DatetimeHelper sharedHelper] dateToStringStyle1:schedule.schedule_end],@"enddatetime",
+                          [[DatetimeHelper sharedHelper] dateToStringWithTimeZoneUTC:schedule.schedule_start],@"startdatetime",
+                          [[DatetimeHelper sharedHelper] dateToStringWithTimeZoneUTC:schedule.schedule_end],@"enddatetime",
                           @(schedule.tzid),@"tzid",
                           @(schedule.alert),@"alert",
                           participantids,@"members"
@@ -302,8 +302,8 @@ static SyncEngine* sharedEngine = nil;
     }
     NSDictionary* schedule_info = [NSDictionary dictionaryWithObjectsAndKeys:
                                    schedule.schedule_desp,@"desp",
-                                   [[DatetimeHelper sharedHelper] dateToStringStyle1:schedule.schedule_start],@"startdatetime",
-                                   [[DatetimeHelper sharedHelper] dateToStringStyle1:schedule.schedule_end],@"enddatetime",
+                                   [[DatetimeHelper sharedHelper] dateToStringWithTimeZoneUTC:schedule.schedule_start],@"startdatetime",
+                                   [[DatetimeHelper sharedHelper] dateToStringWithTimeZoneUTC:schedule.schedule_end],@"enddatetime",
                                    @(schedule.tzid),@"tzid",
                                    @(schedule.alert),@"alert",
                                    participantids,@"members"

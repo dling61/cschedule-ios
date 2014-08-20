@@ -401,23 +401,65 @@
         _editing_schedule.schedule_end = _datePicker.date;
     }
     [self hideDatePickerContainer];
+    
+    
     [_table reloadData];
     [self tableOut];
 }
 
 - (IBAction) datePickerValueChanged
 {
+    NSTimeZone* timeZone=nil;
+    
+    TimeZone* timeZoneInfo =[self getTimezoneWithID:_editing_schedule.tzid];
+    if(timeZoneInfo)
+    {
+        timeZone =[NSTimeZone timeZoneWithAbbreviation:timeZoneInfo.timezone_abbrtzname];
+    }else{
+        timeZone= [NSTimeZone systemTimeZone];
+    }
+    
     if (startorend == 0) {
+        
+        
         start_lbl.text = [NSString stringWithFormat:@"%@ %@",
-                         [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_datePicker.date andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]],
-                         [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_datePicker.date andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]]];
+                          [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_datePicker.date andTimeZone:timeZone],
+                          [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_datePicker.date andTimeZone:timeZone ]];
     }
     else
     {
         end_lbl.text = [NSString stringWithFormat:@"%@ %@",
-                        [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_datePicker.date andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]],
-                        [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_datePicker.date andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]]];
+                        [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_datePicker.date andTimeZone:timeZone],
+                        [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_datePicker.date andTimeZone:timeZone]];
     }
+
+}
+-(void)showTimeForLabel
+{
+    NSTimeZone* timeZone=nil;
+    
+    TimeZone* timeZoneInfo =[self getTimezoneWithID:_editing_schedule.tzid];
+    if(timeZoneInfo)
+    {
+        timeZone =[NSTimeZone timeZoneWithAbbreviation:timeZoneInfo.timezone_abbrtzname];
+    }else{
+        timeZone= [NSTimeZone systemTimeZone];
+    }
+    
+    if(_editing_schedule.schedule_start)
+    {
+        start_lbl.text = [NSString stringWithFormat:@"%@ %@",
+                          [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_editing_schedule.schedule_start andTimeZone:timeZone],
+                          [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_editing_schedule.schedule_start andTimeZone:timeZone ]];
+    }
+    if(_editing_schedule.schedule_end)
+    {
+        
+        end_lbl.text = [NSString stringWithFormat:@"%@ %@",
+                        [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_editing_schedule.schedule_end andTimeZone:timeZone],
+                        [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_editing_schedule.schedule_end andTimeZone:timeZone]];
+    }
+
 }
 
 - (IBAction) pickerCancel: (id)sender
@@ -442,6 +484,8 @@
         {
             TimeZone* timezone = [_timezone_types objectAtIndex:_picker_selected_row];
             _editing_schedule.tzid = timezone.timezone_id;
+             [self showTimeForLabel];
+            
         }
             break;
         case ALERT:
@@ -461,7 +505,7 @@
 
 - (IBAction) EditScheduleDone:(id)sender
 {
-    if(_editing_schedule.activity_id >0)
+    if([self checkInputValid])
     {
         if(desp_tv.text==nil)
         {
@@ -478,15 +522,27 @@
         {
             [[self.syncEngine updateSchedule:_editing_schedule] start];
         }
+
     }
-    else{
-        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please select an Activity!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-        return;
-    }
-    
-    
 }
 
+-(BOOL)checkInputValid
+{
+    
+    if(_editing_schedule.activity_id <=0)
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please select an Activity!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        return NO;
+    }
+    if(_editing_schedule.tzid <=0)
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please select a Timezone!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        return NO;
+
+    }
+    return YES;
+    
+}
 - (NSString*) partipant_str
 {
     NSMutableString* str = [[NSMutableString alloc] init];
@@ -619,12 +675,22 @@
         }
         case 1:
         {
+            
+            NSTimeZone* timeZone=nil;
+            
+            TimeZone* timeZoneInfo =[self getTimezoneWithID:_editing_schedule.tzid];
+            if(timeZoneInfo)
+            {
+                timeZone =[NSTimeZone timeZoneWithAbbreviation:timeZoneInfo.timezone_abbrtzname];
+            }else{
+                timeZone= [NSTimeZone systemTimeZone];
+            }
             if (indexPath.row == 0) {
                 LblCell* startcell = [tableView dequeueReusableCellWithIdentifier:SCHEDULESTARTCELL];
                 start_lbl = startcell.lbl;
                 startcell.lbl.text = [NSString stringWithFormat:@"%@ %@",
-                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_editing_schedule.schedule_start andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]],
-                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_editing_schedule.schedule_start andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]]];
+                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_editing_schedule.schedule_start andTimeZone:timeZone],
+                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_editing_schedule.schedule_start andTimeZone:timeZone]];
                 cell = startcell;
 
             }
@@ -633,8 +699,8 @@
                 LblCell* endcell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEENDCELL];
                 end_lbl = endcell.lbl;
                 endcell.lbl.text = [NSString stringWithFormat:@"%@ %@",
-                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_editing_schedule.schedule_end andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]],
-                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_editing_schedule.schedule_end andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]]];
+                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_editing_schedule.schedule_end andTimeZone:timeZone],
+                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_editing_schedule.schedule_end andTimeZone:timeZone]];
                 cell = endcell;
             }
             break;
