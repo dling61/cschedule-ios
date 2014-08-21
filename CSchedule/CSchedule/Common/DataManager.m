@@ -578,8 +578,9 @@ DataManager* sharedDataManager = nil;
         NSString* os = [origin_app valueForKey:@"os"];
         int enforce = [[origin_app valueForKey:@"enforce"] intValue];
         float osversion = [[origin_app valueForKey:@"osversion"] floatValue];
+        NSString* msg = [origin_app valueForKey:@"msg"];
         
-        AppSettingInfo *appInfo =[[AppSettingInfo alloc]initWithAppID:a_id app_version:a_version enforce:enforce os:os osversion:osversion];
+        AppSettingInfo *appInfo =[[AppSettingInfo alloc]initWithAppID:a_id app_version:a_version enforce:enforce os:os osversion:osversion message:msg];
         NSDictionary* app_dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSKeyedArchiver archivedDataWithRootObject:appInfo], APPVERSION, @"1", SYNCHRONIZED,nil];
         [local_appsetting_new setValue:app_dic forKey:[NSString stringWithFormat:@"%d",appInfo.app_id]];
     }

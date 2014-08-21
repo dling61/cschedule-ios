@@ -322,6 +322,17 @@
 
 - (void) showDatePickerContainer
 {
+    NSTimeZone* timeZone=nil;
+    
+    TimeZone* timeZoneInfo =[self getTimezoneWithID:_editing_schedule.tzid];
+    if(timeZoneInfo)
+    {
+        timeZone =[NSTimeZone timeZoneWithAbbreviation:timeZoneInfo.timezone_abbrtzname];
+    }else{
+        timeZone= [NSTimeZone systemTimeZone];
+    }
+    [_datePicker setTimeZone:timeZone];
+    
     [_picker reloadAllComponents];
     if (startorend == 0) {
         _datePicker.date = _editing_schedule.schedule_start;
@@ -410,6 +421,7 @@
 - (IBAction) datePickerValueChanged
 {
     NSTimeZone* timeZone=nil;
+    //timeZone= [NSTimeZone systemTimeZone];
     
     TimeZone* timeZoneInfo =[self getTimezoneWithID:_editing_schedule.tzid];
     if(timeZoneInfo)

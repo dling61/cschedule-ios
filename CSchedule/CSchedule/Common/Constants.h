@@ -162,7 +162,9 @@
 #pragma mark Message Define
 
 #define LOGIN_FAIL_MESSAGE @"Invalid email or password"
-#define FORCE_APP_UPDATE_MESSAGE @"App is out of update."
+#define FORCE_APP_UPDATE_MESSAGE @"Your version of CSchedule is being retired. Update to the latest version today."
+
+#define FORCE_APP_UPDATE_MESSAGE2 @"App is out of update."
 #define GET_SETTING_FAIL_MESSAGE @"Can not get list Setting"
 #define EMAIL_INVALID_MESSAGE @"You should enter an valid email address"
 #define USERNAME_EMPTY_MESSAGE @"Name cannot be empty" 

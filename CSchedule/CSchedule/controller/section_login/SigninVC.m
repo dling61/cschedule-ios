@@ -69,31 +69,28 @@
     [self.dataManager processSettingInfo:[note userInfo]];
     if([self checkAppVersionAvailable])
     {
-        NSString *tokenString =[[NSUserDefaults standardUserDefaults] objectForKey:keyDeviceToken];
-        if(tokenString.length >0)
-        {
-            NSString * uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-            [self.acitiveIndicator setLabelText:@"Adding Token..."];
-            [[self.syncEngine setToken:tokenString deviceId:uniqueIdentifier] start];
-            
-            
-        }
-        else{
-            [self.acitiveIndicator show:NO];
-            [self.acitiveIndicator setHidden:YES];
-            [self headto:TABPAGES withPackage:nil];
-            
-        }
+        [self processAddToken];
+    }
+    
+    
+}
+-(void)processAddToken
+{
+    NSString *tokenString =[[NSUserDefaults standardUserDefaults] objectForKey:keyDeviceToken];
+    if(tokenString.length >0)
+    {
+        NSString * uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        [self.acitiveIndicator setLabelText:@"Adding Token..."];
+        [[self.syncEngine setToken:tokenString deviceId:uniqueIdentifier] start];
+        
+        
     }
     else{
-        
         [self.acitiveIndicator show:NO];
         [self.acitiveIndicator setHidden:YES];
-        [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:FORCE_APP_UPDATE_MESSAGE delegate:self cancelButtonTitle:@"Update" otherButtonTitles:nil] show];
-        return;
+        [self headto:TABPAGES withPackage:nil];
+        
     }
-    
-    
 }
 -(void)getSettingFail:(NSNotification*) note
 {
@@ -115,6 +112,11 @@
         NSString *iTunesLink = @"https://itunes.apple.com/us/app/cschedule/id596231825?mt=8";
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
     }
+    else{
+        [self.acitiveIndicator setHidden:NO];
+        [self.acitiveIndicator show:YES];
+        [self processAddToken];
+    }
 }
 -(BOOL)checkAppVersionAvailable
 {
@@ -122,27 +124,29 @@
     NSArray* allAppSettings = [self.dataManager allAppSetting];
     for(AppSettingInfo *appSetting in allAppSettings)
     {
+        //float iOSVersion =[[[UIDevice currentDevice] systemVersion] floatValue];
         if([appSetting.os isEqualToString:DEVICE])
         {
-            if(appSetting.enforce==0)
+            if([VERSION isEqualToString:appSetting.app_version])//&& iOSVersion==appSetting.osversion
             {
                 return YES;
             }
             else{
-                //NSDictionary *infoDictionary = [[NSBundle mainBundle]infoDictionary];
-                //NSString * appVersion    = infoDictionary[(NSString*)kCFBundleVersionKey];
-                float iOSVersion =[[[UIDevice currentDevice] systemVersion] floatValue];
-                if([VERSION isEqualToString:appSetting.app_version] && iOSVersion== appSetting.osversion)
+                [self.acitiveIndicator show:NO];
+                [self.acitiveIndicator setHidden:YES];
+                if(appSetting.enforce==0)
                 {
-                    
-                    return YES;
+                    [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:appSetting.msg delegate:self cancelButtonTitle:@"Update" otherButtonTitles:@"Don't Update",nil] show];
+                    return NO;
                 }
-                
+                else{
+                    
+                    [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:FORCE_APP_UPDATE_MESSAGE delegate:self cancelButtonTitle:@"Update" otherButtonTitles:nil] show];
+                }
                 return NO;
             }
         }
     }
-    
     return YES;
 }
 
