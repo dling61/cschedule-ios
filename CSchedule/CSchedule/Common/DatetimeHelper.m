@@ -15,6 +15,8 @@ DatetimeHelper* sharedDatetimeHelper = nil;
 @synthesize dateformatter = _dateformatter;
 @synthesize weekdayStrs = _weekdayStrs;
 @synthesize monthStrs = _monthStrs;
+@synthesize weekdayStrs_Sort=_weekdayStrs_Sort;
+@synthesize monthStrs_Sort=_monthStrs_Sort;
 
 + (DatetimeHelper*) sharedHelper
 {
@@ -31,6 +33,10 @@ DatetimeHelper* sharedDatetimeHelper = nil;
         _dateformatter = [[NSDateFormatter alloc] init];
         _weekdayStrs = @[@"Sunday",@"Monday",@"Tuesday",@"Wednesday",@"Thursday",@"Friday",@"Saturday"];
         _monthStrs = @[@"January",@"February",@"March",@"April",@"May",@"June", @"July",@"August",@"September",@"October",@"November",@"Decemcber"];
+        
+        _weekdayStrs_Sort = @[@"Sun",@"Mon",@"Tue",@"Wed",@"Thu",@"Fri",@"Sat"];
+        _monthStrs_Sort = @[@"Jan.",@"Feb.",@"Mar.",@"Apr.",@"May",@"June", @"July",@"Aug.",@"Sept.",@"Oct.",@"Nov.",@"Dec."];
+
     }
     return self;
 }
@@ -62,7 +68,7 @@ DatetimeHelper* sharedDatetimeHelper = nil;
     NSInteger year = [components year];
     NSInteger month = [components month];
     NSInteger day = [components day];
-    return [NSString stringWithFormat:@"%@, %@ %d, %d",_weekdayStrs[weekday - 1],_monthStrs[month - 1],day,year];
+    return [NSString stringWithFormat:@"%@, %@ %d, %d",_weekdayStrs_Sort[weekday - 1],_monthStrs_Sort[month - 1],day,year];
 }
 
 - (NSString*) GMTDateToSpecificTimeZoneInStringStyle4: (NSDate*) date andTimeZone:(NSTimeZone*)timeZone

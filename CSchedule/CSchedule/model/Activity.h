@@ -13,6 +13,8 @@
 NOPOINTER   int activity_id;
 NOPOINTER   RoleType shared_role;
 NOPOINTER   int owner_id;
+NOPOINTER   int timeZonePre_id;
+NOPOINTER   int alertPre_id;
 STRONG      NSString* activity_name;
 STRONG      NSString* activity_description;
 

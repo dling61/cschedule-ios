@@ -42,8 +42,10 @@
         [[NSUserDefaults standardUserDefaults] setValue:_email_tf.text forKey:USEREMAIL];
         [[NSUserDefaults standardUserDefaults] setValue:_passwd_tf.text forKey:USERPASSWORD];
         
-        [self.acitiveIndicator setLabelText:@"Loading..."];
-        [[self.syncEngine getSetting] start];
+        [self processAddToken];
+        
+        //[self.acitiveIndicator setLabelText:@"Loading..."];
+        //[[self.syncEngine getSetting] start];
     }
     else{
         [self.acitiveIndicator show:NO];
@@ -64,16 +66,7 @@
     [[[UIAlertView alloc] initWithTitle:@"Error" message:LOGIN_FAIL_MESSAGE delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
     _passwd_tf.text = @"";
 }
--(void)getSettingSuccess:(NSNotification*) note
-{
-    [self.dataManager processSettingInfo:[note userInfo]];
-    if([self checkAppVersionAvailable])
-    {
-        [self processAddToken];
-    }
-    
-    
-}
+
 -(void)processAddToken
 {
     NSString *tokenString =[[NSUserDefaults standardUserDefaults] objectForKey:keyDeviceToken];
@@ -92,6 +85,17 @@
         
     }
 }
+/*
+-(void)getSettingSuccess:(NSNotification*) note
+{
+    [self.dataManager processSettingInfo:[note userInfo]];
+    if([self checkAppVersionAvailable])
+    {
+        [self processAddToken];
+    }
+    
+    
+}
 -(void)getSettingFail:(NSNotification*) note
 {
 
@@ -102,6 +106,7 @@
     [self.dataManager evacuateAllData];
     
 }
+ */
 
 #pragma mark Popview button Method
 
@@ -118,6 +123,7 @@
         [self processAddToken];
     }
 }
+/*
 -(BOOL)checkAppVersionAvailable
 {
     
@@ -149,6 +155,7 @@
     }
     return YES;
 }
+ */
 
 -(void)setTokenSuccess:(NSNotification*) note
 {
@@ -175,8 +182,8 @@
     [self responde:SIGNINSUCCESSNOTE by:@selector(signinSuccess:)];
     [self responde:SIGNINFAILURENOTE by:@selector(signinFail:)];
     
-    [self responde:GETSETTINGSUCCESSNOTE by:@selector(getSettingSuccess:)];
-    [self responde:GETSETTINGFAILNOTE by:@selector(getSettingFail:)];
+    //[self responde:GETSETTINGSUCCESSNOTE by:@selector(getSettingSuccess:)];
+    //[self responde:GETSETTINGFAILNOTE by:@selector(getSettingFail:)];
 
     [self responde:SETTOKENSUCCESSNOTE by:@selector(setTokenSuccess:)];
     [self responde:SETTOKENFAILURENOTE by:@selector(setTokenFail:)];

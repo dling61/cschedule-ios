@@ -44,6 +44,8 @@
 @synthesize current_picker_option = _current_picker_option;
 @synthesize isChangeDuty=_isChangeDuty;
 
+@synthesize activitySelected=_activitySelected;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -192,6 +194,10 @@
 {
     [self.dataManager saveSchedule:_editing_schedule synced:YES];
     [self.dataManager saveNextScheduleid:_editing_schedule.schedule_id + 1];
+    
+    _activitySelected.timeZonePre_id= _editing_schedule.tzid;
+    _activitySelected.alertPre_id= _editing_schedule.alert;
+    [self.dataManager saveActivity:_activitySelected synced:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:ADDSCHEDULESUCCESSNOTE object:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -207,6 +213,11 @@
 - (void) putScheduleSuccess: (NSNotification*) note
 {
     [self.dataManager saveSchedule:_editing_schedule synced:YES];
+    
+    _activitySelected.timeZonePre_id= _editing_schedule.tzid;
+    _activitySelected.alertPre_id= _editing_schedule.alert;
+    [self.dataManager saveActivity:_activitySelected synced:YES];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATESCHEDULESUCCESSNOTE object:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -487,8 +498,10 @@
     switch (_current_picker_option) {
         case ACTIVITY_OPTION:
         {
-            Activity* activity = [myActivities objectAtIndex:_picker_selected_row];
-            _editing_schedule.activity_id = activity.activity_id;
+            _activitySelected = [myActivities objectAtIndex:_picker_selected_row];
+            _editing_schedule.activity_id = _activitySelected.activity_id;
+            _editing_schedule.tzid =_activitySelected.timeZonePre_id;
+            _editing_schedule.alert=_activitySelected.alertPre_id;
             [_table reloadData];
         }
             break;
@@ -552,6 +565,13 @@
         return NO;
 
     }
+
+    if([_editing_schedule.schedule_start compare:_editing_schedule.schedule_end]!=NSOrderedAscending)
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"End time can not be earlier than Start time" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        return NO;
+    }
+    
     return YES;
     
 }
@@ -687,22 +707,53 @@
         }
         case 1:
         {
+            NSTimeZone* timeZoneChoose=nil;
             
-            NSTimeZone* timeZone=nil;
-            
-            TimeZone* timeZoneInfo =[self getTimezoneWithID:_editing_schedule.tzid];
-            if(timeZoneInfo)
+            if(_editing_schedule.activity_id >0)
             {
-                timeZone =[NSTimeZone timeZoneWithAbbreviation:timeZoneInfo.timezone_abbrtzname];
-            }else{
-                timeZone= [NSTimeZone systemTimeZone];
+                TimeZone* timeZoneInfo =[self getTimezoneWithID:_editing_schedule.tzid];
+                if(timeZoneInfo)
+                {
+                    timeZoneChoose =[NSTimeZone timeZoneWithAbbreviation:timeZoneInfo.timezone_abbrtzname];
+                }else{
+                    
+                    NSTimeZone *currentTimeZone = [NSTimeZone localTimeZone];
+                    for(TimeZone *timeZonemtp in self.timezone_types)
+                    {
+                        if([timeZonemtp.timezone_abbrtzname isEqualToString:currentTimeZone.abbreviation])
+                        {
+                            timeZoneChoose =[NSTimeZone timeZoneWithAbbreviation:timeZonemtp.timezone_abbrtzname];
+                            _editing_schedule.tzid= timeZonemtp.timezone_id;
+                            break;
+                        }
+                    }
+                    if(!timeZoneChoose)
+                    {
+                        if(self.timezone_types)
+                        {
+                            TimeZone* timeZoneFirst= [self.timezone_types objectAtIndex:0];
+                            timeZoneChoose =[NSTimeZone timeZoneWithAbbreviation:timeZoneFirst.timezone_abbrtzname];
+                            _editing_schedule.tzid= timeZoneFirst.timezone_id;
+                        }
+                        else{
+                            timeZoneChoose =[NSTimeZone systemTimeZone];
+                        }
+                    }
+                    
+                    
+                }
+
             }
+            else{
+                timeZoneChoose =[NSTimeZone systemTimeZone];
+            }
+            
             if (indexPath.row == 0) {
                 LblCell* startcell = [tableView dequeueReusableCellWithIdentifier:SCHEDULESTARTCELL];
                 start_lbl = startcell.lbl;
                 startcell.lbl.text = [NSString stringWithFormat:@"%@ %@",
-                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_editing_schedule.schedule_start andTimeZone:timeZone],
-                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_editing_schedule.schedule_start andTimeZone:timeZone]];
+                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_editing_schedule.schedule_start andTimeZone:timeZoneChoose],
+                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_editing_schedule.schedule_start andTimeZone:timeZoneChoose]];
                 cell = startcell;
 
             }
@@ -711,10 +762,12 @@
                 LblCell* endcell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEENDCELL];
                 end_lbl = endcell.lbl;
                 endcell.lbl.text = [NSString stringWithFormat:@"%@ %@",
-                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_editing_schedule.schedule_end andTimeZone:timeZone],
-                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_editing_schedule.schedule_end andTimeZone:timeZone]];
+                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle2:_editing_schedule.schedule_end andTimeZone:timeZoneChoose],
+                                      [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:_editing_schedule.schedule_end andTimeZone:timeZoneChoose]];
                 cell = endcell;
             }
+            
+            
             break;
         }
         case 2:
@@ -735,13 +788,32 @@
         {
             LblCell* alertcell = [tableView dequeueReusableCellWithIdentifier:SCHEDULEALERTCELL];
             _alert_lbl = alertcell.lbl;
-            if([self getAlertWithID:_editing_schedule.alert])
+            
+            
+            if(_editing_schedule.activity_id >0)
             {
-               alertcell.lbl.text = [[self getAlertWithID:_editing_schedule.alert]alert_name];
+                if([self getAlertWithID:_editing_schedule.alert])
+                {
+                    alertcell.lbl.text = [[self getAlertWithID:_editing_schedule.alert]alert_name];
+                }
+                else{
+                    
+                    if(self.alert_types.count)
+                    {
+                        AlertInfo* alertFirst= [self.alert_types objectAtIndex:0];
+                        alertcell.lbl.text = alertFirst.alert_name;
+                        _editing_schedule.alert= alertFirst.alert_id;
+                    }
+                    else{
+                        alertcell.lbl.text=@"";
+                    }
+                    
+                }
             }
             else{
                 alertcell.lbl.text=@"";
             }
+            
 
             cell = alertcell;
             break;

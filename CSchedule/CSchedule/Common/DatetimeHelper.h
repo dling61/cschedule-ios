@@ -15,6 +15,9 @@ STRONG NSDateFormatter* dateformatter;
 STRONG NSArray* weekdayStrs;
 STRONG NSArray* monthStrs;
 
+STRONG NSArray* weekdayStrs_Sort;
+STRONG NSArray* monthStrs_Sort;
+
 + (DatetimeHelper*) sharedHelper;
 
 // tranform date to string style xxxx-xx-xx xx:xx:xx

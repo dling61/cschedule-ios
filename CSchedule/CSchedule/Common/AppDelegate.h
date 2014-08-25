@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
-
+@interface AppDelegate : UIResponder <UIApplicationDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) UIWindow *window;
+STRONG SyncEngine* syncEngine;
+STRONG DataManager* dataManager;
 
+NOPOINTER BOOL isOpenAlertUpdate;
+
+STRONG NSMutableArray* registeredNotes;
 @end

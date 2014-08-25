@@ -8,7 +8,10 @@
 
 #import "AppDelegate.h"
 @implementation AppDelegate
-
+@synthesize syncEngine=_syncEngine;
+@synthesize registeredNotes=_registeredNotes;
+@synthesize dataManager = _dataManager;
+@synthesize isOpenAlertUpdate;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
@@ -29,10 +32,87 @@
     [[UIBarButtonItem appearance] setTintColor:[UIColor whiteColor]];
     [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:YES] forKey:FIRSTOPEN];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-
+    
+    
+    [self responde:GETSETTINGSUCCESSNOTE by:@selector(getSettingSuccess:)];
+    [self responde:GETSETTINGFAILNOTE by:@selector(getSettingFail:)];
+    
+    _syncEngine = [SyncEngine sharedEngineInstance];
+    _dataManager = [DataManager sharedDataManagerInstance];
+    [self checkUpdateApp];
+    
+    self.isOpenAlertUpdate=NO;
     return YES;
 }
-							
+
+- (void)checkUpdateApp
+{
+    [[self.syncEngine getSetting] start];
+}
+
+
+-(void)getSettingSuccess:(NSNotification*) note
+{
+    [self.dataManager processSettingInfo:[note userInfo]];
+    [self checkAppVersionAvailable];
+}
+-(BOOL)checkAppVersionAvailable
+{
+    
+    NSArray* allAppSettings = [self.dataManager allAppSetting];
+    for(AppSettingInfo *appSetting in allAppSettings)
+    {
+        //float iOSVersion =[[[UIDevice currentDevice] systemVersion] floatValue];
+        if([appSetting.os isEqualToString:DEVICE])
+        {
+            if([VERSION isEqualToString:appSetting.app_version])//&& iOSVersion==appSetting.osversion
+            {
+                return YES;
+            }
+            else if(self.isOpenAlertUpdate==NO) {
+                
+                self.isOpenAlertUpdate=YES;
+                if(appSetting.enforce==0)
+                {
+                    [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:appSetting.msg delegate:self cancelButtonTitle:@"Update" otherButtonTitles:@"Don't Update",nil] show];
+                }
+                else{
+                    
+                    [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:FORCE_APP_UPDATE_MESSAGE delegate:self cancelButtonTitle:@"Update" otherButtonTitles:nil] show];
+                }
+                return NO;
+            }
+            else{
+                return YES;
+            }
+        }
+    }
+    return YES;
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    self.isOpenAlertUpdate=NO;
+    if (buttonIndex == 0) {
+        NSString *iTunesLink = @"https://itunes.apple.com/us/app/cschedule/id596231825?mt=8";
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+    }
+}
+-(void)getSettingFail:(NSNotification*) note
+{
+    [[[UIAlertView alloc] initWithTitle:@"Error" message:GET_SETTING_FAIL_MESSAGE delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    
+}
+- (void) responde:(NSString *)note by:(SEL)func
+{
+    if ([_registeredNotes containsObject:note])
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:note object:nil];
+        [_registeredNotes removeObject:note];
+    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:func name:note object:nil];
+    [_registeredNotes addObject:note];
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -49,6 +129,8 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    [self checkUpdateApp];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

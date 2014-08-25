@@ -22,6 +22,7 @@ WEAK IBOutlet UIDatePicker* datePicker;
 STRONG UIView* datepickerContainer;
 STRONG UIView* pickerContainer;
 STRONG Schedule* editing_schedule;
+STRONG Activity* activitySelected;
 STRONG UILabel* timezone_lbl;
 STRONG UILabel* alert_lbl;
 STRONG NSArray* alert_types;

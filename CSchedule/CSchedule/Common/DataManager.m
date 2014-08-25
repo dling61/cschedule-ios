@@ -826,9 +826,9 @@ DataManager* sharedDataManager = nil;
     [self setAllContacts:nil];
     [self setAllSchedules:nil];
     [self setAllSharedmembers:nil];
-    [self setAllAlerts:nil];
-    [self setAllTimezones:nil];
-    [self setAppSetting:nil];
+    //[self setAllAlerts:nil];
+    //[self setAllTimezones:nil];
+    //[self setAppSetting:nil];
     
 }
 
