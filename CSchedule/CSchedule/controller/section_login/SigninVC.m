@@ -31,11 +31,21 @@
 {
 //    NSLog(@"signin success");
     
+    /*
+    int newUser =[[[[note userInfo] valueForKey:@"response"] valueForKey:@"ownerid"] intValue];
+    if([self.dataManager currentUserid] == newUser)
+    {
+        [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:NO] forKey:FIRSTOPEN];
+    }
+    else{
+        
+        [self.dataManager evacuateAllData];
+        [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:YES] forKey:FIRSTOPEN];
+    }
+     */
+    
     [self.dataManager evacuateAllData];
     [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:YES] forKey:FIRSTOPEN];
-    
-
-    
     [self.dataManager processUserInfo:[note userInfo]];
     if([self.dataManager currentUserid] >0)
     {
@@ -43,9 +53,6 @@
         [[NSUserDefaults standardUserDefaults] setValue:_passwd_tf.text forKey:USERPASSWORD];
         
         [self processAddToken];
-        
-        //[self.acitiveIndicator setLabelText:@"Loading..."];
-        //[[self.syncEngine getSetting] start];
     }
     else{
         [self.acitiveIndicator show:NO];

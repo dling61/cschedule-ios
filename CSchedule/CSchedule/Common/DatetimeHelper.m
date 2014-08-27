@@ -89,14 +89,35 @@ DatetimeHelper* sharedDatetimeHelper = nil;
     NSInteger hour = [components hour];
     NSInteger minute = [components minute];
     int newhour = hour > 12 ? (hour - 12) : hour;
-    NSString* postfix = hour < 12 ? @"am":@"pm";
-    if (minute == 0) {
-        return [NSString stringWithFormat:@"%d. %@",newhour,postfix];
-    }
-    else
+    
+    NSString *stringMins =@"";
+    if(minute==0)
     {
-        return [NSString stringWithFormat:@"%d:%d %@",newhour,minute,postfix];
+        stringMins=@"00";
     }
+    else if(minute <10)
+    {
+        stringMins =[NSString stringWithFormat:@"0%ld",(long)minute];
+    }
+    else{
+        stringMins =[NSString stringWithFormat:@"%ld",(long)minute];
+    }
+    
+     NSString *stringHours =@"";
+    if(newhour==0)
+    {
+        stringHours=@"00";
+    }
+    else if(newhour <10)
+    {
+        stringHours =[NSString stringWithFormat:@"0%d",newhour];
+    }
+    else{
+        stringHours =[NSString stringWithFormat:@"%d",newhour];
+    }
+
+    NSString* postfix = hour < 12 ? @"am":@"pm";
+    return [NSString stringWithFormat:@"%@:%@ %@",stringHours,stringMins,postfix];
 }
 
 @end

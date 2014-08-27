@@ -65,26 +65,44 @@
         //float iOSVersion =[[[UIDevice currentDevice] systemVersion] floatValue];
         if([appSetting.os isEqualToString:DEVICE])
         {
-            if([VERSION isEqualToString:appSetting.app_version])//&& iOSVersion==appSetting.osversion
+            
+            //NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+            //NSLog(@"appVersion %@",appVersion);
+            
+            NSString *versionReplaceServer=appSetting.app_version;
+            NSString *versionLocal =VERSION;
+            versionLocal=[versionLocal stringByReplacingOccurrencesOfString:@"." withString:@""];
+            versionReplaceServer=[versionReplaceServer stringByReplacingOccurrencesOfString:@"." withString:@""];
+            NSInteger valueVersionServer= [versionReplaceServer integerValue];
+            NSInteger valueVersionLocal= [versionLocal integerValue];
+            if(valueVersionLocal < valueVersionServer)
             {
-                return YES;
-            }
-            else if(self.isOpenAlertUpdate==NO) {
-                
-                self.isOpenAlertUpdate=YES;
-                if(appSetting.enforce==0)
-                {
-                    [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:appSetting.msg delegate:self cancelButtonTitle:@"Update" otherButtonTitles:@"Don't Update",nil] show];
+                if(self.isOpenAlertUpdate==NO) {
+                    self.isOpenAlertUpdate=YES;
+                    if(appSetting.enforce==0)
+                    {
+                        
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"CSChedule" message: appSetting.msg delegate: self cancelButtonTitle:@"Don't Update" otherButtonTitles:@"Update",nil];
+                        alert.tag=10;
+                        [alert show];
+                    }
+                    else{
+                        
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"CSChedule" message: FORCE_APP_UPDATE_MESSAGE delegate: self cancelButtonTitle:@"Update CSchedule" otherButtonTitles:nil];
+                        alert.tag=11;
+                        [alert show];
+                    }
+                    return NO;
                 }
                 else{
-                    
-                    [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:FORCE_APP_UPDATE_MESSAGE delegate:self cancelButtonTitle:@"Update" otherButtonTitles:nil] show];
+                    return YES;
                 }
-                return NO;
+                
             }
             else{
                 return YES;
             }
+            
         }
     }
     return YES;
@@ -93,10 +111,21 @@
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     self.isOpenAlertUpdate=NO;
-    if (buttonIndex == 0) {
-        NSString *iTunesLink = @"https://itunes.apple.com/us/app/cschedule/id596231825?mt=8";
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+    if(alertView.tag==10)
+    {
+        if (buttonIndex == 1) {
+            NSString *iTunesLink = @"https://itunes.apple.com/us/app/cschedule/id596231825?mt=8";
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+        }
+        
+    }else if(alertView.tag==11)
+    {
+        if (buttonIndex == 0) {
+            NSString *iTunesLink = @"https://itunes.apple.com/us/app/cschedule/id596231825?mt=8";
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+        }
     }
+    
 }
 -(void)getSettingFail:(NSNotification*) note
 {

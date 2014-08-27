@@ -63,6 +63,7 @@
     _datePicker.datePickerMode= UIDatePickerModeDateAndTime;
     
     
+    
 }
 -(void)checkSharedMember
 {
@@ -572,6 +573,54 @@
         return NO;
     }
     
+//    if(![self compareFromDate:[NSDate date] toDate: _editing_schedule.schedule_start])
+//    {
+//        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Start time can not be earlier than Current time" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+//        return NO;
+//    }
+    return YES;
+    
+}
+-(BOOL)compareFromDate:(NSDate*)fromDate toDate:(NSDate*)toDate
+{
+    
+    NSTimeZone* timeZone=nil;
+    
+    TimeZone* timeZoneInfo =[self getTimezoneWithID:_editing_schedule.tzid];
+    if(timeZoneInfo)
+    {
+        timeZone =[NSTimeZone timeZoneWithAbbreviation:timeZoneInfo.timezone_abbrtzname];
+    }else{
+        timeZone= [NSTimeZone systemTimeZone];
+    }
+    unsigned int unitFlags = NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit;
+    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+     [gregorianCalendar setTimeZone:timeZone];
+    NSDateComponents *components = [gregorianCalendar components:unitFlags
+                                                        fromDate:fromDate
+                                                          toDate:toDate
+                                                         options:0];
+    NSLog(@"components.day :%d, components.hour: %d,components.minute: %d",components.day,components.hour,components.minute);
+    if(components.day >0)
+    {
+        return YES;
+        
+    }
+    else if(components.day==0 && components.hour >=0 &&components.minute >=0)
+    {
+         return YES;
+    }
+    else{
+        if(components.minute>0)
+        {
+             return YES;
+        }
+        else{
+             return NO;
+        }
+        
+    }
+    
     return YES;
     
 }
@@ -699,7 +748,13 @@
             }
             else
             {
-                activitycell.lbl.text = [[self.dataManager getActivityWithID:_editing_schedule.activity_id] activity_name];
+                // activitycell.lbl.text= [[self.dataManager getActivityWithID:_editing_schedule.activity_id] activity_name];
+                
+                _activitySelected =[self.dataManager getActivityWithID:_editing_schedule.activity_id];
+                if(_activitySelected)
+                {
+                    activitycell.lbl.text =_activitySelected.activity_name;
+                }
             }
             cell = activitycell;
             cell.tag = SCHEDULEACTIVITYCELLTAG;

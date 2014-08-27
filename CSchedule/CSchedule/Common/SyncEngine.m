@@ -154,8 +154,14 @@ static SyncEngine* sharedEngine = nil;
     if (lastupdatetime) {
         lastupdatetime_str = [[DatetimeHelper sharedHelper] dateToStringStyle1:lastupdatetime];
     }
-    //NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[[DataManager sharedDataManagerInstance] currentUserid]],@"ownerid",lastupdatetime_str,@"lastupdatetime", nil];
-    NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:@"",@"ownerid",lastupdatetime_str,@"lastupdatetime", nil];
+    NSDictionary* info =nil;
+    if([[DataManager sharedDataManagerInstance] currentUserid] >0)
+    {
+        info =[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[[DataManager sharedDataManagerInstance] currentUserid]],@"ownerid",lastupdatetime_str,@"lastupdatetime",VERSION,@"appversion", nil];
+    }
+    else{
+        info= [NSDictionary dictionaryWithObjectsAndKeys:@"",@"ownerid",lastupdatetime_str,@"lastupdatetime",VERSION,@"appversion", nil];
+    }
     NSDictionary* notes = [NSDictionary dictionaryWithObjectsAndKeys:GETSETTINGSUCCESSNOTE,@"200",GETSETTINGFAILNOTE,@"fail", nil];
     return [self sendInfo:info To:SETTINGPATH through:@"GET" withNotifications:notes];
 }
