@@ -201,6 +201,31 @@
 {
     [self headto:SHAREMEMBERVC withPackage:[NSDictionary dictionaryWithObjectsAndKeys:@(_editing_activity.activity_id),ACTIVITY,@(EDIT),@"script", nil]];
 }
+-(NSMutableAttributedString*) customMemberLabelWithMemberName:(NSString*)memberName isOwer:(BOOL)isOwer
+{
+    //const CGFloat fontSize = 14;
+    UIFont *boldFont = [UIFont boldSystemFontOfSize:17];
+    UIFont *regularFont = [UIFont systemFontOfSize:14];
+    UIColor *foregroundColor = [UIColor darkTextColor];
+    
+    // Create the attributes
+    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                           boldFont, NSFontAttributeName,
+                           foregroundColor, NSForegroundColorAttributeName, nil];
+    NSDictionary *subAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                              regularFont, NSFontAttributeName, nil];
+    const NSRange range = NSMakeRange((memberName.length+1),9);
+    
+    // Create the attributed string (text + attributes)
+    NSString * text=[NSString stringWithFormat:@"%@ (Creator) ",memberName];
+    
+    NSMutableAttributedString *attributedText =
+    [[NSMutableAttributedString alloc] initWithString:text
+                                           attributes:attrs];
+    [attributedText setAttributes:subAttrs range:range];
+    // Set it in our UILabel and we are done!
+    return attributedText;
+}
 
 -(IBAction) EditActivityDone:(id)sender
 {
@@ -283,10 +308,13 @@
                 
                 if(sharedmember.shared_role==OWNER)
                 {
-                    sharedmembercell.lbl.text =[NSString stringWithFormat:@"%@ - Creator",sharedmember.member_name]  ;
+                    
+                    [sharedmembercell.lbl setAttributedText:[self customMemberLabelWithMemberName:sharedmember.member_name isOwer:YES]];
+                    //sharedmembercell.lbl.text =[NSString stringWithFormat:@"%@ - Creator",sharedmember.member_name]  ;
                 }
                 else{
-                    sharedmembercell.lbl.text = sharedmember.member_name;
+                    //[sharedmembercell.lbl setAttributedText:[self customMemberLabelWithMemberName:sharedmember.member_name isOwer:NO]];
+                   sharedmembercell.lbl.text = sharedmember.member_name;
                 }
                 
                 cell= sharedmembercell;
@@ -344,6 +372,8 @@
     }
     return 50.0f;
 }
+
+
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
