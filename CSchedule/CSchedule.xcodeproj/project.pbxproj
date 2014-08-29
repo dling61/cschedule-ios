@@ -810,6 +810,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "郭 晨";
 				TargetAttributes = {
+					C76BA85A1886E7E500294AB8 = {
+						DevelopmentTeam = 4MWH538LB9;
+					};
 					C76BA87E1886E7E500294AB8 = {
 						TestTargetID = C76BA85A1886E7E500294AB8;
 					};
@@ -1099,15 +1102,15 @@
 		C76BA8911886E7E500294AB8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tan Nguyen (B9EW4TUM5G)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tan Nguyen (B9EW4TUM5G)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Developer ewstudy (WLPPN9T47Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Developer ewstudy (WLPPN9T47Q)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CSchedule/CSchedule-Prefix.pch";
 				INFOPLIST_FILE = "CSchedule/CSchedule-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = CSchedule;
-				PROVISIONING_PROFILE = "31C06D48-2C23-4531-AED4-DE93BB14552D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "31C06D48-2C23-4531-AED4-DE93BB14552D";
+				PROVISIONING_PROFILE = "2588927D-BCE3-4236-8006-47C4D47DE068";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2588927D-BCE3-4236-8006-47C4D47DE068";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1116,15 +1119,15 @@
 		C76BA8921886E7E500294AB8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tan Nguyen (B9EW4TUM5G)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tan Nguyen (B9EW4TUM5G)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Developer ewstudy (WLPPN9T47Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Developer ewstudy (WLPPN9T47Q)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CSchedule/CSchedule-Prefix.pch";
 				INFOPLIST_FILE = "CSchedule/CSchedule-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = CSchedule;
-				PROVISIONING_PROFILE = "31C06D48-2C23-4531-AED4-DE93BB14552D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "31C06D48-2C23-4531-AED4-DE93BB14552D";
+				PROVISIONING_PROFILE = "2588927D-BCE3-4236-8006-47C4D47DE068";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2588927D-BCE3-4236-8006-47C4D47DE068";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
