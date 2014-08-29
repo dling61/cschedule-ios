@@ -30,12 +30,38 @@
 - (void) signinSuccess:(NSNotification*) note
 {
 //    NSLog(@"signin success");
-    [[NSUserDefaults standardUserDefaults] setValue:_email_tf.text forKey:USEREMAIL];
-    [[NSUserDefaults standardUserDefaults] setValue:_passwd_tf.text forKey:USERPASSWORD];
-    [self.dataManager processUserInfo:[note userInfo]];
-    [self.acitiveIndicator setLabelText:@"Loading..."];
-    [[self.syncEngine getSetting] start];
     
+    /*
+    int newUser =[[[[note userInfo] valueForKey:@"response"] valueForKey:@"ownerid"] intValue];
+    if([self.dataManager currentUserid] == newUser)
+    {
+        [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:NO] forKey:FIRSTOPEN];
+    }
+    else{
+        
+        [self.dataManager evacuateAllData];
+        [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:YES] forKey:FIRSTOPEN];
+    }
+     */
+    
+    [self.dataManager evacuateAllData];
+    [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:YES] forKey:FIRSTOPEN];
+    [self.dataManager processUserInfo:[note userInfo]];
+    if([self.dataManager currentUserid] >0)
+    {
+        [[NSUserDefaults standardUserDefaults] setValue:_email_tf.text forKey:USEREMAIL];
+        [[NSUserDefaults standardUserDefaults] setValue:_passwd_tf.text forKey:USERPASSWORD];
+        
+        [self processAddToken];
+    }
+    else{
+        [self.acitiveIndicator show:NO];
+        [self.acitiveIndicator setHidden:YES];
+        
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:LOGIN_FAIL_MESSAGE delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+        _passwd_tf.text = @"";
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void) signinFail:(NSNotification*) note
@@ -44,45 +70,50 @@
     [self.acitiveIndicator show:NO];
     [self.acitiveIndicator setHidden:YES];
     
-    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Password does not match the email account" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+    [[[UIAlertView alloc] initWithTitle:@"Error" message:LOGIN_FAIL_MESSAGE delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
     _passwd_tf.text = @"";
 }
+
+-(void)processAddToken
+{
+    NSString *tokenString =[[NSUserDefaults standardUserDefaults] objectForKey:keyDeviceToken];
+    if(tokenString.length >0)
+    {
+        NSString * uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        [self.acitiveIndicator setLabelText:@"Adding Token..."];
+        [[self.syncEngine setToken:tokenString deviceId:uniqueIdentifier] start];
+        
+        
+    }
+    else{
+        [self.acitiveIndicator show:NO];
+        [self.acitiveIndicator setHidden:YES];
+        [self headto:TABPAGES withPackage:nil];
+        
+    }
+}
+/*
 -(void)getSettingSuccess:(NSNotification*) note
 {
     [self.dataManager processSettingInfo:[note userInfo]];
     if([self checkAppVersionAvailable])
     {
-        NSString *tokenString =[[NSUserDefaults standardUserDefaults] objectForKey:keyDeviceToken];
-        if(tokenString.length >0)
-        {
-            NSString * uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-            [self.acitiveIndicator setLabelText:@"Adding Token..."];
-            [[self.syncEngine setToken:tokenString deviceId:uniqueIdentifier] start];
-            
-            
-        }
-        else{
-            [self.acitiveIndicator show:NO];
-            [self.acitiveIndicator setHidden:YES];
-            [self headto:TABPAGES withPackage:nil];
-            
-        }
+        [self processAddToken];
     }
-    else{
-        
-        [self.acitiveIndicator show:NO];
-        [self.acitiveIndicator setHidden:YES];
-        [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:@"App is out of update." delegate:self cancelButtonTitle:@"Update" otherButtonTitles:nil] show];
-        return;
-    }
-
-    
-    
-   
-    
     
     
 }
+-(void)getSettingFail:(NSNotification*) note
+{
+
+    
+    [self.acitiveIndicator show:NO];
+    [self.acitiveIndicator setHidden:YES];
+    [[[UIAlertView alloc] initWithTitle:@"Error" message:GET_SETTING_FAIL_MESSAGE delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    [self.dataManager evacuateAllData];
+    
+}
+ */
 
 #pragma mark Popview button Method
 
@@ -93,43 +124,45 @@
         NSString *iTunesLink = @"https://itunes.apple.com/us/app/cschedule/id596231825?mt=8";
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
     }
+    else{
+        [self.acitiveIndicator setHidden:NO];
+        [self.acitiveIndicator show:YES];
+        [self processAddToken];
+    }
 }
+/*
 -(BOOL)checkAppVersionAvailable
 {
     
     NSArray* allAppSettings = [self.dataManager allAppSetting];
     for(AppSettingInfo *appSetting in allAppSettings)
     {
+        //float iOSVersion =[[[UIDevice currentDevice] systemVersion] floatValue];
         if([appSetting.os isEqualToString:DEVICE])
         {
-            if(appSetting.enforce==0)
+            if([VERSION isEqualToString:appSetting.app_version])//&& iOSVersion==appSetting.osversion
             {
                 return YES;
             }
             else{
-                //NSDictionary *infoDictionary = [[NSBundle mainBundle]infoDictionary];
-                //NSString * appVersion    = infoDictionary[(NSString*)kCFBundleVersionKey];
-                float iOSVersion =[[[UIDevice currentDevice] systemVersion] floatValue];
-                if([VERSION isEqualToString:appSetting.app_version] && iOSVersion== appSetting.osversion)
+                [self.acitiveIndicator show:NO];
+                [self.acitiveIndicator setHidden:YES];
+                if(appSetting.enforce==0)
                 {
-                    
-                    return YES;
+                    [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:appSetting.msg delegate:self cancelButtonTitle:@"Update" otherButtonTitles:@"Don't Update",nil] show];
+                    return NO;
                 }
-                
+                else{
+                    
+                    [[[UIAlertView alloc] initWithTitle:@"CSChedule" message:FORCE_APP_UPDATE_MESSAGE delegate:self cancelButtonTitle:@"Update" otherButtonTitles:nil] show];
+                }
                 return NO;
             }
         }
     }
-    
     return YES;
 }
--(void)getSettingFail:(NSNotification*) note
-{
-    [self.acitiveIndicator show:NO];
-    [self.acitiveIndicator setHidden:YES];
-    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not get list Setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-     [self.dataManager evacuateAllData];
-}
+ */
 
 -(void)setTokenSuccess:(NSNotification*) note
 {
@@ -144,8 +177,10 @@
      NSLog(@"set Token fail %@",note);
     [self.acitiveIndicator show:NO];
     [self.acitiveIndicator setHidden:YES];
-    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not set Token for account" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
-    [self.dataManager evacuateAllData];
+    [self headto:TABPAGES withPackage:nil];
+    
+    //[[[UIAlertView alloc] initWithTitle:@"Error" message:@"Can not set Token for account" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+    //[self.dataManager evacuateAllData];
 }
 
 - (void) registerForNotifications
@@ -154,8 +189,8 @@
     [self responde:SIGNINSUCCESSNOTE by:@selector(signinSuccess:)];
     [self responde:SIGNINFAILURENOTE by:@selector(signinFail:)];
     
-    [self responde:GETSETTINGSUCCESSNOTE by:@selector(getSettingSuccess:)];
-    [self responde:GETSETTINGFAILNOTE by:@selector(getSettingFail:)];
+    //[self responde:GETSETTINGSUCCESSNOTE by:@selector(getSettingSuccess:)];
+    //[self responde:GETSETTINGFAILNOTE by:@selector(getSettingFail:)];
 
     [self responde:SETTOKENSUCCESSNOTE by:@selector(setTokenSuccess:)];
     [self responde:SETTOKENFAILURENOTE by:@selector(setTokenFail:)];

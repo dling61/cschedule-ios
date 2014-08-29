@@ -41,6 +41,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.title = SCHEDULEVC;
+    _statusLabel.text= CSCHEDULE_NO_ITEM_MESSAGE;
+    _statusLabel.hidden=YES;
     [self.acitiveIndicator show:YES];
     [self.acitiveIndicator setHidden:NO];
     if ([self.dataManager IsFirsttimeOpen]) {
@@ -54,6 +56,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    _statusLabel.hidden=YES;
     [self checkRightBarButton];
     [self refreshTable];
 }
@@ -175,17 +178,32 @@
     NSArray* schedules = nil;
     if (segmentIndex == 0) {
         schedules = [self.dataManager allSortedSchedules];
+        
     }
     else
     {
         schedules = [self.dataManager mySortedSchedules];
     }
+    
+    if(schedules.count>0)
+    {
+        _statusLabel.hidden=YES;
+        _table.hidden=NO;
+    }
+    else{
+        _statusLabel.hidden=NO;
+        _table.hidden=YES;
+
+    }
+    
     NSArray* groups = [self.dataManager groupedSchedules:schedules];
     _groupedSchedules_ontable = groups;
     _table_headers = [[NSMutableArray alloc] init];
     for (NSArray* arr in groups) {
         Schedule* s = [arr objectAtIndex:0];
-        [_table_headers addObject:[self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle4:s.schedule_start andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]]];
+        
+        NSTimeZone* timeZone = [NSTimeZone systemTimeZone];
+        [_table_headers addObject:[self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle4:s.schedule_start andTimeZone:timeZone]];
     }
     [_table reloadData];
 }
@@ -287,17 +305,17 @@
         UIActionSheet* sheet=nil;
         if(sm.confirm==Unknown)
         {
-            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Confirm",@"Deny",nil];
+            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Confirmation" otherButtonTitles:@"Confirm",@"Deny",nil];
             sheet.tag = 12;
             [sheet showInView:self.view];
         }else if(sm.confirm==Denied)
         {
-            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Confirm",nil];
+            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Confirmation" otherButtonTitles:@"Confirm",nil];
             sheet.tag = 12;
             [sheet showInView:self.view];
         }else
         {
-            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Deny",nil];
+            sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Confirmation" otherButtonTitles:@"Deny",nil];
             sheet.tag = 12;
             [sheet showInView:self.view];
         }
@@ -305,7 +323,7 @@
     }
     else{
         UIActionSheet* sheet=nil;
-        sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call",@"Mail",@"SMS",nil];
+        sheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Contact Participant" otherButtonTitles:@"Call",@"Mail",@"SMS",nil];
         sheet.tag = 10;
         [sheet showInView:self.view];
     }
@@ -386,9 +404,10 @@
     [schedulecell.name_lbl setFrame:CGRectMake(10.0, 5.0, labelSize.width, labelSize.height)];
     */
     schedulecell.name_lbl.text = activity.activity_name;
+    NSTimeZone* timeZone = [NSTimeZone systemTimeZone];
     schedulecell.time_lbl.text = [NSString stringWithFormat:@"%@ to %@",
-                                  [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:schedule.schedule_start andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]],
-                                  [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:schedule.schedule_end andUtcoff:[[NSTimeZone defaultTimeZone] secondsFromGMT]]];
+                                  [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:schedule.schedule_start andTimeZone:timeZone],
+                                  [self.datetimeHelper GMTDateToSpecificTimeZoneInStringStyle3:schedule.schedule_end andTimeZone:timeZone]];
     NSArray* smbtns = [self createBtnsForSMs:schedule.participants withcschedule:schedule];
     float totallength = 0.0f;
     for (UIButton* btn in smbtns)
@@ -433,12 +452,14 @@
     if (actionSheet.tag == 10) {
         switch (buttonIndex) {
             case 0:
+                break;
+            case 1:
             {
                 NSString* call = [NSString stringWithFormat:@"tel://%@",selected_sharedmember.member_mobile];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:call]];
                 break;
             }
-            case 1:
+            case 2:
             {
                 MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
                 [[picker navigationBar] setTintColor:[UIColor whiteColor]];
@@ -454,7 +475,7 @@
                 }];
                 break;
             }
-            case 2:
+            case 3:
             {
                 [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x067AB5)];
                 [[UINavigationBar appearance] setTitleTextAttributes:
@@ -495,7 +516,7 @@
             [self.acitiveIndicator setLabelText:@"Saving..."];
             [[self.syncEngine confirmSharedMember:selected_sharedmember.member_id schedule:self.scheduleButtonSelected.schedule_id confirmType:Confirmed]start];
         }
-        if([title isEqual: @"Deny"])
+        else if([title isEqual: @"Deny"])
         {
             NSLog(@"Deny");
             [self.acitiveIndicator show:YES];

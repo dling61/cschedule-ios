@@ -8,7 +8,10 @@
 
 #import "AppDelegate.h"
 @implementation AppDelegate
-
+@synthesize syncEngine=_syncEngine;
+@synthesize registeredNotes=_registeredNotes;
+@synthesize dataManager = _dataManager;
+@synthesize isOpenAlertUpdate;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
@@ -29,10 +32,116 @@
     [[UIBarButtonItem appearance] setTintColor:[UIColor whiteColor]];
     [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:YES] forKey:FIRSTOPEN];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-
+    
+    
+    [self responde:GETSETTINGSUCCESSNOTE by:@selector(getSettingSuccess:)];
+    [self responde:GETSETTINGFAILNOTE by:@selector(getSettingFail:)];
+    
+    _syncEngine = [SyncEngine sharedEngineInstance];
+    _dataManager = [DataManager sharedDataManagerInstance];
+    [self checkUpdateApp];
+    
+    self.isOpenAlertUpdate=NO;
     return YES;
 }
-							
+
+- (void)checkUpdateApp
+{
+    [[self.syncEngine getSetting] start];
+}
+
+
+-(void)getSettingSuccess:(NSNotification*) note
+{
+    [self.dataManager processSettingInfo:[note userInfo]];
+    [self checkAppVersionAvailable];
+}
+-(BOOL)checkAppVersionAvailable
+{
+    
+    NSArray* allAppSettings = [self.dataManager allAppSetting];
+    for(AppSettingInfo *appSetting in allAppSettings)
+    {
+        //float iOSVersion =[[[UIDevice currentDevice] systemVersion] floatValue];
+        if([appSetting.os isEqualToString:DEVICE])
+        {
+            
+            //NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+            //NSLog(@"appVersion %@",appVersion);
+            
+            NSString *versionReplaceServer=appSetting.app_version;
+            NSString *versionLocal =VERSION;
+            versionLocal=[versionLocal stringByReplacingOccurrencesOfString:@"." withString:@""];
+            versionReplaceServer=[versionReplaceServer stringByReplacingOccurrencesOfString:@"." withString:@""];
+            NSInteger valueVersionServer= [versionReplaceServer integerValue];
+            NSInteger valueVersionLocal= [versionLocal integerValue];
+            if(valueVersionLocal < valueVersionServer)
+            {
+                if(self.isOpenAlertUpdate==NO) {
+                    self.isOpenAlertUpdate=YES;
+                    if(appSetting.enforce==0)
+                    {
+                        
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"CSChedule" message: appSetting.msg delegate: self cancelButtonTitle:@"Don't Update" otherButtonTitles:@"Update",nil];
+                        alert.tag=10;
+                        [alert show];
+                    }
+                    else{
+                        
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"CSChedule" message: FORCE_APP_UPDATE_MESSAGE delegate: self cancelButtonTitle:@"Update CSchedule" otherButtonTitles:nil];
+                        alert.tag=11;
+                        [alert show];
+                    }
+                    return NO;
+                }
+                else{
+                    return YES;
+                }
+                
+            }
+            else{
+                return YES;
+            }
+            
+        }
+    }
+    return YES;
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    self.isOpenAlertUpdate=NO;
+    if(alertView.tag==10)
+    {
+        if (buttonIndex == 1) {
+            NSString *iTunesLink = @"https://itunes.apple.com/us/app/cschedule/id596231825?mt=8";
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+        }
+        
+    }else if(alertView.tag==11)
+    {
+        if (buttonIndex == 0) {
+            NSString *iTunesLink = @"https://itunes.apple.com/us/app/cschedule/id596231825?mt=8";
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+        }
+    }
+    
+}
+-(void)getSettingFail:(NSNotification*) note
+{
+    [[[UIAlertView alloc] initWithTitle:@"Error" message:GET_SETTING_FAIL_MESSAGE delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    
+}
+- (void) responde:(NSString *)note by:(SEL)func
+{
+    if ([_registeredNotes containsObject:note])
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:note object:nil];
+        [_registeredNotes removeObject:note];
+    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:func name:note object:nil];
+    [_registeredNotes addObject:note];
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -49,6 +158,8 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    [self checkUpdateApp];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -89,8 +200,16 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"%@",userInfo);
-    //[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    NSLog(@"didReceiveRemoteNotification %@",userInfo);
+    NSDictionary *aps=[userInfo objectForKey:@"aps"];
+    if([aps objectForKey:@"alert"])
+    {
+        NSString *alertString =[aps objectForKey:@"alert"];
+        [[[UIAlertView alloc] initWithTitle:@"Push notication" message:alertString delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
+    }
+    else{
+        [[[UIAlertView alloc] initWithTitle:@"Push notication" message:@"You have a new push notification" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
+    }
 }
 
 @end

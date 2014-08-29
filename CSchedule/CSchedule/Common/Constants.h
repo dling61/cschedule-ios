@@ -17,7 +17,7 @@
 #define BASEURL                         @"http://apitest1.servicescheduler.net/"
 #define DEVICE                          @"IOS"
 #define SCODE                           @"28e336ac6c9423d946ba02dddd6a2632"
-#define VERSION                         @"1.4.0"
+#define VERSION                         @"1.3.0"
 
 #define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < 0.1 )
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -113,7 +113,7 @@
 #pragma mark -
 #pragma mark VC titles
 
-#define REGISTERVC                      @"Register"
+#define REGISTERVC                      @"Create Account"
 #define SIGNINVC                        @"Sign in"
 #define FORGETPWVC                      @"Forget password"
 #define TABPAGES                        @"tabpages"
@@ -159,8 +159,28 @@
 
 
 #pragma mark -
-#pragma mark local data keys
+#pragma mark Message Define
 
+#define LOGIN_FAIL_MESSAGE @"Invalid email or password"
+#define FORCE_APP_UPDATE_MESSAGE @"Your version of CSchedule is being retired. Update to the latest version today."
+
+#define FORCE_APP_UPDATE_MESSAGE2 @"App is out of update."
+#define GET_SETTING_FAIL_MESSAGE @"Can not get list Setting"
+#define EMAIL_INVALID_MESSAGE @"You should enter an valid email address"
+#define USERNAME_EMPTY_MESSAGE @"Name cannot be empty" 
+#define PASSWORD_EMPTY_MESSAGE @"Password cannot be empty" 
+#define CONTACT_NAME_EMPTY_MESSAGE @"Contact name cannot empty"
+#define ACTIVITY_NAME_EMPTY_MESSAGE @"An activity name is required"
+#define ACTIVITY_DELETE_MESSAGE @"Are you sure you want to delete this activity and related schedules ?"
+
+#define CSCHEDULE_NO_ITEM_MESSAGE @"When you have already created a schedule or you are participating in an activity created by someone else, you’ll see it here."
+
+#define ACTIVITY_NO_ITEM_MESSAGE @"When you have already created an activity or you are participating in an activity created by someone else, you’ll see it here."
+
+
+#pragma mark -
+#pragma mark local data keys
+#define ADDING_NEW_ACTIVITY             @"addNewActivity"
 #define FIRSTOPEN                       @"whetherfirsttime"
 #define USERID                          @"currentuserid"
 #define USERNAME                        @"currentusername"

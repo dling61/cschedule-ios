@@ -256,7 +256,10 @@ DataManager* sharedDataManager = nil;
 {
     NSMutableDictionary* grouped_schedules = [[NSMutableDictionary alloc] init];
     for (Schedule* schedule in raw_schedules) {
-        NSString* date_str = [[DatetimeHelper sharedHelper] GMTDateToSpecificTimeZoneInStringStyle2:schedule.schedule_start andUtcoff:schedule.tzid];
+        
+        NSTimeZone* timeZone = [NSTimeZone systemTimeZone];
+        
+        NSString* date_str = [[DatetimeHelper sharedHelper] GMTDateToSpecificTimeZoneInStringStyle2:schedule.schedule_start andTimeZone:timeZone];
         NSArray* group = (NSArray*)[grouped_schedules valueForKey:date_str];
         if (group == nil) {
             NSMutableArray* new_group = [[NSMutableArray alloc] init];
@@ -575,8 +578,9 @@ DataManager* sharedDataManager = nil;
         NSString* os = [origin_app valueForKey:@"os"];
         int enforce = [[origin_app valueForKey:@"enforce"] intValue];
         float osversion = [[origin_app valueForKey:@"osversion"] floatValue];
+        NSString* msg = [origin_app valueForKey:@"msg"];
         
-        AppSettingInfo *appInfo =[[AppSettingInfo alloc]initWithAppID:a_id app_version:a_version enforce:enforce os:os osversion:osversion];
+        AppSettingInfo *appInfo =[[AppSettingInfo alloc]initWithAppID:a_id app_version:a_version enforce:enforce os:os osversion:osversion message:msg];
         NSDictionary* app_dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSKeyedArchiver archivedDataWithRootObject:appInfo], APPVERSION, @"1", SYNCHRONIZED,nil];
         [local_appsetting_new setValue:app_dic forKey:[NSString stringWithFormat:@"%d",appInfo.app_id]];
     }
@@ -822,9 +826,9 @@ DataManager* sharedDataManager = nil;
     [self setAllContacts:nil];
     [self setAllSchedules:nil];
     [self setAllSharedmembers:nil];
-    [self setAllAlerts:nil];
-    [self setAllTimezones:nil];
-    [self setAppSetting:nil];
+    //[self setAllAlerts:nil];
+    //[self setAllTimezones:nil];
+    //[self setAppSetting:nil];
     
 }
 
@@ -835,5 +839,14 @@ DataManager* sharedDataManager = nil;
     }
     return NO;
 }
+
+- (BOOL) haveANewActivity
+{
+    if ([[[NSUserDefaults standardUserDefaults] valueForKey:ADDING_NEW_ACTIVITY] boolValue] == YES) {
+        return YES;
+    }
+    return NO;
+}
+
 
 @end

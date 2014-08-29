@@ -16,6 +16,9 @@
 @synthesize shared_role = _shared_role;
 @synthesize owner_id = _owner_id;
 
+@synthesize timeZonePre_id=_timeZonePre_id;
+@synthesize alertPre_id=_alertPre_id;
+
 - (id) initWithId:(int)a_id name:(NSString*)a_name desp:(NSString*)desp role:(int)a_role owner: (int)owne_id start:(NSDate*) a_start end:(NSDate*) a_end
 {
     if (self = [super init]) {
@@ -24,6 +27,9 @@
         _activity_description = desp;
         _shared_role = a_role;
         _owner_id = owne_id;
+        
+        _timeZonePre_id=0;
+        _alertPre_id=0;
     }
     return self;
 }
@@ -40,7 +46,8 @@
     self.activity_description = [decoder decodeObjectForKey:@"desp"];
     self.shared_role = [decoder decodeIntForKey:@"role"];
     self.owner_id = [decoder decodeIntForKey:@"ownerid"];
-    
+    self.timeZonePre_id = [decoder decodeIntForKey:@"timeZonePre_id"];
+    self.alertPre_id = [decoder decodeIntForKey:@"alertPre_id"];
     return self;
 }
 
@@ -50,6 +57,9 @@
     [encoder encodeObject:self.activity_description forKey:@"desp"];
     [encoder encodeInt:self.shared_role forKey:@"role"];
     [encoder encodeInt:self.owner_id forKey:@"ownerid"];
+    
+    [encoder encodeInt:self.timeZonePre_id forKey:@"timeZonePre_id"];
+    [encoder encodeInt:self.alertPre_id forKey:@"alertPre_id"];
 }
 
 @end

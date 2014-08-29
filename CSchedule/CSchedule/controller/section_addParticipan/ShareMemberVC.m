@@ -40,8 +40,22 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButton:)];
+    self.navigationItem.leftBarButtonItem=newBackButton;
+    
     self.title = PARTICIPANTVC;
     [self refreshTable];
+}
+
+-(void)backButton:(UIBarButtonItem *)sender {
+    if(script == EDIT)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 - (void) updateAllSharedmembersSuccess: (NSNotification*) note

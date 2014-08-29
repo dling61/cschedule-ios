@@ -99,5 +99,5 @@
 - (void) evacuateAllData;
 
 - (BOOL) IsFirsttimeOpen;
-
+- (BOOL) haveANewActivity;
 @end

@@ -64,7 +64,7 @@ typedef enum
     DeleteButtonCell=0,
     ConfirmButtonCell,
     DenyButtonCell,
-    ButtonNone
+    AddParticiantButtonCell
 } ButtonCellType;
 
 

@@ -37,7 +37,10 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.title = ACTIVITYVC;
+    _statusLabel.text= ACTIVITY_NO_ITEM_MESSAGE;
+    _statusLabel.hidden=YES;
     if ([self.dataManager IsFirsttimeOpen]) {
+        
         [self refreshTable];
     }
     else
@@ -48,6 +51,15 @@
     }
 }
 
+-(void) viewWillAppear:(BOOL)animated
+{
+    if([self.dataManager haveANewActivity])
+    {
+        self.acitiveIndicator.hidden = NO;
+        [self.acitiveIndicator show: YES];
+        [[self.syncEngine getActivities] start];
+    }
+}
 - (void) viewWillDisappear:(BOOL)animated
 {
     [self restoreState];
@@ -67,11 +79,22 @@
 - (void) refreshTable
 {
     _activities_ontable = [self.dataManager allSortedActivities];
+    if(_activities_ontable.count>0)
+    {
+        _statusLabel.hidden=YES;
+        _table.hidden=NO;
+        
+    }
+    else{
+        _statusLabel.hidden=NO;
+        _table.hidden=YES;
+    }
     [_table reloadData];
 }
 
 - (void)addActivitySuccess: (NSNotification*) note
 {
+    //[[self.syncEngine getActivities] start];
     [self refreshTable];
 }
 
@@ -88,6 +111,8 @@
 
 - (void)getAllsharedMembersDone: (NSNotification*) note
 {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:ADDING_NEW_ACTIVITY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [self.acitiveIndicator show:NO];
     self.acitiveIndicator.hidden = YES;
     [self refreshTable];
@@ -168,7 +193,8 @@
 {
     return _activities_ontable.count;
 }
-    
+
+
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ActivityCell* cell = (ActivityCell*)[tableView dequeueReusableCellWithIdentifier:ACTIVITYCELL];
@@ -218,12 +244,25 @@
 
 -(float) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
     Activity* activity = [_activities_ontable objectAtIndex:indexPath.row];
-    int height = 35.0f;
-    NSString* text = activity.activity_description;
-    if (text == nil || text.length == 0) {
-        text = @"No description";
+    NSArray * former_sharedmembers = [self.dataManager allSortedSharedmembersForActivityid:activity.activity_id];
+    NSMutableString* text = [[NSMutableString alloc] init];
+    int cnt = 0;
+    for (SharedMember* sm in former_sharedmembers) {
+        if (cnt == 0) {
+            [text appendString:sm.member_name];
+        }
+        else
+        {
+            [text appendFormat:@", %@",sm.member_name];
+        }
+        cnt++;
     }
+    if (text.length == 0) {
+        [text appendString:@"No participants yet"];
+    }
+    int height = 35.0f;
     UIFont* font = [UIFont fontWithName:@"Helvetica" size:12.0f];
     CGSize labelSize = [text.description sizeWithFont:font
                                     constrainedToSize:CGSizeMake(300.0, 70.0)
@@ -240,26 +279,6 @@
         selected_activity = activity;
         [self edit];
     }
-    
-    /*
-    if (activity.shared_role <= PARTICIPANT) {
-        selected_activity = activity;
-        UIActionSheet* sheet = nil;
-        if (activity.shared_role == OWNER) {
-            sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Edit",@"Share",@"Mail",@"Delete", nil];
-            sheet.destructiveButtonIndex = 3;
-        }
-        else if (activity.shared_role == ORGANIZER)
-        {
-            sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Edit",@"Share",@"Mail", nil];
-        }
-        else
-        {
-            sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Mail", nil];
-        }
-        [sheet showInView:self.view];
-    }
-     */
 }
 
 

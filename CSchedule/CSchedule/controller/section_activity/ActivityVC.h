@@ -17,6 +17,7 @@ STRONG NSArray* activities_ontable;
 WEAK IBOutlet UITableView* table;
 STRONG PopView*  popview;
 STRONG UIGestureRecognizer* tapRecognizer;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 - (IBAction) addActivity:(id)sender;
 

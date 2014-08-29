@@ -14,7 +14,8 @@
 @synthesize enforce=_enforce;
 @synthesize os=_os;
 @synthesize osversion=_osversion;
--(id) initWithAppID: (int) a_id app_version:(NSString*)a_app_version enforce:(int)a_enforce os: (NSString*)a_os osversion:(float)a_osversion
+@synthesize msg=_msg;
+-(id) initWithAppID: (int) a_id app_version:(NSString*)a_app_version enforce:(int)a_enforce os: (NSString*)a_os osversion:(float)a_osversion message:(NSString*)message
 {
     if (self = [super init]) {
         _app_id = a_id;
@@ -22,6 +23,7 @@
         _enforce = a_enforce;
         _os = a_os;
         _osversion = a_osversion;
+        _msg= message;
     }
     return self;
 }
@@ -38,6 +40,7 @@
     self.enforce = [decoder decodeIntForKey:@"enforce"];
     self.os = [decoder decodeObjectForKey:@"os"];
     self.osversion = [decoder decodeFloatForKey:@"osversion"];
+    self.msg= [decoder decodeObjectForKey:@"msg"];
     return self;
 }
 
@@ -47,5 +50,6 @@
     [encoder encodeInt:self.enforce forKey:@"enforce"];
     [encoder encodeObject:self.os forKey:@"os"];
     [encoder encodeFloat:self.osversion forKey:@"osversion"];
+    [encoder encodeObject:self.msg forKey:@"msg"];
 }
 @end
